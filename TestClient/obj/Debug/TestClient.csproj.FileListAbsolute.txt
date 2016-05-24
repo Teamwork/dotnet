@@ -1,0 +1,13 @@
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\bin\Debug\TestClient.exe.config
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\bin\Debug\TestClient.exe
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\bin\Debug\TestClient.pdb
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\bin\Debug\Teamwork.Net.V2.dll
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\bin\Debug\Newtonsoft.Json.dll
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\bin\Debug\Teamwork.Net.V2.pdb
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\bin\Debug\Newtonsoft.Json.xml
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\obj\Debug\TestClient.csprojResolveAssemblyReference.cache
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\obj\Debug\TestClient.Form1.resources
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\obj\Debug\TestClient.Properties.Resources.resources
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\obj\Debug\TestClient.csproj.GenerateResource.Cache
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\obj\Debug\TestClient.exe
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\obj\Debug\TestClient.pdb

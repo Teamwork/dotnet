@@ -1,0 +1,7 @@
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\Teamwork.Net.V2\obj\Debug\TeamworkProjects.csprojResolveAssemblyReference.cache
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\Teamwork.Net.V2\bin\Debug\Teamwork.Net.V2.dll
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\Teamwork.Net.V2\bin\Debug\Teamwork.Net.V2.pdb
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\Teamwork.Net.V2\bin\Debug\Newtonsoft.Json.dll
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\Teamwork.Net.V2\bin\Debug\Newtonsoft.Json.xml
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\Teamwork.Net.V2\obj\Debug\Teamwork.Net.V2.dll
+C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\Teamwork.Net.V2\obj\Debug\Teamwork.Net.V2.pdb
