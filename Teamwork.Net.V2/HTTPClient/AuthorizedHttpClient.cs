@@ -48,12 +48,12 @@ namespace TeamworkProjects.HTTPClient
      DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
     }
 
-        public async Task<BaseResponse<T>> GetAsync<T>(string endpoint, Dictionary<string, string> paramsDictionary, RequestFormat format = RequestFormat.Json)
+        public async Task<BaseResponse<T>> GetAsync<T>(string pEndpoint, Dictionary<string, string> pAramsDictionary, RequestFormat pFormat = RequestFormat.Json)
         {
             try
             {
 
-                var data2 = Task.Run(() => GetAsync(endpoint)).Result;
+                var data2 = Task.Run(() => GetAsync(pEndpoint)).Result;
 
                 // var data = await GetAsync(endpoint);
                 if (!data2.IsSuccessStatusCode) return new BaseResponse<T>(HttpStatusCode.InternalServerError);

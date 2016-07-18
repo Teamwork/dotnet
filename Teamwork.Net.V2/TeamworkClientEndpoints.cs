@@ -23,15 +23,12 @@ namespace TeamworkProjects
     /// </summary>
     public partial class Client
     {
-        public ProjectHandler Projects
-        {
-            get
-            {
-                if(projects == null) projects = new ProjectHandler(this);
-                return projects;
-            }
-        } 
+        public ProjectHandler Projects => projects ?? (projects = new ProjectHandler(this));
         private ProjectHandler projects;
+
+        public TimeHandler Time => time ?? (time = new TimeHandler(this));
+        private TimeHandler time;
+
 
     }
 }

@@ -71,10 +71,10 @@ namespace TeamworkProjects
         /// <summary>
         /// Returns a new instance of the Teamwork API Client using Username & Password
         /// </summary>
-        /// <param name="userName"></param>
-        /// <param name="password"></param>
+        /// <param name="pUserName"></param>
+        /// <param name="pAssword"></param>
         /// <returns></returns>
-        public static Client GetTeamworkClient(string userName, string password)
+        public static Client GetTeamworkClient(string pUserName, string pAssword)
         {
             try
             {

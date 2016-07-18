@@ -1,7 +1,7 @@
 ﻿#region FileHeader
 // ==========================================================
-// File: Teamwork.Net.V2.TeamworkProjects.ProjectHandler.cs
-// Last Mod:      24.05.2016
+// File:               TeamworkProjects.ProjectHandler.cs
+// Last Mod:      18.07.2016
 // Created:        24.05.2016
 // Created By:   Tim cadenbach
 //  
@@ -10,7 +10,6 @@
 //  24.05.2016 - Created
 //  ==========================================================
 #endregion
-
 #region Imports
 
 using System;
@@ -37,14 +36,14 @@ namespace TeamworkProjects.Endpoints
     /// </summary>
     public class ProjectHandler
     {
-        private readonly Client _client;
+        private readonly Client client;
 
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
-        public ProjectHandler(Client client)
+        public ProjectHandler(Client pClient)
         {
-            _client = client;
+            this.client = pClient;
         }
 
 
@@ -54,56 +53,39 @@ namespace TeamworkProjects.Endpoints
         /// <returns></returns>
         public async Task<List<Project>> GetAllProjectsAsync()
         {
-            var requestString = "projects.json";
-            var data = await _client.httpClient.GetListAsync<Project>(requestString, "projects", null);
-            if (data.StatusCode == HttpStatusCode.OK) return data.List;
-            if (data.StatusCode == HttpStatusCode.InternalServerError)
+            try
             {
-                throw new Exception(data.Message);
+                var requestString = "projects.json";
+                var data = await client.httpClient.GetListAsync<Project>(requestString, "projects", null);
+                if (data.StatusCode == HttpStatusCode.OK) return data.List;
+                if (data.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    throw new Exception(data.Message);
+                }
+                return null;
             }
-            return null;
+            catch (Exception)
+            {
+                throw new Exception("Error processing Teamwork API Request: ", ex);
+            }
         }
-
 
 
         /// <summary>
         ///   Returns all projects the user has access to
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Project>> GetAllRecentProjectsAsync(DateTime updatedSince)
-        {
-            string updatedafter = updatedSince.ToString("yyyyMMddhhmmss");
-
-            using (var client = new AuthorizedHttpClient(_client.ApiKey,_client.Domain))
-            {
-                var data = await client.GetListAsync<Project>("projects.json?updatedAfterDate=" + updatedafter,"projects", null);
-                if (data.StatusCode == HttpStatusCode.OK) return data.List;
-            }
-            return null;
-        }
-
-
-
-        /// <summary>
-        ///   Return all persons of a given project
-        ///   http://developer.teamwork.com/people
-        /// </summary>
-        /// <param name="projectID">Project ID (int)</param>
-        /// <returns>Person List</returns>
-        public async Task<PeopleResponse> GetPeople(int projectID)
+        public async Task<List<Project>> GetAllRecentProjectsAsync(DateTime pUpdatedSince)
         {
             try
-            {
-                using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
-                {
-                    var data = await client.GetAsync<PeopleResponse>("/projects/" + projectID + "/people.json", null);
-                    if (data.StatusCode == HttpStatusCode.OK) return (PeopleResponse) data.ContentObj;
-                }
-                return new PeopleResponse {STATUS = "ERROR", People = null};
+            { 
+               var data = await client.httpClient.GetListAsync<Project>("projects.json?updatedAfterDate=" + pUpdatedSince.ToString("yyyyMMddhhmmss"), "projects", null);
+               if (data.StatusCode == HttpStatusCode.OK) return data.List;
+               return null;
             }
             catch (Exception ex)
             {
-                return new PeopleResponse {STATUS = "ERROR:" + ex.Message, People = null};
+                throw new Exception("Error processing Teamwork API Request: ", ex);
             }
         }
 
@@ -112,18 +94,39 @@ namespace TeamworkProjects.Endpoints
         ///   Return all persons of a given project
         ///   http://developer.teamwork.com/people
         /// </summary>
-        /// <param name="projectID">Project ID (int)</param>
-        /// <param name="personID"></param>
+        /// <param name="pRojectId">Project ID (int)</param>
         /// <returns>Person List</returns>
-        public async Task<PeopleResponse> GetPeople(int projectID, int personID)
+        public async Task<List<Person>> GetPeople(int pRojectId)
         {
             try
             {
-                using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+                var data = await client.httpClient.GetListAsync<Person>("/projects/" + pRojectId + "/people.json","people", null);
+                if (data.StatusCode == HttpStatusCode.OK) return data.List;
+                throw new Exception(data.Status);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error processing Teamwork API Request: ", ex);
+            }
+        }
+
+
+        /// <summary>
+        ///   Returns details of a specific person in a project
+        ///   http://developer.teamwork.com/people
+        /// </summary>
+        /// <param name="pRojectId">Project ID (int)</param>
+        /// <param name="pErsonId"></param>
+        /// <returns>Person List</returns>
+        public async Task<PeopleResponse> GetPeople(int pRojectId, int pErsonId)
+        {
+            try
+            {
+                using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
                 {
                     var data =
                         await
-                            client.GetAsync<PeopleResponse>("/projects/" + projectID + "/people/" + personID + ".json",
+                            client.GetAsync<PeopleResponse>("/projects/" + pRojectId + "/people/" + pErsonId + ".json",
                                 null);
                     if (data.StatusCode == HttpStatusCode.OK) return (PeopleResponse) data.ContentObj;
                 }
@@ -139,74 +142,52 @@ namespace TeamworkProjects.Endpoints
         /// <summary>
         ///   Returns a single Project, returns null if the user can not access the project
         /// </summary>
-        /// <param name="projectID">the project id</param>
-        /// <param name="includePeople">include people on project</param>
-        /// <param name="includeTaskLists">include task lists</param>
-        /// <param name="includeMilestones">include all milestones</param>
-        /// <param name="useDefaultParser"></param>
+        /// <param name="pRojectId">the project id</param>
+        /// <param name="pIncludePeople">include people on project</param>
+        /// <param name="pIncludeTaskLists">include task lists</param>
+        /// <param name="pIncludeTasks">Nest </param>
+        /// <param name="pIncludeMilestones">include all milestones</param>
         /// <returns></returns>
-        public async Task<ProjectResponse> GetProject(int projectID, bool includePeople, bool includeTaskLists,
-            bool includeMilestones = true, bool useDefaultParser = false)
+        public async Task<Project> GetProject(int pRojectId, bool pIncludePeople, bool pIncludeTaskLists,bool pIncludeTasks, bool pIncludeMilestones = true)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            try
             {
-                var requestString = "/projects/" + projectID + ".json";
-                if (useDefaultParser) requestString += "?useNativeParser=true";
-                var data =
-                    await
-                        client.GetAsync<ProjectResponse>(requestString, null);
+                var requestString = "/projects/" + pRojectId + ".json";
+                var data = await client.httpClient.GetAsync<Project>(requestString, "project", null);
+
                 if (data.StatusCode == HttpStatusCode.OK)
                 {
-                    var prj = (ProjectResponse) data.ContentObj;
-
-                    if (includeTaskLists)
+                    // Load all task lists if requested
+                    if (pIncludeTaskLists)
                     {
-                        var taskRequestString = "/projects/" + projectID + "/todo_lists.json?nestSubTasks=yes&" +
-                                                includePeople;
-                        if (useDefaultParser) taskRequestString += "&useNativeParser=true";
-
-                        var tasks = await client.GetAsync<TaskListsResponse>(taskRequestString, null);
-                        if (tasks.StatusCode == HttpStatusCode.OK)
-                        {
-                            var tasklist = (TaskListsResponse) tasks.ContentObj;
-                            prj.project.Tasklists = tasklist.TodoLists;
-                        }
+                        await AddTasksToProject(pRojectId, pIncludeTasks, data);
                     }
 
-                    if (includePeople)
+                    // Load all people in the project
+                    if (pIncludePeople)
                     {
-                        var tasks = await client.GetAsync<PeopleResponse>(
-                            "/projects/" + projectID + "/people.json", null);
-                        if (tasks.StatusCode == HttpStatusCode.OK)
-                        {
-                            var tasklist = (PeopleResponse) tasks.ContentObj;
-                            prj.project.People = tasklist.People;
-                        }
+                        await AddPeopleToProject(pRojectId, data);
                     }
 
-                    if (includeMilestones)
+                    // Load all milestones
+                    if (pIncludeMilestones)
                     {
-                        var tasks = await client.GetAsync<MileStonesResponse>(
-                            "/projects/" + projectID + "/milestones.json?find=all&getProgress=true", null);
-                        if (tasks.StatusCode == HttpStatusCode.OK)
-                        {
-                            var tasklist = (MileStonesResponse) tasks.ContentObj;
-                            prj.project.Milestones = tasklist.Milestones.ToList();
-                        }
+                        await AddMilestonesToProjectz(pRojectId, data);
                     }
-
-
-
-                    return new ProjectResponse {STATUS = "OK", project = prj.project};
+                    return data.Data;
                 }
+                throw new Exception(data.Status);
             }
-            return null;
+            catch (Exception ex)
+            {
+                throw new Exception("Error processing Teamwork API Request: ", ex);
+            }
         }
 
 
         public async Task<StatsResponse> GetProjectStatus(int projectID)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 var data = await client.GetAsync<StatsResponse>("/projects/" + projectID + "/stats.json", null);
                 if (data.StatusCode == HttpStatusCode.OK)
@@ -220,15 +201,6 @@ namespace TeamworkProjects.Endpoints
         }
 
 
-
-
-
-
-
-
-
-
-
         /// <summary>
         ///   Return all Milestones of a given project
         ///   http://developer.teamwork.com/milestones
@@ -238,7 +210,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Milestone List</returns>
         public async Task<MileStonesResponse> GetProjectMilestones(int projectid, MilestoneFindType type)
         {
-            using (var client = new AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 var data =
                     await
@@ -257,7 +229,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns></returns>
         public async Task<CompaniesResponse> GetProjectCompanies(int projectid)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 var data = await client.GetAsync<CompaniesResponse>("/projects/" + projectid + "/companies.json", null);
                 if (data.StatusCode == HttpStatusCode.OK) return (CompaniesResponse) data.ContentObj;
@@ -273,14 +245,13 @@ namespace TeamworkProjects.Endpoints
         /// <returns></returns>
         public async Task<RoleResponse> GetProjectRoles(int projectid)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 var data = await client.GetAsync<RoleResponse>("/projects/" + projectid + "/projectroles.json", null);
                 if (data.StatusCode == HttpStatusCode.OK) return (RoleResponse) data.ContentObj;
             }
             return null;
         }
-
 
 
         /// <summary>
@@ -292,7 +263,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Milestone ID</returns>
         public async Task<BaseResponse<int>> AddMilestone(Milestone milestone, int projectId)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 string post = JsonConvert.SerializeObject(milestone);
                 return
@@ -311,7 +282,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Milestone ID</returns>
         public async Task<TodoList> AddTodoList(TodoList list, int projectId)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 string post = JsonConvert.SerializeObject(list);
                 var newList =
@@ -325,7 +296,7 @@ namespace TeamworkProjects.Endpoints
                     var listresponse =
                         await
                             client.GetAsync<TaskListResponse>(
-                                "/todo_lists/" + int.Parse((string) id.Value.First()) + ".json", null,
+                                "/todo_lists/" + int.Parse(id.Value.First()) + ".json", null,
                                 RequestFormat.Json);
                     if (listresponse != null && listresponse.ContentObj != null)
                     {
@@ -347,7 +318,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Milestone ID</returns>
         public async Task<TodoItem> AddTodoItem(TodoItem todo, int taskListId)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
                 string post = JsonConvert.SerializeObject(todo, settings);
@@ -361,7 +332,7 @@ namespace TeamworkProjects.Endpoints
                 {
                     var listresponse =
                         await
-                            client.GetAsync<TaskResponse>("/tasks/" + int.Parse((string) id.Value.First()) + ".json",
+                            client.GetAsync<TaskResponse>("/tasks/" + int.Parse(id.Value.First()) + ".json",
                                 null,
                                 RequestFormat.Json);
                     if (listresponse != null && listresponse.ContentObj != null)
@@ -384,7 +355,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Milestone ID</returns>
         public async Task<TodoItem> AddMessage(Post message, int projectID)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 string post = JsonConvert.SerializeObject(message);
                 var newList =
@@ -397,7 +368,7 @@ namespace TeamworkProjects.Endpoints
                 {
                     var listresponse =
                         await
-                            client.GetAsync<PostResponse>("/posts/" + int.Parse((string) id.Value.First()) + ".json",
+                            client.GetAsync<PostResponse>("/posts/" + int.Parse(id.Value.First()) + ".json",
                                 null,
                                 RequestFormat.Json);
                     if (listresponse != null && listresponse.ContentObj != null)
@@ -422,7 +393,7 @@ namespace TeamworkProjects.Endpoints
 
             try
             {
-                using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+                using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
                 {
                     string post = JsonConvert.SerializeObject(message);
                     await
@@ -446,7 +417,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Milestone ID</returns>
         public async Task<int> AddTodoListReturnOnlyID(TodoList list, int projectId)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 string post = JsonConvert.SerializeObject(list);
                 var newList =
@@ -457,7 +428,7 @@ namespace TeamworkProjects.Endpoints
                 var id = newList.Headers.First(p => p.Key == "id");
                 if (id.Value != null)
                 {
-                    return int.Parse((string) id.Value.First());
+                    return int.Parse(id.Value.First());
                 }
                 return -1;
             }
@@ -472,7 +443,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Project ID</returns>
         public async Task<BaseResponse<int>> AddProject(Newproject project)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 string post = JsonConvert.SerializeObject(project);
                 return
@@ -490,7 +461,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Project ID</returns>
         public async Task<BaseResponse<bool>> UpdateProject(Project project)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 string post = JsonConvert.SerializeObject(project);
                 return
@@ -510,7 +481,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Project ID</returns>
         public async Task<BaseResponse<ProjectMailResponse>> SetProjectEmailAddressCode(string code, int projectId)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 return
                     await
@@ -527,7 +498,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns>true/false</returns>
         public async Task<bool> DeleteProject(Project project)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 await client.DeleteAsync("/projects/" + project.id + ".json");
                 return true;
@@ -540,7 +511,7 @@ namespace TeamworkProjects.Endpoints
         /// <returns></returns>
         public BaseListResponse<Project> GetAllProjects(bool useDefaultParser = false)
         {
-            using (var client = new  AuthorizedHttpClient(_client.ApiKey,_client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
                 var requestString = "projects.json";
                 if (useDefaultParser) requestString += "?useDefaultParser=true";
@@ -549,5 +520,41 @@ namespace TeamworkProjects.Endpoints
             }
             return null;
         }
+
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        private async Task AddMilestonesToProjectz(int pRojectId, BaseSingleResponse<Project> pData)
+        {
+            var tasks =
+                await
+                    client.httpClient.GetListAsync<Milestone>(
+                        "/projects/" + pRojectId + "/milestones.json?find=all&getProgress=true", "milestones", null);
+            if (tasks.StatusCode == HttpStatusCode.OK)
+            {
+                pData.Data.Milestones = tasks.List;
+            }
+        }
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        private async Task AddPeopleToProject(int pRojectId, BaseSingleResponse<Project> pData)
+        {
+            var result =
+                await client.httpClient.GetListAsync<Person>("/projects/" + pRojectId + "/people.json", "people", null);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                pData.Data.People = result.List;
+            }
+        }
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        private async Task AddTasksToProject(int pRojectId, bool pIncludeTasks, BaseSingleResponse<Project> pData)
+        {
+            var taskRequestString = "/projects/" + pRojectId + "/todo_lists.json";
+            if (pIncludeTasks) taskRequestString += "&nestSubTasks=true";
+
+            var result = await client.httpClient.GetListAsync<TodoList>(taskRequestString, "todo-list", null);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                pData.Data.Tasklists = result.List;
+            }
+        }
+
     }
 }

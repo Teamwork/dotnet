@@ -32,9 +32,7 @@ namespace TeamworkProjects
         {
             try
             {
-                var newTeamworkClient = new TeamworkNoAuth { Client = new AuthorizedHttpClient(string.Empty, new Uri(""))};
-                
-                return null;
+                return new TeamworkNoAuth { Client = new AuthorizedHttpClient(string.Empty, new Uri(""))};
             }
             catch (Exception ex)
             {

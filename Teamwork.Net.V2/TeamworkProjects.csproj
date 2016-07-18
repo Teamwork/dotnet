@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\TimeHandler.cs" />
     <Compile Include="Exceptions\ErrorResponse.cs" />
     <Compile Include="Generic\JsonContractResolver.cs" />
     <Compile Include="Generic\MilestoneFindType.cs" />

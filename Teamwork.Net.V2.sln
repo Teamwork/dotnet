@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamworkProjects", "Teamwor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\TestClient.csproj", "{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamworkNet.Base", "..\TeamworkNet\TeamWorkNet.Base\TeamworkNet.Base.csproj", "{A2549B85-8B85-4AB8-BD11-0F2FA43C921B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamworkNet.Base", "..\..\_net\common\TeamworkNet\TeamWorkNet.Base\TeamworkNet.Base.csproj", "{A2549B85-8B85-4AB8-BD11-0F2FA43C921B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

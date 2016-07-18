@@ -28,7 +28,7 @@ namespace TeamworkProjects.Model
 
 
     // --- Ignored by Serialization ---
-    [JsonIgnore] public int ID => int.Parse(id);
+    [JsonIgnore] public int Id => int.Parse(id);
 
   }
 }
