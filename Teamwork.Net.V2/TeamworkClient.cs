@@ -22,7 +22,7 @@ namespace TeamworkProjects
     /// </summary>
     public partial class Client
     {
-        public AuthorizedHttpClient httpClient { get; set; }
+        public AuthorizedHttpClient HttpClient { get; set; }
         public string ApiKey { get; set; }
         public Uri Domain { get; set; }
 
@@ -31,13 +31,19 @@ namespace TeamworkProjects
             throw new NotSupportedException("Only init the Client using GetTeamworkClient");
         }
 
-        public Client(Uri pDomain, string pAPIKey)
+        /// <summary>
+        /// Deprecated, please use GetTeamworkClient
+        /// </summary>
+        /// <param name="pDomain"></param>
+        /// <param name="pApiKey"></param>
+        [Obsolete("Method is deprecated, please use GetTeamworkClient() in future",true)]
+        public Client(Uri pDomain, string pApiKey)
         {
             try
             {
-                ApiKey = pAPIKey;
+                ApiKey = pApiKey;
                 Domain = pDomain;
-                httpClient = new AuthorizedHttpClient(pAPIKey, pDomain) {BaseAddress = pDomain};
+                HttpClient = new AuthorizedHttpClient(pApiKey, pDomain) {BaseAddress = pDomain};
             }
             catch (Exception ex)
             {
@@ -48,15 +54,15 @@ namespace TeamworkProjects
         /// <summary>
         /// Returns a new instance of the Teamwork API Client
         /// </summary>
-        /// <param name="domain">Your Projects Domain eg: https://name.teamwork.com</param>
-        /// <param name="apiKey">Your API Key</param>
+        /// <param name="pDomain">Your Projects Domain eg: https://name.teamwork.com</param>
+        /// <param name="pApiKey">Your API Key</param>
         /// <returns></returns>
-        public static Client GetTeamworkClient(Uri domain, string apiKey)
+        public static Client GetTeamworkClient(Uri pDomain, string pApiKey)
         {
             try
             {
-                var newTeamworkClient = new Client { httpClient = new AuthorizedHttpClient(apiKey, domain)};
-                newTeamworkClient.httpClient.BaseAddress = domain;
+                var newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(pApiKey, pDomain)};
+                newTeamworkClient.HttpClient.BaseAddress = pDomain;
                 return newTeamworkClient;
             }
             catch (Exception ex)
@@ -66,20 +72,16 @@ namespace TeamworkProjects
             }
         }
 
-        
-        //todo: Remove for Codeplex Release
         /// <summary>
         /// Returns a new instance of the Teamwork API Client using Username & Password
         /// </summary>
         /// <param name="pUserName"></param>
-        /// <param name="pAssword"></param>
+        /// <param name="pPassword"></param>
         /// <returns></returns>
-        public static Client GetTeamworkClient(string pUserName, string pAssword)
+        public static Client GetTeamworkClient(string pUserName, string pPassword)
         {
             try
             {
-                // accounts.teamwork.com/accounts/search,json 
-
                 return null;
             }
             catch (Exception ex)

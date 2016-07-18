@@ -1,20 +1,22 @@
 ﻿#region FileHeader
 // ==========================================================
-// File: TeamworkProjects.Base.TeamWorkHTTPRequest.cs
-// Last Mod:      23.05.2016
-// Created:        23.05.2016
-// Created By:   Tim cadenbach
+// File:            TeamworkProjects.TeamworkClientEndpoints.cs
+// Last Mod:        18.07.2016
+// Created:         24.05.2016
+// Created By:      Tim cadenbach
 //  
 // Copyright (C) 2016 Digital Crew Limited
 // History:
-//  23.05.2016 - Created
+//  24.05.2016 - Created
+//  18.7.2016  - TCA - Added TimeHandler
 //  ==========================================================
 #endregion
 
-using System;
-using TeamworkProjects.Endpoints;
-using TeamworkProjects.HTTPClient;
+#region Imports
 
+using TeamworkProjects.Endpoints;
+
+#endregion
 
 namespace TeamworkProjects
 {
@@ -23,12 +25,10 @@ namespace TeamworkProjects
     /// </summary>
     public partial class Client
     {
-        public ProjectHandler Projects => projects ?? (projects = new ProjectHandler(this));
         private ProjectHandler projects;
-
-        public TimeHandler Time => time ?? (time = new TimeHandler(this));
         private TimeHandler time;
 
-
+        public ProjectHandler Projects => projects ?? (projects = new ProjectHandler(this));
+        public TimeHandler Time => time ?? (time = new TimeHandler(this));
     }
 }

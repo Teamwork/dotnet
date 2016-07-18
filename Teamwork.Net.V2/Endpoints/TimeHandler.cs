@@ -60,7 +60,7 @@ namespace TeamworkProjects.Endpoints
             try
             {
                 var requestring = "/projects/" + pRojectId + "/time/total.json";
-                var data = await client.httpClient.GetAsync<TimeTotalsResponse>(requestring, null);
+                var data = await client.HttpClient.GetAsync<TimeTotalsResponse>(requestring, null);
                 if (data.StatusCode == HttpStatusCode.OK) return (TimeTotalsResponse)data.ContentObj;
                 return new TimeTotalsResponse { STATUS = data.Error.Message, Projects = null };
             }
@@ -77,7 +77,7 @@ namespace TeamworkProjects.Endpoints
             {
                 var requestring = "/projects/" + pProjectId + "/time_entries.json";
                 string postdata = JsonConvert.SerializeObject(pTimeEntry);
-                var data = await client.httpClient.PostWithReturnAsync(requestring, new StringContent("{\"time-entry\": " + postdata + "}", Encoding.UTF8));
+                var data = await client.HttpClient.PostWithReturnAsync(requestring, new StringContent("{\"time-entry\": " + postdata + "}", Encoding.UTF8));
                 if (data.StatusCode == HttpStatusCode.Created) return true;
                 return false;
             }

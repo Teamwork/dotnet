@@ -56,7 +56,7 @@ namespace TeamworkProjects.Endpoints
             try
             {
                 var requestString = "projects.json";
-                var data = await client.httpClient.GetListAsync<Project>(requestString, "projects", null);
+                var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
                 if (data.StatusCode == HttpStatusCode.OK) return data.List;
                 if (data.StatusCode == HttpStatusCode.InternalServerError)
                 {
@@ -79,7 +79,7 @@ namespace TeamworkProjects.Endpoints
         {
             try
             { 
-               var data = await client.httpClient.GetListAsync<Project>("projects.json?updatedAfterDate=" + pUpdatedSince.ToString("yyyyMMddhhmmss"), "projects", null);
+               var data = await client.HttpClient.GetListAsync<Project>("projects.json?updatedAfterDate=" + pUpdatedSince.ToString("yyyyMMddhhmmss"), "projects", null);
                if (data.StatusCode == HttpStatusCode.OK) return data.List;
                return null;
             }
@@ -100,7 +100,7 @@ namespace TeamworkProjects.Endpoints
         {
             try
             {
-                var data = await client.httpClient.GetListAsync<Person>("/projects/" + pRojectId + "/people.json","people", null);
+                var data = await client.HttpClient.GetListAsync<Person>("/projects/" + pRojectId + "/people.json","people", null);
                 if (data.StatusCode == HttpStatusCode.OK) return data.List;
                 throw new Exception(data.Status);
             }
@@ -153,7 +153,7 @@ namespace TeamworkProjects.Endpoints
             try
             {
                 var requestString = "/projects/" + pRojectId + ".json";
-                var data = await client.httpClient.GetAsync<Project>(requestString, "project", null);
+                var data = await client.HttpClient.GetAsync<Project>(requestString, "project", null);
 
                 if (data.StatusCode == HttpStatusCode.OK)
                 {
@@ -526,7 +526,7 @@ namespace TeamworkProjects.Endpoints
         {
             var tasks =
                 await
-                    client.httpClient.GetListAsync<Milestone>(
+                    client.HttpClient.GetListAsync<Milestone>(
                         "/projects/" + pRojectId + "/milestones.json?find=all&getProgress=true", "milestones", null);
             if (tasks.StatusCode == HttpStatusCode.OK)
             {
@@ -537,7 +537,7 @@ namespace TeamworkProjects.Endpoints
         private async Task AddPeopleToProject(int pRojectId, BaseSingleResponse<Project> pData)
         {
             var result =
-                await client.httpClient.GetListAsync<Person>("/projects/" + pRojectId + "/people.json", "people", null);
+                await client.HttpClient.GetListAsync<Person>("/projects/" + pRojectId + "/people.json", "people", null);
             if (result.StatusCode == HttpStatusCode.OK)
             {
                 pData.Data.People = result.List;
@@ -549,7 +549,7 @@ namespace TeamworkProjects.Endpoints
             var taskRequestString = "/projects/" + pRojectId + "/todo_lists.json";
             if (pIncludeTasks) taskRequestString += "&nestSubTasks=true";
 
-            var result = await client.httpClient.GetListAsync<TodoList>(taskRequestString, "todo-list", null);
+            var result = await client.HttpClient.GetListAsync<TodoList>(taskRequestString, "todo-list", null);
             if (result.StatusCode == HttpStatusCode.OK)
             {
                 pData.Data.Tasklists = result.List;

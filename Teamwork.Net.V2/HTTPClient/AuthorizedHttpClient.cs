@@ -1,14 +1,13 @@
 ﻿#region FileHeader
 // ==========================================================
-// File: Teamwork.Net.V2.TeamworkProjects.AuthorizedHttpClient.cs
-// Last Mod:      23.05.2016
-// Created:        23.05.2016
-// Created By:   Tim cadenbach
+// File:            TeamworkProjects.AuthorizedHttpClient.cs
+// Last Mod:        18.07.2016
+// Created:         24.05.2016
+// Created By:      Tim cadenbach
 //  
 // Copyright (C) 2016 Digital Crew Limited
 // History:
-//  23.05.2016 - Created
-//  23.05.2016 - Cleaned unused functions, moved overrides to different file
+//  24.05.2016 - Created
 //  ==========================================================
 #endregion
 #region Imports
@@ -32,23 +31,24 @@ using TeamworkProjects.Response;
 namespace TeamworkProjects.HTTPClient
 {
 
-  /// <summary>
-  /// Authorized Http Client is a derived HTTPClient with added Authentication Header
-  /// </summary>
-  public partial class AuthorizedHttpClient : HttpClient
-   {
     /// <summary>
-    ///   Initialize a new Instance of the Client
+    /// Authorized Http Client is a derived HTTPClient with added Authentication Header
     /// </summary>
-    /// <param name="apiKey">APIKey for Projects API</param>
-    public AuthorizedHttpClient(string apiKey, Uri baseuri)
-    {
-     BaseAddress = baseuri;
-     DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",Convert.ToBase64String(Encoding.UTF8.GetBytes($"{apiKey}:x")));DefaultRequestHeaders.Accept.Clear();
-     DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-    }
+   public partial class AuthorizedHttpClient : HttpClient
+   {
+      /// <summary>
+      ///   Initialize a new Instance of the Client
+      /// </summary>
+      /// <param name="pApiKey">APIKey for Projects API</param>
+      /// <param name="pBaseuri"></param>
+      public AuthorizedHttpClient(string pApiKey, Uri pBaseuri)
+        {
+         BaseAddress = pBaseuri;
+         DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));DefaultRequestHeaders.Accept.Clear();
+         DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        }
 
-        public async Task<BaseResponse<T>> GetAsync<T>(string pEndpoint, Dictionary<string, string> pAramsDictionary, RequestFormat pFormat = RequestFormat.Json)
+      public async Task<BaseResponse<T>> GetAsync<T>(string pEndpoint, Dictionary<string, string> pAramsDictionary, RequestFormat pFormat = RequestFormat.Json)
         {
             try
             {
@@ -71,11 +71,10 @@ namespace TeamworkProjects.HTTPClient
             return new BaseResponse<T>(HttpStatusCode.InternalServerError);
         }
 
-
-        public async Task<BaseResponse<int>> PostWithReturnAsync(string requestUri, HttpContent content)
+      public async Task<BaseResponse<int>> PostWithReturnAsync(string pRequestUri, HttpContent pContent)
         {
 
-            var response = await PostAsync(requestUri, content);
+            var response = await PostAsync(pRequestUri, pContent);
             if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
                 using (Stream responseStream = await response.Content.ReadAsStreamAsync())
@@ -94,18 +93,15 @@ namespace TeamworkProjects.HTTPClient
                 {
                     return new BaseResponse<int>(HttpStatusCode.BadRequest, null) { Content = result.Message };
                 }
-                else
-                {
-                    return new BaseResponse<int>(HttpStatusCode.OK, null) { Headers = response.Headers, ContentObj = result.id };
-                }
+                return new BaseResponse<int>(HttpStatusCode.OK, null) { Headers = response.Headers, ContentObj = result.id };
             }
 
         }
 
-        public async Task<BaseResponse<ProjectMailResponse>> PutWithReturnObjectAsync(string requestUri, HttpContent content)
+      public async Task<BaseResponse<ProjectMailResponse>> PutWithReturnObjectAsync(string pRequestUri, HttpContent pContent)
         {
 
-            var response = await PutAsync(requestUri, content);
+            var response = await PutAsync(pRequestUri, pContent);
             if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
                 using (Stream responseStream = await response.Content.ReadAsStreamAsync())
@@ -123,18 +119,15 @@ namespace TeamworkProjects.HTTPClient
                 {
                     return new BaseResponse<ProjectMailResponse>(HttpStatusCode.BadRequest, null) { Content = result.Message };
                 }
-                else
-                {
-                    return new BaseResponse<ProjectMailResponse>(HttpStatusCode.OK, null) { ContentObj = result.id };
-                }
+                return new BaseResponse<ProjectMailResponse>(HttpStatusCode.OK, null) { ContentObj = result.id };
             }
 
         }
 
-        public async Task<BaseResponse<bool>> PutWithReturnAsync(string requestUri, HttpContent content)
+      public async Task<BaseResponse<bool>> PutWithReturnAsync(string pRequestUri, HttpContent pContent)
         {
 
-            var response = await PutAsync(requestUri, content);
+            var response = await PutAsync(pRequestUri, pContent);
             if (response.StatusCode == HttpStatusCode.InternalServerError)
             {
                 using (Stream responseStream = await response.Content.ReadAsStreamAsync())
@@ -152,25 +145,20 @@ namespace TeamworkProjects.HTTPClient
                 {
                     return new BaseResponse<bool>(HttpStatusCode.BadRequest, null) { Content = result.Message };
                 }
-                else
-                {
-                    return new BaseResponse<bool>(HttpStatusCode.OK, null) { ContentObj = result.id };
-                }
+                return new BaseResponse<bool>(HttpStatusCode.OK, null) { ContentObj = result.id };
             }
 
         }
 
-
-
-        public string GetError(string content)
+      public string GetError(string pContent)
         {
-            var error = (ErrorResponse)JsonConvert.DeserializeObject<ErrorResponse>(content);
+            var error = JsonConvert.DeserializeObject<ErrorResponse>(pContent);
             return error.Message;
         }
 
-        public BaseResponse<T> Get<T>(string endpoint, Dictionary<string, string> paramsDictionary, RequestFormat format = RequestFormat.Json)
+      public BaseResponse<T> Get<T>(string pEndpoint, Dictionary<string, string> pAramsDictionary, RequestFormat pFormat = RequestFormat.Json)
         {
-            var data = GetAsync(endpoint).Result;
+            var data = GetAsync(pEndpoint).Result;
             if (!data.IsSuccessStatusCode) return new BaseResponse<T>(HttpStatusCode.InternalServerError);
             using (Stream responseStream = data.Content.ReadAsStreamAsync().Result)
             {
@@ -178,9 +166,6 @@ namespace TeamworkProjects.HTTPClient
                 return new BaseResponse<T>(HttpStatusCode.OK) { ContentObj = JsonConvert.DeserializeObject(jsonMessage, typeof(T)) };
             }
         }
-
-    }
+   }
     
-
-
 }

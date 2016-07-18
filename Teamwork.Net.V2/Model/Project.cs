@@ -1,11 +1,17 @@
-﻿// ==========================================================
-// File: TeamworkProjects.Portable.Project.cs
-// Created: 14.02.2015
-// Created By: Tim cadenbach
-// 
-// Copyright (C) 2015 Tim Cadenbach
-// License: Apache License 2.0
+﻿#region FileHeader
 // ==========================================================
+// File:            TeamworkProjects.Project.cs
+// Last Mod:        18.07.2016
+// Created:         24.05.2016
+// Created By:      Tim cadenbach
+//  
+// Copyright (C) 2016 Digital Crew Limited
+// History:
+//  24.05.2016 - Created
+//  ==========================================================
+#endregion
+
+#region Imports
 
 using System;
 using System.Collections.Generic;
@@ -14,71 +20,70 @@ using Newtonsoft.Json;
 using TeamworkProjects.Base.Model;
 using TeamworkProjects.Extensions.DateTime;
 
+#endregion
+
 namespace TeamworkProjects.Model
 {
 
   public partial class Project : TeamworkObjectBase
   {
-    public Company company { get; set; }
-    public bool starred { get; set; }
-    public string name { get; set; }
+      [JsonProperty("last-changed-on", NullValueHandling = NullValueHandling.Ignore)]
+    public string lastChangedOn;
 
-    [JsonProperty(PropertyName = "show-announcement")]
+      public Company company { get; set; }
+      public bool starred { get; set; }
+
+      [JsonProperty(PropertyName = "show-announcement")]
     public bool ShowAnnouncement { get; set; }
 
-    public string announcement { get; set; }
+      public string announcement { get; set; }
 
-    public string status { get; set; }
-    public bool isProjectAdmin { get; set; }
+      public string status { get; set; }
+      public bool isProjectAdmin { get; set; }
 
-    [JsonProperty(PropertyName = "created-on")]
+      [JsonProperty(PropertyName = "created-on")]
     public string createdon { get; set; }
 
-    public Category category { get; set; }
+      public Category category { get; set; }
 
-    [JsonProperty(PropertyName = "start-page ")]
+      [JsonProperty(PropertyName = "start-page ")]
     public string Startpage { get; set; }
 
 
-    public string logo { get; set; }
-    public bool notifyeveryone { get; set; }
-    public string id { get; set; }
-
-    [JsonProperty("last-changed-on", NullValueHandling = NullValueHandling.Ignore)]
-    public string lastChangedOn;
+      public string logo { get; set; }
+      public bool notifyeveryone { get; set; }
 
 
-
-    public string endDate { get; set; }
-
-
-    public string startDate { get; set; }
+      public string endDate { get; set; }
 
 
+      public string startDate { get; set; }
 
-    public Permissions permissions { get; set; }
 
-    public List<Milestone> Milestones { get; set; }
-    public List<TodoList> Tasklists { get; set; }
-    public List<Person> People { get; set; }
+      public Permissions permissions { get; set; }
 
-    public string CalendarItemID { get; set; }
+      public List<Milestone> Milestones { get; set; }
+      public List<TodoList> Tasklists { get; set; }
+      public List<Person> People { get; set; }
 
-    [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
+      public string CalendarItemID { get; set; }
+
+      [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
     public Tag[] Tags { get; set; }
 
 
+      // -- Ignored by Serialization --
 
-    // -- Ignored by Serialization --
-
-    [JsonIgnore]
+      [JsonIgnore]
     public DateTime EndDate => endDate.ToDateTimeExactMax("yyyy-MM-ddTHH:mm:ssZ");
-    [JsonIgnore]
+
+      [JsonIgnore]
     public DateTime StartDate => startDate.ToDateTimeExactMin("yyyy-MM-ddTHH:mm:ssZ");
-    [JsonIgnore]
+
+      [JsonIgnore]
     public DateTime LastChangedOn => DateTime.Parse(lastChangedOn);
 
-    [JsonIgnore]
+      [JsonIgnore]
     public double TaskCount
     {
       get
@@ -87,7 +92,8 @@ namespace TeamworkProjects.Model
         return Tasklists.Sum(p => p.TodoItems.Count());
       }
     }
-    [JsonIgnore]
+
+      [JsonIgnore]
     public double TaskCountCompleted
     {
       get
@@ -96,7 +102,8 @@ namespace TeamworkProjects.Model
         return Tasklists.Sum(p => p.TodoItems.Count(i => i.Completed));
       }
     }
-    [JsonIgnore]
+
+      [JsonIgnore]
     public int MilestoneCount
     {
       get
@@ -105,7 +112,8 @@ namespace TeamworkProjects.Model
         return Milestones.Count();
       }
     }
-    [JsonIgnore]
+
+      [JsonIgnore]
     public int MilestoneCountCompleted
     {
       get
@@ -114,7 +122,8 @@ namespace TeamworkProjects.Model
         return Milestones.Count(p=>p.Completed);
       }
     }
-    [JsonIgnore]
+
+      [JsonIgnore]
     public double Progress
     {
       get
@@ -123,7 +132,8 @@ namespace TeamworkProjects.Model
         return 0;
       }
     }
-    [JsonIgnore]
+
+      [JsonIgnore]
     public Milestone UpcomingMilestone
     {
       get
@@ -132,16 +142,16 @@ namespace TeamworkProjects.Model
       }
 
     }
-    [JsonIgnore]
+
+      [JsonIgnore]
     private DateTime lastSynchronized { get; set; }
-    [JsonIgnore]
+
+      [JsonIgnore]
     public DateTime LastSynchronized
     {
       get { return lastSynchronized; }
       set { lastSynchronized = value; }
 
     }
-
-
   }
 }
