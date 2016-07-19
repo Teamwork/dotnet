@@ -12,8 +12,13 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 using Teamwork.Net;
+using TeamworkProjects.Base.Response;
 using TeamworkProjects.HTTPClient;
+using TeamworkProjects.Model;
 
 namespace TeamworkProjects
 {
@@ -41,9 +46,18 @@ namespace TeamworkProjects
             }
         }
 
-
-
-
-
+        /// <summary>
+        /// Returns authentication details and infos of the current user
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<UserEntry>> GetAuthenticationtDetails(string pUserName, string pAssword)
+        {
+            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.teamwork.com/")))
+            {
+                var data = await webclient.GetListAsync<UserEntry>(@"accounts/search.json?email=" + pUserName + "&password=" + pAssword,"accounts", null);
+                if (data.StatusCode == HttpStatusCode.OK) return data.List;
+                throw new Exception(data.Status + " " + data.Message);
+            }
+        }
     }
 }

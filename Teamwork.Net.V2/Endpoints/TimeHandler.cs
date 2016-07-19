@@ -78,7 +78,7 @@ namespace TeamworkProjects.Endpoints
                 var requestring = "/projects/" + pProjectId + "/time_entries.json";
                 string postdata = JsonConvert.SerializeObject(pTimeEntry);
                 var data = await client.HttpClient.PostWithReturnAsync(requestring, new StringContent("{\"time-entry\": " + postdata + "}", Encoding.UTF8));
-                if (data.StatusCode == HttpStatusCode.Created) return true;
+                if (data.StatusCode == HttpStatusCode.Created || data.StatusCode == HttpStatusCode.OK) return true;
                 return false;
             }
             catch (Exception ex)

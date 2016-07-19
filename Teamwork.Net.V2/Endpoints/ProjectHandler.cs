@@ -64,7 +64,7 @@ namespace TeamworkProjects.Endpoints
                 }
                 return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw new Exception("Error processing Teamwork API Request: ", ex);
             }
@@ -443,14 +443,9 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Project ID</returns>
         public async Task<BaseResponse<int>> AddProject(Newproject project)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
-            {
-                string post = JsonConvert.SerializeObject(project);
-                return
-                    await
-                        client.PostWithReturnAsync("projects.json",
-                            new StringContent("{\"project\": " + post + "}", Encoding.UTF8));
-            }
+            string post = JsonConvert.SerializeObject(project);
+            return await client.HttpClient.PostWithReturnAsync("projects.json",
+                        new StringContent("{\"project\": " + post + "}", Encoding.UTF8));
         }
 
         /// <summary>
@@ -466,7 +461,7 @@ namespace TeamworkProjects.Endpoints
                 string post = JsonConvert.SerializeObject(project);
                 return
                     await
-                        client.PutWithReturnAsync("/projects/" + project.id + ".json",
+                        client.PutWithReturnAsync("/projects/" + project.Id + ".json",
                             new StringContent("{\"project\": " + post + "}", Encoding.UTF8));
             }
         }
@@ -500,7 +495,7 @@ namespace TeamworkProjects.Endpoints
         {
             using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
             {
-                await client.DeleteAsync("/projects/" + project.id + ".json");
+                await client.DeleteAsync("/projects/" + project.Id + ".json");
                 return true;
             }
         }

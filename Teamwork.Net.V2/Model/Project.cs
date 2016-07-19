@@ -25,6 +25,30 @@ using TeamworkProjects.Extensions.DateTime;
 namespace TeamworkProjects.Model
 {
 
+    public class ProjectNew
+    {
+
+        [JsonProperty("last-changed-on", NullValueHandling = NullValueHandling.Ignore)]
+        public string name { get; set; }
+
+        [JsonProperty("last-changed-on", NullValueHandling = NullValueHandling.Ignore)]
+        public string description { get; set; }
+
+        [JsonProperty("company-id", NullValueHandling = NullValueHandling.Ignore)]
+        public string company { get; set; }
+
+        [JsonProperty("startDate", NullValueHandling = NullValueHandling.Ignore)]
+        public string start { get; set; }
+
+        [JsonProperty("endDate", NullValueHandling = NullValueHandling.Ignore)]
+        public string end { get; set; }
+
+        [JsonProperty("category-id", NullValueHandling = NullValueHandling.Ignore)]
+        public string category { get; set; }
+
+    }
+
+
   public partial class Project : TeamworkObjectBase
   {
       [JsonProperty("last-changed-on", NullValueHandling = NullValueHandling.Ignore)]

@@ -15,7 +15,8 @@ namespace TeamworkProjects.Model
 {
   public class TeamworkObjectBase
   {
-    private string id { get; set; }
+   [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+   public string id { get; set; }
 
 
     // --- Public properties --- 
@@ -28,7 +29,15 @@ namespace TeamworkProjects.Model
 
 
     // --- Ignored by Serialization ---
-    [JsonIgnore] public int Id => int.Parse(id);
-
+      [JsonIgnore]
+      public int Id
+        {
+          get
+          {
+              int num = 0;
+              if (int.TryParse(id, out num)) return num;
+              return -1;
+          }
+        }
   }
 }
