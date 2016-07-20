@@ -28,7 +28,6 @@ namespace TeamworkProjects
 
         public Client()
         {
-            throw new NotSupportedException("Only init the Client using GetTeamworkClient");
         }
 
         /// <summary>
@@ -36,7 +35,6 @@ namespace TeamworkProjects
         /// </summary>
         /// <param name="pDomain"></param>
         /// <param name="pApiKey"></param>
-        [Obsolete("Method is deprecated, please use GetTeamworkClient() in future",true)]
         public Client(Uri pDomain, string pApiKey)
         {
             try

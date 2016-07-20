@@ -9,12 +9,13 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TeamworkProjects</RootNamespace>
     <AssemblyName>Teamwork.Net.V2</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,6 +34,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>TeamworkProjectsSDK.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -48,13 +55,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Endpoints\CategoryHandler.cs" />
+    <Compile Include="Endpoints\CompanyHandler.cs" />
+    <Compile Include="Endpoints\FileHandler.cs" />
+    <Compile Include="Endpoints\MeHandler.cs" />
     <Compile Include="Endpoints\TimeHandler.cs" />
+    <Compile Include="Endpoints\TodoListHandler.cs" />
     <Compile Include="Exceptions\ErrorResponse.cs" />
     <Compile Include="Generic\JsonContractResolver.cs" />
     <Compile Include="Generic\MilestoneFindType.cs" />
     <Compile Include="Generic\RequestFormat.cs" />
     <Compile Include="Generic\TaskSearchType.cs" />
     <Compile Include="Endpoints\ProjectHandler.cs" />
+    <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="Model\Account.cs" />
     <Compile Include="Model\Activity.cs" />
     <Compile Include="Model\Category.cs" />
@@ -77,6 +90,7 @@
     <Compile Include="Model\Project.cs" />
     <Compile Include="Model\ProjectMailAddress.cs" />
     <Compile Include="Model\Role.cs" />
+    <Compile Include="Model\StatusEntry.cs" />
     <Compile Include="Model\Tag.cs" />
     <Compile Include="Model\TeamworkObjectBase.cs" />
     <Compile Include="Model\Time.cs" />
@@ -124,6 +138,7 @@
     <Compile Include="Response\TasksResponse.cs" />
     <Compile Include="Response\TeamworkResponse.cs" />
     <Compile Include="Response\TimeEntriesResponse.cs" />
+    <Compile Include="Model\UserEntry.cs" />
     <Compile Include="Response\UserResponse.cs" />
     <Compile Include="TeamworkClientEndpoints.cs" />
     <Compile Include="TeamworkNoAuth.cs" />
@@ -132,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="TeamworkProjectsSDK.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

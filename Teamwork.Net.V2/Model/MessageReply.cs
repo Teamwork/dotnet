@@ -54,4 +54,21 @@ namespace TeamworkProjects.Model
     [JsonProperty("replyNo", NullValueHandling = NullValueHandling.Ignore)]
     public string ReplyNo { get; set; }
   }
+
+
+    public class MessageCreate
+    {
+        [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
+        public string title { get; set; }
+        [JsonProperty("category-id", NullValueHandling = NullValueHandling.Ignore)]
+        public string categoryid { get; set; }
+        [JsonProperty("notify", NullValueHandling = NullValueHandling.Ignore)]
+        public string notify { get; set; }
+        [JsonProperty("private", NullValueHandling = NullValueHandling.Ignore)]
+        public string Isprivate { get; set; }
+        [JsonProperty("body", NullValueHandling = NullValueHandling.Ignore)]
+        public string body { get; set; }
+        [JsonProperty("pendingFileAttachments", NullValueHandling = NullValueHandling.Ignore)]
+        public string pendingFileAttachments { get; set; }
+    }
 }
