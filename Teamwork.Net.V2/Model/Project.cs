@@ -90,7 +90,9 @@ namespace TeamworkProjects.Model
       public List<TodoList> Tasklists { get; set; }
       public List<Person> People { get; set; }
 
-      public string CalendarItemID { get; set; }
+      public List<Category> NotebookCategories { get; set; }
+
+        public string CalendarItemID { get; set; }
 
       [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
     public Tag[] Tags { get; set; }

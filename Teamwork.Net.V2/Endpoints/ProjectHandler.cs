@@ -147,8 +147,9 @@ namespace TeamworkProjects.Endpoints
         /// <param name="pIncludeTaskLists">include task lists</param>
         /// <param name="pIncludeTasks">Nest </param>
         /// <param name="pIncludeMilestones">include all milestones</param>
+        /// <param name="pIncludeNotebookCategories"></param>
         /// <returns></returns>
-        public async Task<Project> GetProject(int pRojectId, bool pIncludePeople, bool pIncludeTaskLists,bool pIncludeTasks, bool pIncludeMilestones = true)
+        public async Task<Project> GetProject(int pRojectId, bool pIncludePeople, bool pIncludeTaskLists,bool pIncludeTasks, bool pIncludeMilestones = true, bool pIncludeNotebookCategories = false)
         {
             try
             {
@@ -174,6 +175,12 @@ namespace TeamworkProjects.Endpoints
                     {
                         await AddMilestonesToProjectz(pRojectId, data);
                     }
+
+                    if (pIncludeNotebookCategories)
+                    {
+                        await AddNotebookCategories(pRojectId, data);
+                    }
+
                     return data.Data;
                 }
                 throw new Exception(data.Status);
@@ -282,12 +289,10 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Milestone ID</returns>
         public async Task<TodoList> AddTodoList(TodoList list, int projectId)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
-            {
                 string post = JsonConvert.SerializeObject(list);
                 var newList =
                     await
-                        client.PostWithReturnAsync("/projects/" + projectId + "/todo_lists.json",
+                        client.HttpClient.PostWithReturnAsync("/projects/" + projectId + "/todo_lists.json",
                             new StringContent("{\"todo-list\": " + post + "}", Encoding.UTF8));
 
                 var id = newList.Headers.First(p => p.Key == "id");
@@ -295,7 +300,7 @@ namespace TeamworkProjects.Endpoints
                 {
                     var listresponse =
                         await
-                            client.GetAsync<TaskListResponse>(
+                            client.HttpClient.GetAsync<TaskListResponse>(
                                 "/todo_lists/" + int.Parse(id.Value.First()) + ".json", null,
                                 RequestFormat.Json);
                     if (listresponse != null && listresponse.ContentObj != null)
@@ -303,9 +308,8 @@ namespace TeamworkProjects.Endpoints
                         var response = (TaskListResponse) listresponse.ContentObj;
                         return response.TodoList;
                     }
-                }
-                return null;
             }
+                throw new Exception("Something went wrong");
         }
 
 
@@ -353,33 +357,50 @@ namespace TeamworkProjects.Endpoints
         /// <param name="message">The Task</param>
         /// <param name="projectID">Tasklist to add the task to</param>
         /// <returns>Milestone ID</returns>
-        public async Task<TodoItem> AddMessage(Post message, int projectID)
+        public async Task<bool> AddMessage(MessageCreate message, int projectID)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
-            {
                 string post = JsonConvert.SerializeObject(message);
                 var newList =
                     await
-                        client.PostWithReturnAsync("/projects/" + projectID + "/posts.json",
+                        client.HttpClient.PostWithReturnAsync("/projects/" + projectID + "/posts.json",
                             new StringContent("{\"post\": " + post + "}", Encoding.UTF8));
-
-                var id = newList.Headers.First(p => p.Key == "id");
-                if (id.Value != null)
-                {
-                    var listresponse =
-                        await
-                            client.GetAsync<PostResponse>("/posts/" + int.Parse(id.Value.First()) + ".json",
-                                null,
-                                RequestFormat.Json);
-                    if (listresponse != null && listresponse.ContentObj != null)
-                    {
-                        var response = (TaskResponse) listresponse.ContentObj;
-                        return response.TodoItem;
-                    }
-                }
-                return null;
-            }
+            if (newList.StatusCode != HttpStatusCode.OK && newList.StatusCode != HttpStatusCode.Created) return false;
+                //var id = newList.Headers.First(p => p.Key == "id");
+                //if (id.Value != null)
+                //{
+                //    var listresponse =
+                //        await
+                //            client.HttpClient.GetAsync<PostResponse>("/posts/" + int.Parse(id.Value.First()) + ".json",
+                //                null,
+                //                RequestFormat.Json);
+                //    if (listresponse != null && listresponse.ContentObj != null)
+                //    {
+                //        var response = (TaskResponse) listresponse.ContentObj;
+                //        return response;
+                //    }
+                //}
+            return true;
         }
+
+
+        /// <summary>
+        ///   Add a message to the project
+        ///   http://developer.teamwork.com/messages#create_a_message
+        /// </summary>
+        /// <param name="message">The Task</param>
+        /// <param name="projectID">Tasklist to add the task to</param>
+        /// <returns>Milestone ID</returns>
+        public async Task<bool> AddNotebook(Notebook book, int projectID)
+        {
+            string post = JsonConvert.SerializeObject(book);
+            var newList =
+                await
+                    client.HttpClient.PostWithReturnAsync("/projects/" + projectID + "/notebooks.json",
+                        new StringContent("{\"notebook\": " + post + "}", Encoding.UTF8));
+            if (newList.StatusCode != HttpStatusCode.OK && newList.StatusCode != HttpStatusCode.Created) return false;
+            return true;
+        }
+
 
         /// <summary>
         ///   Add a message to the project
@@ -528,6 +549,20 @@ namespace TeamworkProjects.Endpoints
                 pData.Data.Milestones = tasks.List;
             }
         }
+
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        private async Task AddNotebookCategories(int pRojectId, BaseSingleResponse<Project> pData)
+        {
+            var tasks =
+                await
+                    client.HttpClient.GetListAsync<Category>(
+                        "/projects/" + pRojectId + "/notebookCategories.json", "Categories", null);
+            if (tasks.StatusCode == HttpStatusCode.OK)
+            {
+                pData.Data.NotebookCategories = tasks.List;
+            }
+        }
+
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         private async Task AddPeopleToProject(int pRojectId, BaseSingleResponse<Project> pData)
         {
