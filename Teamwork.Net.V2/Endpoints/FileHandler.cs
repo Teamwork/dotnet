@@ -177,6 +177,50 @@ namespace TeamworkProjects.Endpoints
         }
 
 
+        public async Task<bool> UploadFileToTask(int pTaskId, string description, string filepath,
+    string filename, bool isPrivate = false, int categoryID = 0)
+        {
+
+            using (var content = new MultipartFormDataContent())
+            {
+                FileStream fs = File.OpenRead(filepath);
+
+                var streamContent = new StreamContent(fs);
+                streamContent.Headers.Add("Content-Type", "application/octet-stream");
+                streamContent.Headers.Add("Content-Disposition",
+                    "form-data; name=\"file\"; filename=\"" + Path.GetFileName(filepath) + "\"");
+                content.Add(streamContent, "file", Path.GetFileName(filepath));
+
+                HttpResponseMessage message = await this.client.HttpClient.PostAsync("pendingfiles.json", content);
+
+                if (message.StatusCode != HttpStatusCode.OK)
+                {
+                    using (Stream responseStream = await message.Content.ReadAsStreamAsync())
+                    {
+                        string jsonMessage = new StreamReader(responseStream).ReadToEnd();
+                        var result = JsonConvert.DeserializeObject<FileUploadResponse>(jsonMessage);
+
+                        var file = new TeamWorkFile
+                        {
+                            CategoryId = categoryID.ToString(CultureInfo.InvariantCulture),
+                            CategoryName = "",
+                            description = description,
+                            Name = filename,
+                            PendingFileRef = result.pendingFile.Reference,
+                            Isprivate = isPrivate == false ? "0" : "1"
+                        };
+
+                        var response = await client.HttpClient.PostWithReturnAsync("/tasks/" + pTaskId + "/files.json",
+                            new StringContent("{\"file\": " + JsonConvert.SerializeObject(file) + "}", Encoding.UTF8));
+
+                        if (response.StatusCode == HttpStatusCode.OK)
+                            return true;
+                    }
+                }
+                return false;
+            }
+        }
+
         public async Task<string> UploadFileToProjectGetFileRefBack(int projectID, string description, string filepath,
     string filename, bool isPrivate = false, int categoryID = 0)
         {
