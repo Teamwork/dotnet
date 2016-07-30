@@ -322,13 +322,12 @@ namespace TeamworkProjects.Endpoints
         /// <returns>Milestone ID</returns>
         public async Task<TodoItem> AddTodoItem(TodoItem todo, int taskListId)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
-            {
+
                 var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
                 string post = JsonConvert.SerializeObject(todo, settings);
                 var newList =
                     await
-                        client.PostWithReturnAsync("/tasklists/" + taskListId + "/tasks.json",
+                        client.HttpClient.PostWithReturnAsync("/tasklists/" + taskListId + "/tasks.json",
                             new StringContent("{\"todo-item\": " + post + "}", Encoding.UTF8));
 
                 var id = newList.Headers.First(p => p.Key == "id");
@@ -336,7 +335,7 @@ namespace TeamworkProjects.Endpoints
                 {
                     var listresponse =
                         await
-                            client.GetAsync<TaskResponse>("/tasks/" + int.Parse(id.Value.First()) + ".json",
+                            client.HttpClient.GetAsync<TaskResponse>("/tasks/" + int.Parse(id.Value.First()) + ".json",
                                 null,
                                 RequestFormat.Json);
                     if (listresponse != null && listresponse.ContentObj != null)
@@ -345,8 +344,7 @@ namespace TeamworkProjects.Endpoints
                         return response.TodoItem;
                     }
                 }
-                return null;
-            }
+throw new Exception("Something went wrong whilea dding the task");
         }
 
 
@@ -576,10 +574,11 @@ namespace TeamworkProjects.Endpoints
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         private async Task AddTasksToProject(int pRojectId, bool pIncludeTasks, BaseSingleResponse<Project> pData)
         {
-            var taskRequestString = "/projects/" + pRojectId + "/todo_lists.json";
-            if (pIncludeTasks) taskRequestString += "&nestSubTasks=true";
+            var listname = pIncludeTasks ? "todo-lists" : "tasklists";
+            var taskRequestString = "/projects/" + pRojectId + "/tasklists.json?getNewTaskDefaults=true";
+            if (pIncludeTasks) taskRequestString = "/projects/" + pRojectId + "/todo_lists.json?getNewTaskDefaults=true&nestSubTasks =true";
 
-            var result = await client.HttpClient.GetListAsync<TodoList>(taskRequestString, "todo-list", null);
+            var result = await client.HttpClient.GetListAsync<TodoList>(taskRequestString, listname, null);
             if (result.StatusCode == HttpStatusCode.OK)
             {
                 pData.Data.Tasklists = result.List;

@@ -11,3 +11,12 @@ C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\obj\Debug\TestClie
 C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\obj\Debug\TestClient.csproj.GenerateResource.Cache
 C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\obj\Debug\TestClient.exe
 C:\Work\Workspaces Teamwork\Common\Teamwork.Net.V2\TestClient\obj\Debug\TestClient.pdb
+C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\bin\Debug\TestClient.exe.config
+C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\bin\Debug\TestClient.exe
+C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\bin\Debug\TestClient.pdb
+C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\obj\Debug\TestClient.csprojResolveAssemblyReference.cache
+C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\obj\Debug\TestClient.Form1.resources
+C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\obj\Debug\TestClient.Properties.Resources.resources
+C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\obj\Debug\TestClient.csproj.GenerateResource.Cache
+C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\obj\Debug\TestClient.exe
+C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\obj\Debug\TestClient.pdb
