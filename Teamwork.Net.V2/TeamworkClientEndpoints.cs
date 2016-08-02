@@ -34,6 +34,7 @@ namespace TeamworkProjects
         private CompanyHandler companies;
         private CategoryHandler categories;
         private FileHandler files;
+        private TagHandler tags;
 
         public ProjectHandler Projects => projects ?? (projects = new ProjectHandler(this));
         public TimeHandler Time => time ?? (time = new TimeHandler(this));
@@ -42,5 +43,6 @@ namespace TeamworkProjects
         public CompanyHandler Companies => companies ?? (companies = new CompanyHandler(this));
         public CategoryHandler Categories => categories ?? (categories = new CategoryHandler(this));
         public FileHandler Files => files ?? (files = new FileHandler(this));
+        public TagHandler Tags => tags ?? (tags = new TagHandler(this));
     }
 }

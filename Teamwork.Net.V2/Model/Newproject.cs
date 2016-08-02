@@ -11,7 +11,9 @@ using Newtonsoft.Json;
 
 namespace TeamworkProjects.Model
 {
-  public class Newproject
+    using TeamworkProjects.Base.Model;
+
+    public class Newproject
   {
     [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
     public string Name { get; set; }
@@ -63,5 +65,11 @@ namespace TeamworkProjects.Model
 
     [JsonProperty("start-page", NullValueHandling = NullValueHandling.Ignore)]
     public string StartPage { get; set; }
-  }
+
+
+
+        [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
+        public Tag[] tags { get; set; }
+
+    }
 }

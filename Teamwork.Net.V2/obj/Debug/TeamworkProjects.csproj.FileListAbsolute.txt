@@ -5,10 +5,11 @@ C:\Teamwork\Teamwork.Net\Teamwork.Net\Teamwork.Net.V2\bin\Debug\Newtonsoft.Json.
 C:\Teamwork\Teamwork.Net\Teamwork.Net\Teamwork.Net.V2\obj\Debug\Teamwork.Net.V2.dll
 C:\Teamwork\Teamwork.Net\Teamwork.Net\Teamwork.Net.V2\obj\Debug\Teamwork.Net.V2.pdb
 C:\Teamwork\Teamwork.Net\Teamwork.Net\Teamwork.Net.V2\obj\Debug\TeamworkProjects.csprojResolveAssemblyReference.cache
-E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\obj\Debug\TeamworkProjects.csprojResolveAssemblyReference.cache
 E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\obj\Debug\Teamwork.Net.V2.dll
 E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\obj\Debug\Teamwork.Net.V2.pdb
 E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Debug\Teamwork.Net.V2.dll
 E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Debug\Teamwork.Net.V2.pdb
 E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Debug\Newtonsoft.Json.dll
 E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Debug\Newtonsoft.Json.xml
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Debug\TCDev.Office.Core.dll
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\obj\Debug\TeamworkProjects.csprojResolveAssemblyReference.cache

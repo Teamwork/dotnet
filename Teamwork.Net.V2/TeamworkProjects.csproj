@@ -53,12 +53,16 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="TCDev.Office.Core">
+      <HintPath>..\..\Outlook Extensions\Teamwork Projects Outlook\Outlook Projects\bin\Debug\TCDev.Office.Core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Endpoints\CategoryHandler.cs" />
     <Compile Include="Endpoints\CompanyHandler.cs" />
     <Compile Include="Endpoints\FileHandler.cs" />
     <Compile Include="Endpoints\MeHandler.cs" />
+    <Compile Include="Endpoints\TagHandler.cs" />
     <Compile Include="Endpoints\TimeHandler.cs" />
     <Compile Include="Endpoints\TodoListHandler.cs" />
     <Compile Include="Exceptions\ErrorResponse.cs" />

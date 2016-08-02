@@ -23,8 +23,15 @@ namespace TeamworkProjects.Model
     public string DisplayName
     {
       get { return FirstName + " " + LastName; }
+      set { FirstName = value; }
     }
-    [JsonProperty("first-name", NullValueHandling = NullValueHandling.Ignore)]
+
+     public override string ToString()
+    {
+         return FirstName + " " + LastName;
+     }
+
+   [JsonProperty("first-name", NullValueHandling = NullValueHandling.Ignore)]
     public string FirstName { get; set; }
 
     [JsonProperty("last-name", NullValueHandling = NullValueHandling.Ignore)]

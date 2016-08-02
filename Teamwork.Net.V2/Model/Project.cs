@@ -46,6 +46,9 @@ namespace TeamworkProjects.Model
         [JsonProperty("category-id", NullValueHandling = NullValueHandling.Ignore)]
         public string category { get; set; }
 
+        [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
+        public Tag[] tags { get; set; }
+
     }
 
 

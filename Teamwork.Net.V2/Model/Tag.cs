@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 
 namespace TeamworkProjects.Base.Model
 {
+    [Serializable]
   public class Tag
   {
     [JsonProperty("color", NullValueHandling = NullValueHandling.Ignore)]

@@ -11,7 +11,9 @@ using Newtonsoft.Json;
 
 namespace TeamworkProjects.Model
 {
-  public class Notebook
+    using TeamworkProjects.Base.Model;
+
+    public class Notebook
   {
     [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
     public string Id { get; set; }
@@ -63,5 +65,10 @@ namespace TeamworkProjects.Model
 
     [JsonProperty("project-id", NullValueHandling = NullValueHandling.Ignore)]
     public int ProjectId { get; set; }
-  }
+
+
+
+        [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
+        public Tag[] tags { get; set; }
+    }
 }

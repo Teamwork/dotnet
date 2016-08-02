@@ -10,7 +10,9 @@ using Newtonsoft.Json;
 
 namespace TeamworkProjects.Model
 {
-  public class MessageReply
+    using TeamworkProjects.Base.Model;
+
+    public class MessageReply
   {
     [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
     public string Id { get; set; }
@@ -70,5 +72,9 @@ namespace TeamworkProjects.Model
         public string body { get; set; }
         [JsonProperty("pendingFileAttachments", NullValueHandling = NullValueHandling.Ignore)]
         public string pendingFileAttachments { get; set; }
+
+        [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
+        public Tag[] tags { get; set; }
+
     }
 }
