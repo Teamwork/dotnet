@@ -46,6 +46,9 @@ namespace TeamworkProjects.Model
         [JsonProperty("commentFollowerIds", NullValueHandling = NullValueHandling.Ignore)]
         public string commentFollowerIds;
 
+        [JsonProperty("columnid", NullValueHandling = NullValueHandling.Ignore)]
+        public int ColumnId { get; set; } = -1;
+
         [JsonProperty("changeFollowerIds", NullValueHandling = NullValueHandling.Ignore)]
         public string changeFollowerIds;
 

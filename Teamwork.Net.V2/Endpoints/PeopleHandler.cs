@@ -45,7 +45,31 @@ namespace TeamWorkNet.Handler
         }
 
 
-        public async Task<List<Person>> GetPeopleAsync()
+		public async Task<List<UserStatus>> GetPeopleStatusAsync()
+		{
+			try
+			{
+				var requestString = "people/status.json";
+				var data = await client.HttpClient.GetListAsync<UserStatus>(requestString, "userStatuses", null);
+				if (data.StatusCode == HttpStatusCode.OK)
+				{
+
+					var pages = int.Parse(data.Headers.GetValues("X-Pages").First());
+					var Page = int.Parse(data.Headers.GetValues("X-Page").First());
+					var total = int.Parse(data.Headers.GetValues("X-Records").First());
+					return data.List;
+				}
+
+				throw new Exception("Error processing Teamwork API Request: ", new Exception(data.Message));
+			}
+			catch (Exception ex)
+			{
+				throw new Exception("Error processing Teamwork API Request: ", ex);
+			}
+		}
+
+
+		public async Task<List<Person>> GetPeopleAsync()
         {
             try
             {

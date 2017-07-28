@@ -23,7 +23,7 @@ namespace TeamworkProjects.Endpoints
             this.client = pClient;
         }
 
-        public async Task<bool> AddNewStatusMessage(UserStatus pStatus, int pErsonid = -1)
+        public async Task<bool> AddNewStatusMessage(UserStatus2 pStatus, int pErsonid = -1)
         {
            var request = "/me/status.json";
            string post = JsonConvert.SerializeObject(pStatus);
@@ -66,13 +66,21 @@ namespace TeamworkProjects.Endpoints
 
         public async Task<Account> GetAccountDetails()
         {
-            var request = "/account.json";
-            var result = await client.HttpClient.GetAsync<Account>(request, "account", null, RequestFormat.Json);
-            if (result.StatusCode == HttpStatusCode.OK)
-            {
-                return result.Data;
-            }
-            return null;
+
+						try
+						{
+							var request = "/account.json";
+							var result = await client.HttpClient.GetAsync<Account>(request, "account", null, RequestFormat.Json);
+							if (result.StatusCode == HttpStatusCode.OK)
+							{
+								return result.Data;
+							}
+							return null;
+						}
+						catch(Exception ex)
+									{
+							return null;
+						}
         }
     }
 }

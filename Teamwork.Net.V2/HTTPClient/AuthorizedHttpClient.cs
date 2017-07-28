@@ -43,7 +43,8 @@ namespace TeamworkProjects.HTTPClient
       /// <param name="pApiKey">APIKey for Projects API</param>
       /// <param name="pBaseuri"></param>
       public AuthorizedHttpClient(string pApiKey, Uri pBaseuri)
-        {
+      {
+        ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
          BaseAddress = pBaseuri;
          DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));
          DefaultRequestHeaders.Accept.Clear();
@@ -58,7 +59,8 @@ namespace TeamworkProjects.HTTPClient
         /// <param name="pBaseuri"></param>
         public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, HttpMessageHandler handler) : base(handler)
         {
-            BaseAddress = pBaseuri;
+      ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+      BaseAddress = pBaseuri;
             DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));
             DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
@@ -66,7 +68,8 @@ namespace TeamworkProjects.HTTPClient
         }
         public AuthorizedHttpClient()
         {
-            DefaultRequestHeaders.Accept.Clear();
+      ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+      DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident / 6.0)");
         }

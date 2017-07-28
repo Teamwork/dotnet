@@ -26,7 +26,7 @@ namespace TeamworkProjects.Model
         public int ProjectId { get; set; }
 
         [JsonProperty("minutes", NullValueHandling = NullValueHandling.Ignore)]
-        public string Minutes { get; set; }
+        public int Minutes { get; set; }
 
         [JsonProperty("isbillable", NullValueHandling = NullValueHandling.Ignore)]
         public string Isbillable { get; set; }
@@ -75,7 +75,7 @@ namespace TeamworkProjects.Model
         public string HasStartTime { get; set; }
 
         [JsonProperty("hours", NullValueHandling = NullValueHandling.Ignore)]
-        public string Hours { get; set; }
+        public int Hours { get; set; }
     }
 
     /// <summary>

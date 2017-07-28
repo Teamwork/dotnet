@@ -21,7 +21,7 @@ namespace TeamworkProjects.Model
         public int ProjectId { get; set; }
 
         [JsonProperty("todo-items", NullValueHandling = NullValueHandling.Ignore)]
-        public TodoItem[] TodoItems { get; set; }
+        public List<TodoItem> TodoItems { get; set; }
 
         [JsonProperty("grant-access-to", NullValueHandling = NullValueHandling.Ignore)]
         public string GrantAccessTo { get; set; }

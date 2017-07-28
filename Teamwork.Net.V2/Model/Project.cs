@@ -61,6 +61,9 @@ namespace TeamworkProjects.Model
       public Company company { get; set; }
       public bool starred { get; set; }
 
+        [JsonIgnore]
+        public List<TimeEntry> TimEntries { get; set; }
+
       [JsonProperty(PropertyName = "show-announcement")]
     public bool ShowAnnouncement { get; set; }
 
@@ -134,8 +137,8 @@ namespace TeamworkProjects.Model
           foreach (var list in Tasklists)
           {
               if (list.TodoItems == null) continue;
-              if (list.TodoItems.Length == 0) continue;
-              counter += list.TodoItems.Length;
+              if (list.TodoItems.Count == 0) continue;
+              counter += list.TodoItems.Count;
               counter += CountSubTasks(list.TodoItems.Where(p => p.SubTasks != null).ToList());
           }
           
@@ -171,7 +174,7 @@ namespace TeamworkProjects.Model
         foreach (var list in Tasklists)
         {
             if (list.TodoItems == null) continue;
-            if (list.TodoItems.Length == 0) continue;
+            if (list.TodoItems.Count == 0) continue;
             counter += list.TodoItems.Count(p => p.Completed);
             counter += CountSubTasks(list.TodoItems.Where(p => p.SubTasks != null).ToList());
         }

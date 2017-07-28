@@ -20,3 +20,21 @@ C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\obj\Debug\TestClient.Properties
 C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\obj\Debug\TestClient.csproj.GenerateResource.Cache
 C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\obj\Debug\TestClient.exe
 C:\Teamwork\Teamwork.Net\Teamwork.Net\TestClient\obj\Debug\TestClient.pdb
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\obj\Debug\TestClient.csprojResolveAssemblyReference.cache
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\obj\Debug\TestClient.Form1.resources
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\obj\Debug\TestClient.Properties.Resources.resources
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\obj\Debug\TestClient.csproj.GenerateResource.Cache
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\obj\Debug\TestClient.exe
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\obj\Debug\TestClient.pdb
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\TestClient.exe.config
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\TestClient.exe
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\TestClient.pdb
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\Teamwork.Net.V2.dll
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\System.Net.Http.Formatting.dll
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\Newtonsoft.Json.dll
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\Teamwork.Net.V2.pdb
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\Teamwork.Net.V2.dll.config
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\System.Net.Http.Formatting.xml
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\Newtonsoft.Json.xml
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\bin\Debug\de\System.Net.Http.Formatting.resources.dll
+E:\Workspaces Teamwork\_github\TeamworkNet\TestClient\obj\Debug\TestClient.csproj.TestClient.exe.config

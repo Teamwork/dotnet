@@ -85,7 +85,7 @@ namespace TeamworkProjects.Endpoints
         {
             try
             {
-                var requestString = "/messages/projects.json?status=active&orderby=lastActivityDate";
+                var requestString = "/messages/projects.json?status=active&orderby=lastActivityDate&type=featureEnabled";
                 if (pStarredOnly) requestString += "&starredOnly=true&type=featurenabled";
                 var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
                 if (data.StatusCode == HttpStatusCode.OK) return data.List.OrderBy(p=>p.Name).ToList();
@@ -262,7 +262,8 @@ namespace TeamworkProjects.Endpoints
             bool pIncludeLinkCategories = false,
             bool pMSProjectMode = false,
             bool pIncludeFileCategories = false,
-            bool pIncludeCompletedTasks = false)
+            bool pIncludeCompletedTasks = false,
+            bool pIncludeTimeEntries = false)
         {
             try
             {
@@ -310,6 +311,12 @@ namespace TeamworkProjects.Endpoints
                     {
                         await AddFileCategories(pRojectId, data);
                     }
+
+                    if (pIncludeTimeEntries && !pMSProjectMode)
+                    {
+                        await AddTimeEntries(pRojectId, data);
+                    }
+
 
                     return data.Data;
                 }
@@ -424,7 +431,6 @@ namespace TeamworkProjects.Endpoints
                             new StringContent("{\"milestone\": " + post + "}", Encoding.UTF8));
             }
         }
-
 
         /// <summary>
         ///   Add a Milestone to the given project
@@ -840,18 +846,51 @@ throw new Exception("Something went wrong whilea dding the task");
                 pData.Data.People = result.List;
             }
         }
+
+
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        private async Task AddTimeEntries(int pRojectId, BaseSingleResponse<Project> pData, bool pMSProjectMode = false)
+        {
+            var taskRequestString = "/projects/" + pRojectId + "/time_entries.json";
+
+            var result =
+                await client.HttpClient.GetListAsync<TimeEntry>(taskRequestString, "time-entries", null);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                pData.Data.TimEntries = result.List;
+            }
+        }
+
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         private async Task AddTasksToProject(int pRojectId, bool pIncludeTasks, BaseSingleResponse<Project> pData, DateTime? startDate, DateTime? endDate, bool pMSProjectMode = false, bool showCompleted = false)
         {
-            var listname = pIncludeTasks ? "todo-lists" : "tasklists";
+            var listname =  "tasklists";
             var taskRequestString = "/projects/" + pRojectId + "/tasklists.json?getNewTaskDefaults=true";
-            if (pIncludeTasks) taskRequestString = "/projects/" + pRojectId + "/todo_lists.json?getNewTaskDefaults=true&nestSubTasks=true";
+            //if (pIncludeTasks) taskRequestString = "/projects/" + pRojectId + "/todo_lists.json?getNewTaskDefaults=true&nestSubTasks=true";
             if (showCompleted) taskRequestString = taskRequestString + "&showCompleted=true&status=all";
             if (pMSProjectMode) taskRequestString = "/msprj/getprojecttasklists.json?nestSubTasks=true";
 
 
-            var result = await client.HttpClient.GetListAsync<TodoList>(taskRequestString, listname, null);
-            if (result.StatusCode == HttpStatusCode.OK)
+						var result = await client.HttpClient.GetListParallelAsync<TodoList>(taskRequestString, listname, null);
+
+						if (pIncludeTasks) {
+
+							await Task.WhenAll(result.List.Select(list => Task.Run(() => {
+
+								var taskurl = $"/v2/tasklists/{list.Id}/tasks.json?pageSize=50&getFiles=1&getSubTasks=1";
+								var taskresult = client.HttpClient.GetListParallelAsync<TodoItem>(taskurl, "tasks", null).Result;
+
+								if (list.TodoItems == null) list.TodoItems = new List<TodoItem>();
+								list.TodoItems.AddRange(taskresult.List);
+
+							})));
+
+
+
+						}
+
+
+			if (result.StatusCode == HttpStatusCode.OK)
             {
                 pData.Data.Tasklists = result.List;
             }

@@ -47,7 +47,7 @@ namespace TeamworkProjects.Endpoints
         {
             try
             {
-                var requestString = "tasks.json?filter=today&include=overdue&responsible-party-ids=78362";
+                var requestString = "tasks.json?filter=today&include=overdue";
                var data = await client.HttpClient.GetListAsync<TodoItem>(requestString, "todo-items", null);
                 if (data.StatusCode == HttpStatusCode.OK) return data.List;
                 if (data.StatusCode == HttpStatusCode.InternalServerError)

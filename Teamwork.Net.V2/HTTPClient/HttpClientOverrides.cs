@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -26,8 +27,6 @@ using TeamworkProjects.Response;
 
 namespace TeamworkProjects.HTTPClient
 {
-    using System.Linq;
-
     public partial class AuthorizedHttpClient : HttpClient
   {
       public async Task<BaseListResponse<T>> GetListAsync<T>(string pEndpoint,string pObjName, Dictionary<string, string> pParamsDictionary,RequestFormat pFormat = RequestFormat.Json)
@@ -52,6 +51,10 @@ namespace TeamworkProjects.HTTPClient
                       // Add Header from Response
                       returndata.Headers = response.Headers;
                       returndata.StatusCode = response.StatusCode;
+
+											
+
+
 
 
 
@@ -92,7 +95,93 @@ namespace TeamworkProjects.HTTPClient
             }
     }
 
-      public async Task<BaseSingleResponse<T>> GetAsync<T>(string pEndpoint, string pObjName, Dictionary<string, string> pParamsDictionary, RequestFormat pFormat = RequestFormat.Json)
+
+
+		public async Task<BaseListResponse<T>> GetListParallelAsync<T>(string pEndpoint, string pObjName, Dictionary<string, string> pParamsDictionary, RequestFormat pFormat = RequestFormat.Json)
+		{
+			try
+			{
+				var response = Task.Run(() => GetAsync(pEndpoint)).Result;
+				using (var responseStream = await response.Content.ReadAsStreamAsync())
+					{
+
+					var rateLimit = 0;
+					var rateLimitRemaining = 250;
+					var pages = 0;
+					var page = 0;
+					var items = 0;
+
+					var returnList = new List<T>();
+
+						var jsonMessage = new StreamReader(responseStream).ReadToEnd();
+						if (response.StatusCode == HttpStatusCode.OK)
+						{
+
+
+						// Lets see if there's more to fetch
+						rateLimit = int.Parse(response.Headers.GetValues("X-Ratelimit-Limit").FirstOrDefault().ToString());
+						rateLimitRemaining = int.Parse(response.Headers.GetValues("X-Ratelimit-Remaining").FirstOrDefault().ToString());
+						page = int.Parse(response.Headers.GetValues("X-Page").FirstOrDefault().ToString());
+						pages = int.Parse(response.Headers.GetValues("X-Pages").FirstOrDefault().ToString());
+
+						var data = BaseListResponse<T>.Deserialize<T>(jsonMessage, pObjName);
+						returnList.AddRange(data.List);
+
+						if(page != pages) { 
+							List<string> urls = new List<string>();
+							while (page < pages)
+							{
+								urls.Add(pEndpoint + "&page=" + page);
+								page++;
+							}
+							await Task.WhenAll(urls.Select(pagedUrl => Task.Run(() => {
+
+								//Lets check rate limits first
+								response = Task.Run(() => GetAsync(pagedUrl)).Result;
+								rateLimit = int.Parse(response.Headers.GetValues("X-Ratelimit-Limit").FirstOrDefault().ToString());
+								rateLimitRemaining = int.Parse(response.Headers.GetValues("X-Ratelimit-Remaining").FirstOrDefault().ToString());
+
+								if (rateLimitRemaining < 1) System.Threading.Thread.Sleep(60000);
+
+
+								data = BaseListResponse<T>.Deserialize<T>(jsonMessage, pObjName);
+								returnList.AddRange(data.List);
+
+							})));
+						}
+					  	var returndata = new BaseListResponse<T>
+							{
+								Headers = response.Headers,
+								StatusCode = response.StatusCode,
+								Message = jsonMessage,
+								List = returnList
+								};
+
+							return returndata;
+						}
+						return new BaseListResponse<T>
+						{
+							Headers = response.Headers,
+							StatusCode = response.StatusCode,
+							Message = jsonMessage
+						};
+					}
+			}
+			catch (Exception ex)
+			{
+				if (Debugger.IsAttached) Console.WriteLine(ex.Message);
+				return new BaseListResponse<T>
+				{
+					Headers = null,
+					StatusCode = HttpStatusCode.UnsupportedMediaType,
+					Message = ex.Message
+				};
+			}
+		}
+
+
+
+		public async Task<BaseSingleResponse<T>> GetAsync<T>(string pEndpoint, string pObjName, Dictionary<string, string> pParamsDictionary, RequestFormat pFormat = RequestFormat.Json)
         {
             try
             {

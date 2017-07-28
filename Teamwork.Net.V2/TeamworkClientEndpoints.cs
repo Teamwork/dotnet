@@ -16,6 +16,7 @@
 
 using System.ComponentModel;
 using TeamworkProjects.Endpoints;
+using TeamworkProjects.Model;
 using TeamWorkNet.Handler;
 
 #endregion
@@ -37,8 +38,12 @@ namespace TeamworkProjects
         private TagHandler tags;
         private TaskHandler tasks;
         private PeopleHandler people;
+        private BoardsHandler boards;
+				private ChatHandler chat;
 
-        public ProjectHandler Projects => projects ?? (projects = new ProjectHandler(this));
+
+
+		public ProjectHandler Projects => projects ?? (projects = new ProjectHandler(this));
         public TimeHandler Time => time ?? (time = new TimeHandler(this));
         public MeHandler Me => me ?? (me = new MeHandler(this));
         public TodoListHandler TodoLists => todolists ?? (todolists = new TodoListHandler(this));
@@ -48,5 +53,7 @@ namespace TeamworkProjects
         public TagHandler Tags => tags ?? (tags = new TagHandler(this));
         public TaskHandler Tasks => tasks ?? (tasks = new TaskHandler(this));
         public PeopleHandler People => people ?? (people = new PeopleHandler(this));
-    }
+        public BoardsHandler Boards => boards ?? (boards = new BoardsHandler(this));
+		public ChatHandler Chat => chat ?? (chat = new ChatHandler(this));
+	}
 }
