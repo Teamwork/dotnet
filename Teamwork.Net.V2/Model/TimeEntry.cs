@@ -14,6 +14,7 @@
 #region Imports
 
 using Newtonsoft.Json;
+using TeamworkProjects.Base.Model;
 
 #endregion
 
@@ -97,7 +98,7 @@ namespace TeamworkProjects.Model
         public string isbillable { get; set; }
 
         [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
-        public string[] tags { get; set; }
+        public string tags { get; set; }
 
         [JsonProperty("has-start-time", NullValueHandling = NullValueHandling.Ignore)]
         public string HasStartTime { get; set; }

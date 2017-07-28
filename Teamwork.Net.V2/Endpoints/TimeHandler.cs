@@ -71,13 +71,41 @@ namespace TeamworkProjects.Endpoints
         }
 
 
-        public async Task<bool> AddTimeEntry(NewTimeEntry pTimeEntry, string pProjectId)
+        public async Task<int> AddTimeEntry(NewTimeEntry pTimeEntry, string pProjectId, bool IsTaskID = false, bool markCompleted = false)
         {
             try
             {
                 var requestring = "/projects/" + pProjectId + "/time_entries.json";
+                if(IsTaskID) requestring = "/tasks/" + pProjectId + "/time_entries.json";
                 string postdata = JsonConvert.SerializeObject(pTimeEntry);
                 var data = await client.HttpClient.PostWithReturnAsync(requestring, new StringContent("{\"time-entry\": " + postdata + "}", Encoding.UTF8));
+
+                if (data.StatusCode == HttpStatusCode.Created || data.StatusCode == HttpStatusCode.OK)
+                {
+                    if (markCompleted && IsTaskID)
+                    {
+                        await client.Tasks.CompleteTask(int.Parse(pProjectId));
+                    }
+                    return int.Parse(((string[])(data.Headers.GetValues("id")))[0]);
+                }
+
+
+                return (int)data.ContentObj;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error processing Teamwork API Request: ", ex);
+            }
+        }
+
+        public async Task<bool> UpdateTimeEntry(int id, NewTimeEntry pTimeEntry)
+        {
+            try
+            {
+                var requestring = "/time_entries/" + id + ".json";
+                string postdata = JsonConvert.SerializeObject(pTimeEntry);
+                var data = await client.HttpClient.PutAsync(requestring, new StringContent("{\"time-entry\": " + postdata + "}", Encoding.UTF8));
+
                 if (data.StatusCode == HttpStatusCode.Created || data.StatusCode == HttpStatusCode.OK) return true;
                 return false;
             }
@@ -86,6 +114,5 @@ namespace TeamworkProjects.Endpoints
                 throw new Exception("Error processing Teamwork API Request: ", ex);
             }
         }
-
     }
 }

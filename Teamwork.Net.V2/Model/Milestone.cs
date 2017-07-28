@@ -75,7 +75,11 @@ namespace TeamworkProjects.Model
     }
 
 
-    [JsonProperty("completed", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore]
+        public DateTime DeadLineDate => Deadline.ToDateTimeExactMax("yyyyMMdd");
+
+
+        [JsonProperty("completed", NullValueHandling = NullValueHandling.Ignore)]
     public bool Completed { get; set; }
 
     [JsonProperty("reminder", NullValueHandling = NullValueHandling.Ignore)]

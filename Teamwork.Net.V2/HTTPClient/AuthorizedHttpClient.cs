@@ -30,6 +30,7 @@ using TeamworkProjects.Response;
 
 namespace TeamworkProjects.HTTPClient
 {
+    using System.Linq;
 
     /// <summary>
     /// Authorized Http Client is a derived HTTPClient with added Authentication Header
@@ -44,11 +45,33 @@ namespace TeamworkProjects.HTTPClient
       public AuthorizedHttpClient(string pApiKey, Uri pBaseuri)
         {
          BaseAddress = pBaseuri;
-         DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));DefaultRequestHeaders.Accept.Clear();
+         DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));
+         DefaultRequestHeaders.Accept.Clear();
          DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident / 6.0)");
         }
 
-      public async Task<BaseResponse<T>> GetAsync<T>(string pEndpoint, Dictionary<string, string> pAramsDictionary, RequestFormat pFormat = RequestFormat.Json)
+        /// <summary>
+        ///   Initialize a new Instance of the Client
+        /// </summary>
+        /// <param name="pApiKey">APIKey for Projects API</param>
+        /// <param name="pBaseuri"></param>
+        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, HttpMessageHandler handler) : base(handler)
+        {
+            BaseAddress = pBaseuri;
+            DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));
+            DefaultRequestHeaders.Accept.Clear();
+            DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident / 6.0)");
+        }
+        public AuthorizedHttpClient()
+        {
+            DefaultRequestHeaders.Accept.Clear();
+            DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident / 6.0)");
+        }
+
+        public async Task<BaseResponse<T>> GetAsync<T>(string pEndpoint, Dictionary<string, string> pAramsDictionary, RequestFormat pFormat = RequestFormat.Json)
         {
             try
             {
@@ -167,5 +190,55 @@ namespace TeamworkProjects.HTTPClient
             }
         }
    }
-    
+
+
+    public class ClientCache
+    {
+        public List<ClientCacheEntry> data; 
+        public List<ClientCacheEntry> Data
+        {
+            get { return data ?? (data = new List<ClientCacheEntry>()); }
+            set { data = value; }
+        }
+
+
+        public void AddEntry(string pID, string pData, DateTime pCreated, HttpResponseHeaders pHeaders, HttpStatusCode pStatus)
+        {
+            Data.Add(new ClientCacheEntry() {
+                ID =pID,
+                Data = pData,
+                DateCreated = DateTime.Now,
+                Headers = pHeaders,
+                 StatusCode = pStatus});
+        }
+
+        public ClientCacheEntry FindEntry(string pID)
+        {
+            var res = Data?.FirstOrDefault(p => p.ID == pID);
+            if(res != null) { 
+                if (res.DateCreated.AddMinutes(5) < DateTime.Now)
+                {
+                    Data.Remove(res);
+                }
+                else
+                {
+                    return res;
+                }
+            }
+            return null;
+        }
+
+    }
+
+    public class ClientCacheEntry
+    {
+        public string ID;
+        public string Data;
+        public DateTime DateCreated;
+        public HttpResponseHeaders Headers;
+        public HttpStatusCode StatusCode;
+        public string ETAG;
+    }
+
+
 }

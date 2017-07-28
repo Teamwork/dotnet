@@ -17,7 +17,10 @@ namespace TeamworkProjects.Model
       [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
       public string Title { get; set; }
 
-      [JsonProperty("category-id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("grant-access-to", NullValueHandling = NullValueHandling.Ignore)]
+        public string GrantAccessTo { get; set; }
+
+        [JsonProperty("category-id", NullValueHandling = NullValueHandling.Ignore)]
       public string CategoryId { get; set; }
 
       [JsonProperty("notify", NullValueHandling = NullValueHandling.Ignore)]

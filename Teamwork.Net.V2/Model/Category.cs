@@ -7,6 +7,7 @@
 // License: Apache License 2.0
 // ==========================================================
 
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace TeamworkProjects.Model
@@ -30,5 +31,13 @@ namespace TeamworkProjects.Model
 
     [JsonProperty("parent-id", NullValueHandling = NullValueHandling.Ignore)]
     public string ParentId { get; set; }
-  }
+
+        [JsonIgnore]
+        public string ParentName { get; set; }
+        [JsonIgnore]
+        public bool HasChildren { get; set; }
+        [JsonIgnore]
+        public List<Category> Children { get; set; }
+
+    }
 }

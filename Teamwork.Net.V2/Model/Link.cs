@@ -14,7 +14,11 @@ namespace TeamworkProjects.Model
   public class Link : TeamworkObjectBase
   {
 
-    [JsonProperty("project-id", NullValueHandling = NullValueHandling.Ignore)]
+
+        [JsonProperty("grant-access-to", NullValueHandling = NullValueHandling.Ignore)]
+        public string GrantAccessTo { get; set; }
+
+        [JsonProperty("project-id", NullValueHandling = NullValueHandling.Ignore)]
     public int ProjectId { get; set; }
 
     [JsonProperty("created-by-userfirstname", NullValueHandling = NullValueHandling.Ignore)]
@@ -55,5 +59,8 @@ namespace TeamworkProjects.Model
 
     [JsonProperty("code", NullValueHandling = NullValueHandling.Ignore)]
     public string Code { get; set; }
-  }
+
+        [JsonProperty("notify", NullValueHandling = NullValueHandling.Ignore)]
+        public string notify { get; set; }
+    }
 }

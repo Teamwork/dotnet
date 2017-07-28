@@ -47,15 +47,119 @@ namespace TeamworkProjects.Endpoints
         }
 
 
+
+        // http://sunbeam.teamwork.dev/v2/tasks.json?dataSet=basic&nestSubTasks=1&include=taskListNames,projectNames
+
+
+
         /// <summary>
         ///   Returns all projects the user has access to
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Project>> GetAllProjectsAsync()
+        public async Task<List<Project>> GetAllProjectsAsync(bool pStarredOnly)
         {
             try
             {
-                var requestString = "projects.json";
+                var requestString = "projects.json?status=active&orderby=lastActivityDate";
+                if (pStarredOnly) requestString = "/projects/starred.json?status=active&orderby=lastActivityDate";
+                var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
+                if (data.StatusCode == HttpStatusCode.OK) return data.List;
+                if (data.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    throw new Exception(data.Message);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error processing Teamwork API Request: ", ex);
+            }
+        }
+
+
+        /// <summary>
+        ///   Returns all projects the user has access that have messages enabled
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Project>> GetAllProjectsAsyncMessages(bool pStarredOnly)
+        {
+            try
+            {
+                var requestString = "/messages/projects.json?status=active&orderby=lastActivityDate";
+                if (pStarredOnly) requestString += "&starredOnly=true&type=featurenabled";
+                var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
+                if (data.StatusCode == HttpStatusCode.OK) return data.List.OrderBy(p=>p.Name).ToList();
+                if (data.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    throw new Exception(data.Message);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error processing Teamwork API Request: ", ex);
+            }
+        }
+
+        /// <summary>
+        ///   Returns all projects the user has access that have messages enabled
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Project>> GetAllProjectsAsyncMilestones(bool pStarredOnly)
+        {
+            try
+            {
+                var requestString = "/Milestones/projects.json?status=active&orderby=lastActivityDate";
+                if (pStarredOnly) requestString += "&starredOnly=true&type=featurenabled";
+                var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
+                if (data.StatusCode == HttpStatusCode.OK) return data.List;
+                if (data.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    throw new Exception(data.Message);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error processing Teamwork API Request: ", ex);
+            }
+        }
+
+        /// <summary>
+        ///   Returns all projects the user has access that have messages enabled
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Project>> GetAllProjectsAsyncNotebooks(bool pStarredOnly)
+        {
+            try
+            {
+                var requestString = "/notebooks/projects.json?status=active&orderby=lastActivityDate";
+                if (pStarredOnly) requestString += "&starredOnly=true&type=featurenabled";
+                var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
+                if (data.StatusCode == HttpStatusCode.OK) return data.List;
+                if (data.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    throw new Exception(data.Message);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error processing Teamwork API Request: ", ex);
+            }
+        }
+
+
+        /// <summary>
+        ///   Returns all projects the user has access that have messages enabled
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<Project>> GetAllProjectsAsyncTime(bool pStarredOnly)
+        {
+            try
+            {
+                var requestString = "/Time/projects.json?status=active&orderby=lastActivityDate";
+                if (pStarredOnly) requestString += "&starredOnly=true&type=featurenabled";
                 var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
                 if (data.StatusCode == HttpStatusCode.OK) return data.List;
                 if (data.StatusCode == HttpStatusCode.InternalServerError)
@@ -148,12 +252,22 @@ namespace TeamworkProjects.Endpoints
         /// <param name="pIncludeTasks">Nest </param>
         /// <param name="pIncludeMilestones">include all milestones</param>
         /// <param name="pIncludeNotebookCategories"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
         /// <returns></returns>
-        public async Task<Project> GetProject(int pRojectId, bool pIncludePeople, bool pIncludeTaskLists,bool pIncludeTasks, bool pIncludeMilestones = true, bool pIncludeNotebookCategories = false)
+        public async Task<Project> GetProject(int pRojectId, bool pIncludePeople, bool pIncludeTaskLists,bool pIncludeTasks,
+            bool pIncludeMilestones = true, 
+            bool pIncludeNotebookCategories = false,
+            bool pIncludeMessageCategories = false,
+            bool pIncludeLinkCategories = false,
+            bool pMSProjectMode = false,
+            bool pIncludeFileCategories = false,
+            bool pIncludeCompletedTasks = false)
         {
             try
             {
                 var requestString = "/projects/" + pRojectId + ".json";
+                if (pMSProjectMode) requestString = "/msprj/getproject.json";
                 var data = await client.HttpClient.GetAsync<Project>(requestString, "project", null);
 
                 if (data.StatusCode == HttpStatusCode.OK)
@@ -161,24 +275,40 @@ namespace TeamworkProjects.Endpoints
                     // Load all task lists if requested
                     if (pIncludeTaskLists)
                     {
-                        await AddTasksToProject(pRojectId, pIncludeTasks, data);
+                        await AddTasksToProject(pRojectId, pIncludeTasks, data,DateTime.MinValue, DateTime.MaxValue, pMSProjectMode, showCompleted:pIncludeCompletedTasks);
                     }
 
                     // Load all people in the project
                     if (pIncludePeople)
                     {
-                        await AddPeopleToProject(pRojectId, data);
+                        await AddPeopleToProject(pRojectId, data, pMSProjectMode);
                     }
 
                     // Load all milestones
                     if (pIncludeMilestones)
                     {
-                        await AddMilestonesToProjectz(pRojectId, data);
+                        await AddMilestonesToProjectz(pRojectId, data, pMSProjectMode);
                     }
 
-                    if (pIncludeNotebookCategories)
+                    if (pIncludeNotebookCategories && !pMSProjectMode)
                     {
                         await AddNotebookCategories(pRojectId, data);
+                    }
+
+
+                    if (pIncludeMessageCategories && !pMSProjectMode)
+                    {
+                        await AddMessageCategories(pRojectId, data);
+                    }
+
+                    if (pIncludeLinkCategories && !pMSProjectMode)
+                    {
+                        await AddLinkCategories(pRojectId, data);
+                    }
+
+                    if (pIncludeFileCategories && !pMSProjectMode)
+                    {
+                        await AddFileCategories(pRojectId, data);
                     }
 
                     return data.Data;
@@ -262,6 +392,21 @@ namespace TeamworkProjects.Endpoints
 
 
         /// <summary>
+        ///   Returns all Roles of a project together with the persons in the roles
+        ///   Details: http://developer.teamwork.com/projectroles
+        /// </summary>
+        /// <param name="projectid"></param>
+        /// <returns></returns>
+        public async Task<List<TeamWorkFile>> GetProjectFiles(int projectid)
+        {
+             var data = await client.HttpClient.GetAsync<TeamworkFileProjectCallWrapper>("/projects/" + projectid + "/files.json","project", null);
+             if (data.StatusCode == HttpStatusCode.OK) return data.Data.files;
+              return null;
+        }
+
+
+
+        /// <summary>
         ///   Add a Milestone to the given project
         ///   http://developer.teamwork.com/milestones#create_a_single_m
         /// </summary>
@@ -279,6 +424,24 @@ namespace TeamworkProjects.Endpoints
                             new StringContent("{\"milestone\": " + post + "}", Encoding.UTF8));
             }
         }
+
+
+        /// <summary>
+        ///   Add a Milestone to the given project
+        ///   http://developer.teamwork.com/milestones#create_a_single_m
+        /// </summary>
+        /// <param name="milestone">Milestone ID (int)</param>
+        /// <param name="projectId">Project ID (int)</param>
+        /// <returns>Milestone ID</returns>
+        public async Task<BaseResponse<int>> AddLink(Link link, int projectId)
+        {
+                string post = JsonConvert.SerializeObject(link);
+                return
+                    await
+                        client.HttpClient.PostWithReturnAsync("/projects/" + projectId + "/links.json",
+                            new StringContent("{\"link\": " + post + "}", Encoding.UTF8));
+        }
+
 
         /// <summary>
         ///   Add a Tasklist to the given project
@@ -320,14 +483,17 @@ namespace TeamworkProjects.Endpoints
         /// <param name="todo">The Task</param>
         /// <param name="taskListId">Tasklist to add the task to</param>
         /// <returns>Milestone ID</returns>
-        public async Task<TodoItem> AddTodoItem(TodoItem todo, int taskListId)
+        public async Task<TodoItem> AddTodoItem(TodoItemCreate todo, int taskListId, bool IsSubTask = false, string parentTaskID = "")
         {
 
                 var settings = new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore};
                 string post = JsonConvert.SerializeObject(todo, settings);
-                var newList =
-                    await
-                        client.HttpClient.PostWithReturnAsync("/tasklists/" + taskListId + "/tasks.json",
+
+
+               var requesturi = IsSubTask ? "/tasks/" + parentTaskID + ".json" : "/tasklists/" + taskListId + "/tasks.json";
+
+
+                var newList =await client.HttpClient.PostWithReturnAsync(requesturi, 
                             new StringContent("{\"todo-item\": " + post + "}", Encoding.UTF8));
 
                 var id = newList.Headers.First(p => p.Key == "id");
@@ -355,29 +521,20 @@ throw new Exception("Something went wrong whilea dding the task");
         /// <param name="message">The Task</param>
         /// <param name="projectID">Tasklist to add the task to</param>
         /// <returns>Milestone ID</returns>
-        public async Task<bool> AddMessage(MessageCreate message, int projectID)
+        public async Task<int> AddMessage(MessageCreate message, int projectID)
         {
                 string post = JsonConvert.SerializeObject(message);
                 var newList =
                     await
                         client.HttpClient.PostWithReturnAsync("/projects/" + projectID + "/posts.json",
                             new StringContent("{\"post\": " + post + "}", Encoding.UTF8));
-            if (newList.StatusCode != HttpStatusCode.OK && newList.StatusCode != HttpStatusCode.Created) return false;
-                //var id = newList.Headers.First(p => p.Key == "id");
-                //if (id.Value != null)
-                //{
-                //    var listresponse =
-                //        await
-                //            client.HttpClient.GetAsync<PostResponse>("/posts/" + int.Parse(id.Value.First()) + ".json",
-                //                null,
-                //                RequestFormat.Json);
-                //    if (listresponse != null && listresponse.ContentObj != null)
-                //    {
-                //        var response = (TaskResponse) listresponse.ContentObj;
-                //        return response;
-                //    }
-                //}
-            return true;
+            if (newList.StatusCode != HttpStatusCode.OK && newList.StatusCode != HttpStatusCode.Created) return -1;
+            var id = newList.Headers.First(p => p.Key == "id");
+            if (id.Value != null)
+            {
+                return int.Parse(id.Value.First().ToString());
+            }
+            return -1;
         }
 
 
@@ -436,12 +593,11 @@ throw new Exception("Something went wrong whilea dding the task");
         /// <returns>Milestone ID</returns>
         public async Task<int> AddTodoListReturnOnlyID(TodoList list, int projectId)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
-            {
+
                 string post = JsonConvert.SerializeObject(list);
                 var newList =
                     await
-                        client.PostWithReturnAsync("/projects/" + projectId + "/todo_lists.json",
+                        client.HttpClient.PostWithReturnAsync("/projects/" + projectId + "/todo_lists.json",
                             new StringContent("{\"todo-list\": " + post + "}", Encoding.UTF8));
 
                 var id = newList.Headers.First(p => p.Key == "id");
@@ -450,7 +606,25 @@ throw new Exception("Something went wrong whilea dding the task");
                     return int.Parse(id.Value.First());
                 }
                 return -1;
-            }
+          }
+
+
+        /// <summary>
+        ///   Add a Tasklist to the given project
+        ///   http://developer.teamwork.com/tasklists#create_list
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="projectId">Project ID (int)</param>
+        /// <returns>Milestone ID</returns>
+        public async Task<int> UpdateTodoList(TodoList list, int projectId)
+        {
+
+            string post = JsonConvert.SerializeObject(list);
+            var newList =
+                await
+                    client.HttpClient.PutAsync("/tasklists/" + list.Id + ".json",
+                        new StringContent("{\"todo-list\": " + post + "}", Encoding.UTF8));
+            return -1;
         }
 
 
@@ -465,6 +639,18 @@ throw new Exception("Something went wrong whilea dding the task");
             string post = JsonConvert.SerializeObject(project);
             return await client.HttpClient.PostWithReturnAsync("projects.json",
                         new StringContent("{\"project\": " + post + "}", Encoding.UTF8));
+        }
+
+
+        /// <summary>
+        ///   Create a new Project
+        ///   http://developer.teamwork.com/projects
+        /// </summary>
+        /// <param name="project">New Project Object</param>
+        /// <returns>Project ID</returns>
+        public async void StarProject(int project)
+        {
+            await client.HttpClient.PutAsync("/projects/" + project + "/star.json",null);
         }
 
         /// <summary>
@@ -504,6 +690,9 @@ throw new Exception("Something went wrong whilea dding the task");
             }
         }
 
+
+
+
         /// <summary>
         ///   Delete given Project
         ///   http://developer.teamwork.com/projects
@@ -536,12 +725,15 @@ throw new Exception("Something went wrong whilea dding the task");
         }
 
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        private async Task AddMilestonesToProjectz(int pRojectId, BaseSingleResponse<Project> pData)
+        private async Task AddMilestonesToProjectz(int pRojectId, BaseSingleResponse<Project> pData, bool pMSProjectMode = false)
         {
+
+            var request = "/projects/" + pRojectId + "/milestones.json ? find = all & getProgress = true";
+            if (pMSProjectMode) request = "/msprj/getprojectmilestones.jsonfind=all&getProgress=true";
             var tasks =
                 await
-                    client.HttpClient.GetListAsync<Milestone>(
-                        "/projects/" + pRojectId + "/milestones.json?find=all&getProgress=true", "milestones", null);
+                    client.HttpClient.GetListAsync<Milestone>(request
+                        , "milestones", null);
             if (tasks.StatusCode == HttpStatusCode.OK)
             {
                 pData.Data.Milestones = tasks.List;
@@ -557,26 +749,106 @@ throw new Exception("Something went wrong whilea dding the task");
                         "/projects/" + pRojectId + "/notebookCategories.json", "Categories", null);
             if (tasks.StatusCode == HttpStatusCode.OK)
             {
+                // Prepare Categories
+
+                foreach (var cat in tasks.List)
+                {
+                    cat.Children = tasks.List.Where(p => p.ParentId == cat.Id).ToList();
+                    if (cat.Children.Count > 0) cat.HasChildren = true;
+                    cat.Children.ForEach(p => p.ParentName = cat.Name);
+                }
+
+
                 pData.Data.NotebookCategories = tasks.List;
             }
         }
 
+
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        private async Task AddPeopleToProject(int pRojectId, BaseSingleResponse<Project> pData)
+        private async Task AddMessageCategories(int pRojectId, BaseSingleResponse<Project> pData)
         {
+            var tasks =
+                await
+                    client.HttpClient.GetListAsync<Category>(
+                        "/projects/" + pRojectId + "/messageCategories.json", "Categories", null);
+            if (tasks.StatusCode == HttpStatusCode.OK)
+            {
+                // Prepare Categories
+
+                foreach (var cat in tasks.List)
+                {
+                    cat.Children = tasks.List.Where(p => p.ParentId == cat.Id).ToList();
+                    if (cat.Children.Count > 0) cat.HasChildren = true;
+                    cat.Children.ForEach(p => p.ParentName = cat.Name);
+                }
+                pData.Data.MessageCategories = tasks.List;
+            }
+        }
+
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        private async Task AddLinkCategories(int pRojectId, BaseSingleResponse<Project> pData)
+        {
+            var tasks =
+                await
+                    client.HttpClient.GetListAsync<Category>(
+                        "/projects/" + pRojectId + "/LinkCategories.json", "Categories", null);
+            if (tasks.StatusCode == HttpStatusCode.OK)
+            {
+                // Prepare Categories
+
+                foreach (var cat in tasks.List)
+                {
+                    cat.Children = tasks.List.Where(p => p.ParentId == cat.Id).ToList();
+                    if (cat.Children.Count > 0) cat.HasChildren = true;
+                    cat.Children.ForEach(p => p.ParentName = cat.Name);
+                }
+                pData.Data.LinkCategories = tasks.List;
+            }
+        }
+
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        private async Task AddFileCategories(int pRojectId, BaseSingleResponse<Project> pData)
+        {
+            var tasks =
+                await
+                    client.HttpClient.GetListAsync<Category>(
+                        "/projects/" + pRojectId + "/FileCategories.json", "Categories", null);
+            if (tasks.StatusCode == HttpStatusCode.OK)
+            {
+                // Prepare Categories
+
+                foreach (var cat in tasks.List)
+                {
+                    cat.Children = tasks.List.Where(p => p.ParentId == cat.Id).ToList();
+                    if (cat.Children.Count > 0) cat.HasChildren = true;
+                    cat.Children.ForEach(p => p.ParentName = cat.Name);
+                }
+                pData.Data.FileCategories = tasks.List;
+            }
+        }
+
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        private async Task AddPeopleToProject(int pRojectId, BaseSingleResponse<Project> pData, bool pMSProjectMode = false)
+        {
+            var taskRequestString = "/projects/" + pRojectId + "/people.json";
+            if (pMSProjectMode) taskRequestString = "/msprj/getprojectpeople.json";
+
             var result =
-                await client.HttpClient.GetListAsync<Person>("/projects/" + pRojectId + "/people.json", "people", null);
+                await client.HttpClient.GetListAsync<Person>(taskRequestString, "people", null);
             if (result.StatusCode == HttpStatusCode.OK)
             {
                 pData.Data.People = result.List;
             }
         }
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        private async Task AddTasksToProject(int pRojectId, bool pIncludeTasks, BaseSingleResponse<Project> pData)
+        private async Task AddTasksToProject(int pRojectId, bool pIncludeTasks, BaseSingleResponse<Project> pData, DateTime? startDate, DateTime? endDate, bool pMSProjectMode = false, bool showCompleted = false)
         {
             var listname = pIncludeTasks ? "todo-lists" : "tasklists";
             var taskRequestString = "/projects/" + pRojectId + "/tasklists.json?getNewTaskDefaults=true";
-            if (pIncludeTasks) taskRequestString = "/projects/" + pRojectId + "/todo_lists.json?getNewTaskDefaults=true&nestSubTasks =true";
+            if (pIncludeTasks) taskRequestString = "/projects/" + pRojectId + "/todo_lists.json?getNewTaskDefaults=true&nestSubTasks=true";
+            if (showCompleted) taskRequestString = taskRequestString + "&showCompleted=true&status=all";
+            if (pMSProjectMode) taskRequestString = "/msprj/getprojecttasklists.json?nestSubTasks=true";
+
 
             var result = await client.HttpClient.GetListAsync<TodoList>(taskRequestString, listname, null);
             if (result.StatusCode == HttpStatusCode.OK)

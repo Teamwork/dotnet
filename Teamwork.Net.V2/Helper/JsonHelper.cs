@@ -44,4 +44,45 @@ namespace TeamworkProjects.Helper
             _MemberInfo.SetValue(target, value);
         }
     }
+
+
+    public class MyBooleanConverter : JsonConverter
+    {
+        public override bool CanWrite { get { return false; } }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            var val = bool.Parse(value.ToString());
+            writer.WriteValue(val);
+
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            var value = reader.Value;
+
+            if (value == null || string.IsNullOrEmpty(value.ToString()))
+            {
+                return false;
+            }
+
+            if ( value.ToString() == "1" || value.ToString() == "True")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public override bool CanConvert(Type objectType)
+        {
+            if (objectType == typeof(System.String) || objectType == typeof(Boolean))
+            {
+                return true;
+            }
+            return false;
+        }
+    }
+
+
 }

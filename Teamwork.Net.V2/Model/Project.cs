@@ -19,6 +19,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using TeamworkProjects.Base.Model;
 using TeamworkProjects.Extensions.DateTime;
+using TeamworkProjects.Response;
 
 #endregion
 
@@ -77,7 +78,11 @@ namespace TeamworkProjects.Model
     public string Startpage { get; set; }
 
 
-      public string logo { get; set; }
+
+        [JsonProperty(PropertyName = "active-pages")]
+        public ProjectActivePages ActivePages { get; set; }
+
+    public string logo { get; set; }
       public bool notifyeveryone { get; set; }
 
 
@@ -93,7 +98,14 @@ namespace TeamworkProjects.Model
       public List<TodoList> Tasklists { get; set; }
       public List<Person> People { get; set; }
 
+        [JsonIgnore]
       public List<Category> NotebookCategories { get; set; }
+        [JsonIgnore]
+        public List<Category> MessageCategories { get; set; }
+        [JsonIgnore]
+        public List<Category> LinkCategories { get; set; }
+        [JsonIgnore]
+        public List<Category> FileCategories { get; set; }
 
         public string CalendarItemID { get; set; }
 
@@ -103,14 +115,14 @@ namespace TeamworkProjects.Model
 
       // -- Ignored by Serialization --
 
-      [JsonIgnore]
-    public DateTime EndDate => endDate.ToDateTimeExactMax("yyyy-MM-ddTHH:mm:ssZ");
+    [JsonIgnore]
+    public DateTime EndDate => endDate.ToDateTimeExactMax("yyyyMMdd");
+
+    [JsonIgnore]
+    public DateTime StartDate => startDate.ToDateTimeExactMin("yyyyMMdd");
 
       [JsonIgnore]
-    public DateTime StartDate => startDate.ToDateTimeExactMin("yyyy-MM-ddTHH:mm:ssZ");
-
-      [JsonIgnore]
-    public DateTime LastChangedOn => DateTime.Parse(lastChangedOn);
+    public DateTime LastChangedOn => !string.IsNullOrEmpty(lastChangedOn) ? DateTime.Parse(lastChangedOn) : DateTime.MinValue;
 
       [JsonIgnore]
     public double TaskCount
@@ -118,9 +130,36 @@ namespace TeamworkProjects.Model
       get
       {
         if (Tasklists == null) return 0;
-        return Tasklists.Sum(p => p.TodoItems.Count());
+          var counter = 0;
+          foreach (var list in Tasklists)
+          {
+              if (list.TodoItems == null) continue;
+              if (list.TodoItems.Length == 0) continue;
+              counter += list.TodoItems.Length;
+              counter += CountSubTasks(list.TodoItems.Where(p => p.SubTasks != null).ToList());
+          }
+          
+        return counter;
       }
     }
+
+
+      public int CountSubTasks(List<TodoItem> listSource, bool onlyCompleted = false)
+      {
+          var counter = 0;
+          if (onlyCompleted)
+          {
+                counter += listSource.Count(p=>p.Completed);
+                counter += listSource.Where(p => p.SubTasks != null).Sum(sub => CountSubTasks(sub.SubTasks));
+            }
+          else
+          {
+                counter += listSource.Count;
+                counter += listSource.Where(p => p.SubTasks != null).Sum(sub => CountSubTasks(sub.SubTasks));
+            }
+
+          return counter;
+        }
 
       [JsonIgnore]
     public double TaskCountCompleted
@@ -128,7 +167,16 @@ namespace TeamworkProjects.Model
       get
       {
         if (Tasklists == null) return 0;
-        return Tasklists.Sum(p => p.TodoItems.Count(i => i.Completed));
+        var counter = 0;
+        foreach (var list in Tasklists)
+        {
+            if (list.TodoItems == null) continue;
+            if (list.TodoItems.Length == 0) continue;
+            counter += list.TodoItems.Count(p => p.Completed);
+            counter += CountSubTasks(list.TodoItems.Where(p => p.SubTasks != null).ToList());
+        }
+
+        return counter;
       }
     }
 
@@ -152,12 +200,20 @@ namespace TeamworkProjects.Model
       }
     }
 
-      [JsonIgnore]
+    [JsonIgnore]
     public double Progress
     {
       get
       {
-        if (TaskCountCompleted > 0) return Math.Round(TaskCountCompleted / TaskCount * 100,0);
+        if (TaskCountCompleted > 0) return Math.Round(TaskCountCompleted / TaskCount);
+
+
+          foreach (var list in this.Tasklists)
+          {
+              
+          }
+
+
         return 0;
       }
     }
@@ -182,5 +238,26 @@ namespace TeamworkProjects.Model
       set { lastSynchronized = value; }
 
     }
+
+
+      public override string ToString()
+      {
+          return this.Name;
+      }
   }
+
+
+
+    public class ProjectActivePages
+    {
+        public string links { get; set; }
+        public string tasks { get; set; }
+        public string time { get; set; }
+        public string billing { get; set; }
+        public string notebooks { get; set; }
+        public string files { get; set; }
+        public string riskRegister { get; set; }
+        public string milestones { get; set; }
+        public string messages { get; set; }
+    }
 }

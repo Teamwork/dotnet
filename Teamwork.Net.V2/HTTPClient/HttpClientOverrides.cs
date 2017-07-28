@@ -26,31 +26,59 @@ using TeamworkProjects.Response;
 
 namespace TeamworkProjects.HTTPClient
 {
-  public partial class AuthorizedHttpClient : HttpClient
+    using System.Linq;
+
+    public partial class AuthorizedHttpClient : HttpClient
   {
       public async Task<BaseListResponse<T>> GetListAsync<T>(string pEndpoint,string pObjName, Dictionary<string, string> pParamsDictionary,RequestFormat pFormat = RequestFormat.Json)
     {
       try
       {
-        var response = Task.Run(() => GetAsync(pEndpoint)).Result;
-        using (var responseStream = await response.Content.ReadAsStreamAsync())
-        {
-          var jsonMessage = new StreamReader(responseStream).ReadToEnd();
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                var returndata = BaseListResponse<T>.Deserialize<T>(jsonMessage, pObjName);
-                // Add Header from Response
-                returndata.Headers = response.Headers;
-                returndata.StatusCode = response.StatusCode;
-                return returndata;
-            }
-            return new BaseListResponse<T>
-            {
-                Headers = response.Headers,
-                StatusCode = response.StatusCode,
-                Message = jsonMessage
-            };
-        }
+          ClientCacheEntry OldData = null;
+          // Try to find cached results
+          if (this.Cache != null)
+          {
+               OldData = Cache.FindEntry(this.BaseAddress + "/" + pEndpoint + "/" + this.DefaultRequestHeaders);
+          }
+          if (OldData == null || (OldData.DateCreated < DateTime.Now.AddMinutes(5)))
+          {
+              var response = Task.Run(() => GetAsync(pEndpoint)).Result;
+              using (var responseStream = await response.Content.ReadAsStreamAsync())
+              {
+                  var jsonMessage = new StreamReader(responseStream).ReadToEnd();
+                  if (response.StatusCode == HttpStatusCode.OK)
+                  {
+                      var returndata = BaseListResponse<T>.Deserialize<T>(jsonMessage, pObjName);
+                      // Add Header from Response
+                      returndata.Headers = response.Headers;
+                      returndata.StatusCode = response.StatusCode;
+
+
+
+
+
+                      Cache?.AddEntry(this.BaseAddress + "/" + pEndpoint, jsonMessage, DateTime.Now, response.Headers, response.StatusCode);
+                      return returndata;
+                  }
+                  return new BaseListResponse<T>
+                  {
+                      Headers = response.Headers,
+                      StatusCode = response.StatusCode,
+                      Message = jsonMessage
+                  };
+              }
+          }
+          else
+          {
+                    var returndata = BaseListResponse<T>.Deserialize<T>(OldData.Data, pObjName);
+                    // Add Header from Response
+                    returndata.Headers = OldData.Headers;
+                    returndata.StatusCode = OldData.StatusCode;
+                    return returndata;
+                }
+
+
+
       }
       catch (Exception ex)
       {
@@ -68,25 +96,43 @@ namespace TeamworkProjects.HTTPClient
         {
             try
             {
-                var response = Task.Run(() => GetAsync(pEndpoint)).Result;
-                using (var responseStream = await response.Content.ReadAsStreamAsync())
+                ClientCacheEntry OldData = null;
+                // Try to find cached results
+                if (this.Cache != null)
                 {
-                    var jsonMessage = new StreamReader(responseStream).ReadToEnd();
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        var returndata = BaseSingleResponse<T>.Deserialize<T>(jsonMessage, pObjName);
-                        // Add Header from Response
-                        returndata.Headers = response.Headers;
-                        returndata.StatusCode = response.StatusCode;
-                        return returndata;
-                    }
-                    return new BaseSingleResponse<T>
-                    {
-                        Headers = response.Headers,
-                        StatusCode = response.StatusCode,
-                        Message = jsonMessage
-                    };
+                    OldData = Cache.FindEntry(pEndpoint);
                 }
+                if (OldData == null)
+                {
+                    var response = Task.Run(() => GetAsync(pEndpoint)).Result;
+                    using (var responseStream = await response.Content.ReadAsStreamAsync())
+                    {
+                        var jsonMessage = new StreamReader(responseStream).ReadToEnd();
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var returndata = BaseSingleResponse<T>.Deserialize<T>(jsonMessage, pObjName);
+                            // Add Header from Response
+                            returndata.Headers = response.Headers;
+                            returndata.StatusCode = response.StatusCode;
+                            Cache?.AddEntry(pEndpoint, jsonMessage, DateTime.Now, response.Headers, response.StatusCode);
+                            return returndata;
+                        }
+                        return new BaseSingleResponse<T>
+                        {
+                            Headers = response.Headers,
+                            StatusCode = response.StatusCode,
+                            Message = jsonMessage
+                        };
+                    }
+                }
+                else
+                {
+                    var returndata = BaseSingleResponse<T>.Deserialize<T>(OldData.Data, pObjName);
+                    returndata.Headers = OldData.Headers;
+                    returndata.StatusCode = OldData.StatusCode;
+                    return returndata;
+                }
+
 
             }
             catch (Exception ex)
@@ -94,6 +140,7 @@ namespace TeamworkProjects.HTTPClient
                 if (Debugger.IsAttached) Console.WriteLine(ex.Message);
                 return new BaseSingleResponse<T>
                 {
+                    Data = default(T),
                     Headers = null,
                     StatusCode = HttpStatusCode.UnsupportedMediaType,
                     Message = ex.Message
@@ -101,7 +148,6 @@ namespace TeamworkProjects.HTTPClient
             }
         }
   }
-
 
 
   public static class GetExtension

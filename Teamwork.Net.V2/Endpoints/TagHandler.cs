@@ -78,7 +78,7 @@ namespace TeamworkProjects.Endpoints
             {
        
                     string post = JsonConvert.SerializeObject(theTag);
-                    await _client.HttpClient.PutAsync("/tags.json", new StringContent("{\"tag\": " + theTag + "}", Encoding.UTF8));
+                    await _client.HttpClient.PutAsync("/tags/" + theTag.ID + ".json", new StringContent("{\"tag\": " + post + "}", Encoding.UTF8));
                     return true;
                 
             }

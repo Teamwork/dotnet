@@ -18,10 +18,16 @@ namespace TeamworkProjects.Model
     [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
     public string Id { get; set; }
 
-    [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("grant-access-to", NullValueHandling = NullValueHandling.Ignore)]
+        public string GrantAccessTo { get; set; }
+
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
     public string Name { get; set; }
 
-    [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("notify", NullValueHandling = NullValueHandling.Ignore)]
+        public string notify { get; set; }
+
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
     public string Description { get; set; }
 
     [JsonProperty("content", NullValueHandling = NullValueHandling.Ignore)]
@@ -69,6 +75,6 @@ namespace TeamworkProjects.Model
 
 
         [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
-        public Tag[] tags { get; set; }
+        public string tags { get; set; }
     }
 }

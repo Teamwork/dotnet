@@ -127,4 +127,37 @@ namespace TeamworkProjects.Model
     [JsonProperty("user-invited-status", NullValueHandling = NullValueHandling.Ignore)]
     public string UserInvitedStatus { get; set; }
   }
+
+
+    public class PersonAdd
+    {
+
+
+        [JsonProperty("user-type", NullValueHandling = NullValueHandling.Ignore)]
+        public string UserType { get; set; }
+
+        [JsonProperty("full-name", NullValueHandling = NullValueHandling.Ignore)]
+        public string FullName { get; set; }
+
+        [JsonProperty("email-address", NullValueHandling = NullValueHandling.Ignore)]
+        public string EmailAddress { get; set; }
+
+       [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
+        public string Notes { get; set; }
+
+       [JsonProperty("company-id", NullValueHandling = NullValueHandling.Ignore)]
+        public string CompanyId { get; set; }
+
+       [JsonProperty("user-name", NullValueHandling = NullValueHandling.Ignore)]
+        public string UserName { get; set; }
+
+        [JsonProperty("user-invited", NullValueHandling = NullValueHandling.Ignore)]
+        public string UserInvited { get; set; }
+
+        [JsonProperty("allowEmailNotifications", NullValueHandling = NullValueHandling.Ignore)]
+        public string AllowNotifications { get; set; }
+
+
+
+    }
 }

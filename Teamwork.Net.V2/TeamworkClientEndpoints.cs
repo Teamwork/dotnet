@@ -35,6 +35,8 @@ namespace TeamworkProjects
         private CategoryHandler categories;
         private FileHandler files;
         private TagHandler tags;
+        private TaskHandler tasks;
+        private PeopleHandler people;
 
         public ProjectHandler Projects => projects ?? (projects = new ProjectHandler(this));
         public TimeHandler Time => time ?? (time = new TimeHandler(this));
@@ -44,5 +46,7 @@ namespace TeamworkProjects
         public CategoryHandler Categories => categories ?? (categories = new CategoryHandler(this));
         public FileHandler Files => files ?? (files = new FileHandler(this));
         public TagHandler Tags => tags ?? (tags = new TagHandler(this));
+        public TaskHandler Tasks => tasks ?? (tasks = new TaskHandler(this));
+        public PeopleHandler People => people ?? (people = new PeopleHandler(this));
     }
 }

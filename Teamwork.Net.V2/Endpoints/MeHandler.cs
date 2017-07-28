@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using TeamworkProjects.Generic;
 using TeamworkProjects.HTTPClient;
 using TeamworkProjects.Model;
 
@@ -29,6 +30,49 @@ namespace TeamworkProjects.Endpoints
            var result = await client.HttpClient.PostWithReturnAsync(request, new StringContent("{\"userstatus\": " + post + "}", Encoding.UTF8));
            if (result.StatusCode == HttpStatusCode.Created || result.StatusCode == HttpStatusCode.OK) return true;
            return false;
+        }
+
+
+        public async Task<bool> Clockin()
+        {
+            var request = "/me/clockin.json";
+            string post = string.Empty;
+            var result = await client.HttpClient.PostAsync(request, new StringContent("{\"info\": \"\""+ "}", Encoding.UTF8));
+            if (result.StatusCode == HttpStatusCode.Created || result.StatusCode == HttpStatusCode.OK) return true;
+            return false;
+        }
+
+        public async Task<bool> ClockOut()
+        {
+            var request = "/me/clockout.json";
+            string post = string.Empty;
+            var result = await client.HttpClient.PostAsync(request, new StringContent("{\"info\": \"\"" + "}", Encoding.UTF8));
+            if (result.StatusCode == HttpStatusCode.Created || result.StatusCode == HttpStatusCode.OK) return true;
+            return false;
+        }
+
+
+        public async Task<Person> GetMyDetails()
+        {
+            var request = "/me.json";
+            var result = await client.HttpClient.GetAsync<Person>(request,"person",null,RequestFormat.Json);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return result.Data;
+            }
+            return null;
+        }
+
+
+        public async Task<Account> GetAccountDetails()
+        {
+            var request = "/account.json";
+            var result = await client.HttpClient.GetAsync<Account>(request, "account", null, RequestFormat.Json);
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return result.Data;
+            }
+            return null;
         }
     }
 }

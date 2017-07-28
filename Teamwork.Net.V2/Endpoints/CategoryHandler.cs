@@ -17,6 +17,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -50,7 +51,20 @@ namespace TeamWorkNet.Handler
             {
                 var requestString = "projectCategories.json";
                 var data = await client.HttpClient.GetListAsync<Category>(requestString, "categories", null);
-                if (data.StatusCode == HttpStatusCode.OK) return data.List;
+                if (data.StatusCode == HttpStatusCode.OK)
+                {
+                    // Prepare Categories
+
+                    foreach (var cat in data.List)
+                    {
+                        cat.Children = data.List.Where(p => p.ParentId == cat.Id).ToList();
+                        if (cat.Children.Count > 0) cat.HasChildren = true;
+                        cat.Children.ForEach(p => p.ParentName = cat.Name);
+                    }
+                    
+                    return data.List;
+                }
+
                 throw new Exception("Error processing Teamwork API Request: ", new Exception(data.Message));
             }
             catch (Exception ex)

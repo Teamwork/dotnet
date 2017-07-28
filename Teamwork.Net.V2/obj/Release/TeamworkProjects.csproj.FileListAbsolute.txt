@@ -1,0 +1,10 @@
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Release\Teamwork.Net.V2.dll
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Release\Teamwork.Net.V2.pdb
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Release\Newtonsoft.Json.dll
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Release\System.Net.Http.Formatting.dll
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Release\Newtonsoft.Json.xml
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Release\System.Net.Http.Formatting.xml
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\bin\Release\de\System.Net.Http.Formatting.resources.dll
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\obj\Release\TeamworkProjects.csprojResolveAssemblyReference.cache
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\obj\Release\Teamwork.Net.V2.dll
+E:\Workspaces Teamwork\_github\TeamworkNet\Teamwork.Net.V2\obj\Release\Teamwork.Net.V2.pdb

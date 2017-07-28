@@ -30,6 +30,9 @@ using TeamworkProjects.Response;
 
 namespace TeamworkProjects.Endpoints
 {
+    using System.Net.Http.Handlers;
+    using System.Net.Http.Headers;
+
     /// <summary>
     /// 
     /// </summary>
@@ -96,6 +99,9 @@ namespace TeamworkProjects.Endpoints
     {
         private readonly Client client;
 
+
+        public delegate void ProgressChangesd(object sender, double e);
+        public event ProgressChangesd onProgressChanged;
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
@@ -133,20 +139,25 @@ namespace TeamworkProjects.Endpoints
         /// <param name="categoryID">default 0</param>
         /// <returns></returns>
         public async Task<bool> UploadFileToProject(int projectID, string description, string filepath,
-            string filename, bool isPrivate = false, int categoryID = 0)
+            string filename, bool isPrivate = false, int categoryID = 0,string categoryName = "", string notify = "", string grantaccess = "", string pApiKey = "", string pDomain = "")
         {
 
-                using (var content = new MultipartFormDataContent())
+            HttpClientHandler hand = new HttpClientHandler();
+            ProgressMessageHandler processMessageHander = new ProgressMessageHandler(hand);
+            processMessageHander.HttpSendProgress += ProcessMessageHander_HttpSendProgress;
+            var clientwReport = Client.GetTeamworkClient(new Uri(pDomain), pApiKey,processMessageHander);
+            using (var content = new MultipartFormDataContent())
                 {
-                    FileStream fs = File.OpenRead(filepath);
+                    var info = new FileInfo(filepath);
+                    FileStream fs = info.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
-                    var streamContent = new StreamContent(fs);
+                var streamContent = new StreamContent(fs);
                     streamContent.Headers.Add("Content-Type", "application/octet-stream");
                     streamContent.Headers.Add("Content-Disposition",
                         "form-data; name=\"file\"; filename=\"" + Path.GetFileName(filepath) + "\"");
                     content.Add(streamContent, "file", Path.GetFileName(filepath));
-
-                    HttpResponseMessage message = await this.client.HttpClient.PostAsync("pendingfiles.json", content);
+                
+                HttpResponseMessage message = await clientwReport.HttpClient.PostAsync("pendingfiles.json", content);
 
                     if (message.StatusCode != HttpStatusCode.OK)
                     {
@@ -157,19 +168,40 @@ namespace TeamworkProjects.Endpoints
 
                             var file = new TeamWorkFile
                             {
-                                CategoryId = categoryID.ToString(CultureInfo.InvariantCulture),
-                                CategoryName = "",
                                 description = description,
                                 Name = filename,
                                 PendingFileRef = result.pendingFile.Reference,
-                                Isprivate = isPrivate == false ? "0" : "1"
+                                Isprivate = isPrivate == false ? "0" : "1",
+                               
                             };
 
-                            var response = await client.HttpClient.PostWithReturnAsync("/projects/" + projectID + "/files.json",
-                                new StringContent("{\"file\": " + JsonConvert.SerializeObject(file) + "}", Encoding.UTF8));
+                            if (categoryID > -1)
+                            {
+                                file.CategoryId = categoryID.ToString(CultureInfo.InvariantCulture);
+                                file.CategoryName = "";
+                            }
+                            else
+                            {
+                                file.CategoryName = "No Category";
+                            }
+                            if (!string.IsNullOrEmpty(notify)) file.notify = notify;
+                            if (!string.IsNullOrEmpty(grantaccess)) file.GrantAccessTo = grantaccess;
+
+
+                            try
+                            {
+                            var response = await clientwReport.HttpClient.PostWithReturnAsync("/projects/" + projectID + "/files.json",
+                                    new StringContent("{\"file\": " + JsonConvert.SerializeObject(file) + "}", Encoding.UTF8));
 
                             if (response.StatusCode == HttpStatusCode.OK)
                                 return true;
+                        }
+                            catch (Exception ex)
+                            {
+                                throw ex;
+                            }
+
+
                         }
                     }
                     return false;
@@ -177,13 +209,58 @@ namespace TeamworkProjects.Endpoints
         }
 
 
-        public async Task<bool> UploadFileToTask(int pTaskId, string description, string filepath,
+        public async Task<bool> UploadFileToTask(int pProjectId, int pTaskId, string description, string filepath,
     string filename, bool isPrivate = false, int categoryID = 0)
         {
 
             using (var content = new MultipartFormDataContent())
             {
-                FileStream fs = File.OpenRead(filepath);
+                var info = new FileInfo(filepath);
+                FileStream fs = info.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+
+                var streamContent = new StreamContent(fs);
+                streamContent.Headers.Add("Content-Type", "application/octet-stream");
+                streamContent.Headers.Add("Content-Disposition","form-data; name=\"file\"; filename=\"" + Path.GetFileName(filepath) + "\"");
+                content.Add(streamContent, "file", Path.GetFileName(filepath));
+
+                HttpResponseMessage message = await this.client.HttpClient.PostAsync("pendingfiles.json", content);
+
+                if (message.StatusCode != HttpStatusCode.OK)
+                {
+                    using (Stream responseStream = await message.Content.ReadAsStreamAsync())
+                    {
+                        string jsonMessage = new StreamReader(responseStream).ReadToEnd();
+                        var result = JsonConvert.DeserializeObject<FileUploadResponse>(jsonMessage);
+
+                        var file = new TeamWorkFile
+                        {
+                            CategoryId = categoryID.ToString(CultureInfo.InvariantCulture),
+                            CategoryName = "",
+                            description = description,
+                            Name = filename,
+                            PendingFileRef = result.pendingFile.Reference,
+                            Isprivate = isPrivate == false ? "0" : "1"
+                        };
+
+                        var response = await client.HttpClient.PostWithReturnAsync("/project/" + pProjectId + "/tasks/" + pTaskId + "/files.json",
+                            new StringContent("{\"file\": " + JsonConvert.SerializeObject(file) + "}", Encoding.UTF8));
+
+                        if (response.StatusCode == HttpStatusCode.OK)
+                            return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+        public async Task<bool> UploadFileToMessage(int pProjectId, int pMessageId, string description, string filepath,
+    string filename, bool isPrivate = false, int categoryID = 0)
+        {
+
+            using (var content = new MultipartFormDataContent())
+            {
+                var info = new FileInfo(filepath);
+                FileStream fs = info.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
                 var streamContent = new StreamContent(fs);
                 streamContent.Headers.Add("Content-Type", "application/octet-stream");
@@ -210,7 +287,7 @@ namespace TeamworkProjects.Endpoints
                             Isprivate = isPrivate == false ? "0" : "1"
                         };
 
-                        var response = await client.HttpClient.PostWithReturnAsync("/tasks/" + pTaskId + "/files.json",
+                        var response = await client.HttpClient.PostWithReturnAsync("/project/" + pProjectId + "/messages/" + pMessageId + "/files.json",
                             new StringContent("{\"file\": " + JsonConvert.SerializeObject(file) + "}", Encoding.UTF8));
 
                         if (response.StatusCode == HttpStatusCode.OK)
@@ -227,7 +304,8 @@ namespace TeamworkProjects.Endpoints
 
             using (var content = new MultipartFormDataContent())
             {
-                FileStream fs = File.OpenRead(filepath);
+                var info = new FileInfo(filepath);
+                FileStream fs = info.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
                 var streamContent = new StreamContent(fs);
                 streamContent.Headers.Add("Content-Type", "application/octet-stream");
@@ -243,27 +321,19 @@ namespace TeamworkProjects.Endpoints
                     {
                         string jsonMessage = new StreamReader(responseStream).ReadToEnd();
                         var result = JsonConvert.DeserializeObject<FileUploadResponse>(jsonMessage);
-
-                        //var file = new TeamWorkFile
-                        //{
-                        //    CategoryId = categoryID.ToString(CultureInfo.InvariantCulture),
-                        //    CategoryName = "",
-                        //    description = description,
-                        //    Name = filename,
-                        //    PendingFileRef = result.pendingFile.Reference,
-                        //    Isprivate = isPrivate == false ? "0" : "1"
-                        //};
-
-                        //var response = await client.HttpClient.PostWithReturnAsync("/projects/" + projectID + "/files.json",
-                        //    new StringContent("{\"file\": " + JsonConvert.SerializeObject(file) + "}", Encoding.UTF8));
-
-                        //if (response.StatusCode == HttpStatusCode.OK)
                         return result.pendingFile.Reference;
                     }
                 }
                 return "";
             }
         }
+
+
+        private void ProcessMessageHander_HttpSendProgress(object sender, HttpProgressEventArgs e)
+        {
+            onProgressChanged?.Invoke(sender,e.ProgressPercentage);
+        }
+
 
         /// <summary>
         /// Upload a file to a given project
@@ -275,14 +345,17 @@ namespace TeamworkProjects.Endpoints
         /// <param name="fileid"></param>
         /// <returns></returns>
         public async Task<BaseResponse<bool>> UploadNewFileVersionToProject(int projectID, string description,
-            string filepath, string filename, string fileid)
+            string filepath, string filename, string fileid, string pApiKey = "", string pDomain = "")
         {
-            using (var client = new AuthorizedHttpClient(this.client.ApiKey, this.client.Domain))
-            {
-                using (var content = new MultipartFormDataContent())
+
+            HttpClientHandler hand = new HttpClientHandler();
+            ProgressMessageHandler processMessageHander = new ProgressMessageHandler(hand);
+            processMessageHander.HttpSendProgress += ProcessMessageHander_HttpSendProgress;
+            var clientwReport = Client.GetTeamworkClient(new Uri(pDomain), pApiKey, processMessageHander);
+            using (var content = new MultipartFormDataContent())
                 {
-                    FileStream fs = File.OpenRead(filepath);
-                    ;
+                    var info = new FileInfo(filepath);
+                    FileStream fs = info.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
 
                     var streamContent = new StreamContent(fs);
@@ -292,7 +365,7 @@ namespace TeamworkProjects.Endpoints
                     content.Add(streamContent, "file", Path.GetFileName(filepath));
                     try
                     {
-                        HttpResponseMessage message = await client.PostAsync("pendingfiles.json", content);
+                        HttpResponseMessage message = await clientwReport.HttpClient.PostAsync("pendingfiles.json", content);
                         if (message.StatusCode != HttpStatusCode.OK)
                         {
                             using (Stream responseStream = await message.Content.ReadAsStreamAsync())
@@ -308,7 +381,7 @@ namespace TeamworkProjects.Endpoints
 
                                 var response =
                                     await
-                                        client.PostWithReturnAsync("/files/" + fileid + ".json",
+                                        client.HttpClient.PostWithReturnAsync("/files/" + fileid + ".json",
                                             new StringContent(
                                                 "{\"fileversion\": " + JsonConvert.SerializeObject(file) + "}",
                                                 Encoding.UTF8));
@@ -323,7 +396,6 @@ namespace TeamworkProjects.Endpoints
                         Console.WriteLine(ex.Message);
                     }
                 }
-            }
             return new BaseResponse<bool>(false, HttpStatusCode.InternalServerError);
         }
 

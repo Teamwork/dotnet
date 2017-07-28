@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using Teamwork.Net;
 using TeamworkProjects.Base.Response;
 using TeamworkProjects.HTTPClient;
@@ -52,12 +53,115 @@ namespace TeamworkProjects
         /// <returns></returns>
         public async Task<List<UserEntry>> GetAuthenticationtDetails(string pUserName, string pAssword)
         {
+            List<UserEntry> accountlist = new List<UserEntry>();
             using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.teamwork.com/")))
             {
-                var data = await webclient.GetListAsync<UserEntry>(@"accounts/search.json?email=" + pUserName + "&password=" + pAssword,"accounts", null);
-                if (data.StatusCode == HttpStatusCode.OK) return data.List;
-                throw new Exception(data.Status + " " + data.Message);
+                var data = await webclient.GetListAsync<UserEntry>(@"accounts/search.json?email=" + pUserName + "&password=" + HttpUtility.UrlEncode(pAssword),"accounts", null);
+                if (data.StatusCode == HttpStatusCode.OK)
+                {
+                    accountlist.AddRange(data.List);
+                }
+                else
+                {
+                    throw new Exception(data.Status + " " + data.Message);
+                }
+
             }
+
+
+
+            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.eu.teamwork.com/")))
+            {
+                var data = await webclient.GetListAsync<UserEntry>(@"accounts/search.json?email=" + pUserName + "&password=" + HttpUtility.UrlEncode(pAssword), "accounts", null);
+                if (data.StatusCode == HttpStatusCode.OK)
+                {
+                    foreach (var acc in data.List)
+                    {
+                        acc.companyname = acc.companyname + "-EU";
+                    }
+                    accountlist.AddRange(data.List);
+                }
+                else
+                {
+                    throw new Exception(data.Status + " " + data.Message);
+                }
+            }
+
+            if (accountlist.Count > 0) return accountlist;
+            throw new Exception("No Login found");
+
         }
+
+
+        /// <summary>
+        /// Returns authentication details and infos of the current user
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<UserEntry>> GetAuthenticationtDetailsTest(string pUserName, string pAssword)
+        {
+            List<UserEntry> accountlist = new List<UserEntry>();
+            using (var webclient = new AuthorizedHttpClient("", new Uri("http://sunbeam.teamwork.dev/")))
+            {
+                var data = await webclient.GetListAsync<UserEntry>(@"accounts/search.json?email=" + pUserName + "&password=" + pAssword, "accounts", null);
+                if (data.StatusCode == HttpStatusCode.OK)
+                {
+                    accountlist.AddRange(data.List);
+                }
+                else
+                {
+                    throw new Exception(data.Status + " " + data.Message);
+                }
+
+            }
+
+            if (accountlist.Count > 0) return accountlist;
+            throw new Exception("No Login found");
+
+        }
+
+
+        /// <summary>
+        /// Returns authentication details and infos of the current user
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<UserEntry>> FindAccounts(string pUserName)
+        {
+            List<UserEntry> accountlist = new List<UserEntry>();
+            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.teamwork.com/")))
+            {
+                var data = await webclient.GetListAsync<UserEntry>(@"accounts/search.json?email=" + pUserName, "accounts", null);
+                if (data.StatusCode == HttpStatusCode.OK)
+                {
+                    accountlist.AddRange(data.List);
+                }
+                else
+                {
+                    throw new Exception(data.Status + " " + data.Message);
+                }
+
+            }
+
+            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.eu.teamwork.com/")))
+            {
+                var data = await webclient.GetListAsync<UserEntry>(@"accounts/search.json?email=" + pUserName, "accounts", null);
+                if (data.StatusCode == HttpStatusCode.OK)
+                {
+                    foreach (var acc in data.List)
+                    {
+                        acc.companyname = acc.companyname + "-EU";
+                    }
+                    accountlist.AddRange(data.List);
+                }
+                else
+                {
+                    throw new Exception(data.Status + " " + data.Message);
+                }
+            }
+
+            if (accountlist.Count > 0) return accountlist;
+            throw new Exception("No Login found");
+
+        }
+
     }
 }

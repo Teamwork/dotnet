@@ -15,16 +15,26 @@ namespace TeamworkProjects.Model
     public string description { get; set; }
   }
 
+
+    public class TeamworkFileProjectCallWrapper
+    {
+        public List<TeamWorkFile> files { get; set; } 
+    }
+
     public class TeamWorkFile  : TeamworkObjectBase
   {
-
-    [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
-    public string Name { get; set; }
 
     [JsonProperty("category-id", NullValueHandling = NullValueHandling.Ignore)]
     public string CategoryId { get; set; }
 
-    [JsonProperty("category-name", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("grant-access-to", NullValueHandling = NullValueHandling.Ignore)]
+        public string GrantAccessTo { get; set; }
+
+        [JsonIgnore]
+    public string FileDisplayForList => DateTime.Parse(Uploaded).ToShortDateString() + " - " + originalName + ", " + version + " version(s)";
+    [JsonIgnore]
+    public string ToString => DateTime.Parse(Uploaded).ToShortDateString() + " - " + originalName + ", " + version + " version(s)";
+        [JsonProperty("category-name", NullValueHandling = NullValueHandling.Ignore)]
     public string CategoryName { get; set; }
 
     [JsonProperty("project-id", NullValueHandling = NullValueHandling.Ignore)]
@@ -56,7 +66,10 @@ namespace TeamworkProjects.Model
     [JsonProperty("project-name", NullValueHandling = NullValueHandling.Ignore)]
     public string projectname { get; set; }
 
-    public string version { get; set; }
+        [JsonProperty("notify", NullValueHandling = NullValueHandling.Ignore)]
+        public string notify { get; set; } = "true";
+
+        public string version { get; set; }
     public string originalName { get; set; }
     public string id { get; set; }
     public string size { get; set; }

@@ -24,15 +24,20 @@ namespace TeamworkProjects.Base.Model
       get { return color; }
       set
       {
-        if (value.Contains("#d84640") || value.Contains("#f78234") || value.Contains("#f4bd38") ||
-            value.Contains("#b1da34") || value.Contains("#53c944")
+        if (
+            value.Contains("#d84640") 
+            || value.Contains("#f78234") 
+            || value.Contains("#f4bd38") 
+            || value.Contains("#b1da34") 
+            || value.Contains("#53c944")
             || value.Contains("#37ced0")
             || value.Contains("#2f8de4")
             || value.Contains("#9b7cdb")
             || value.Contains("#f47fbe")
             || value.Contains("#a6a6a6")
             || value.Contains("#4d4d4d")
-            || value.Contains("#9e6957"))
+            || value.Contains("#9e6957")
+            )
         {
           color = value;
         }

@@ -18,6 +18,12 @@ namespace TeamworkProjects.Model
 
       [JsonProperty("time-tracking-enabled", NullValueHandling = NullValueHandling.Ignore)]
       public bool TimeTrackingEnabled { get; set; }
+        
+      [JsonProperty("officeAddinAvailable", NullValueHandling = NullValueHandling.Ignore)]
+      public bool officeAddinAvailable { get; set; }
+
+      [JsonProperty("officeAddinMSProjectAvailable", NullValueHandling = NullValueHandling.Ignore)]
+      public bool officeAddinMSProjectAvailable { get; set; }
 
       [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
       public string Name { get; set; }
@@ -106,7 +112,16 @@ namespace TeamworkProjects.Model
       [JsonProperty("firstname", NullValueHandling = NullValueHandling.Ignore)]
       public string Firstname { get; set; }
 
-      [JsonProperty("dateSeperator", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("isPaid", NullValueHandling = NullValueHandling.Ignore)]
+        public string isPaid { get; set; }
+        [JsonProperty("pricePlan", NullValueHandling = NullValueHandling.Ignore)]
+        public string pricePlan { get; set; }
+
+        [JsonProperty("pricePlanId", NullValueHandling = NullValueHandling.Ignore)]
+        public int pricePlanId { get; set; }
+
+
+        [JsonProperty("dateSeperator", NullValueHandling = NullValueHandling.Ignore)]
       public string DateSeperator { get; set; }
 
       [JsonProperty("timeFormat", NullValueHandling = NullValueHandling.Ignore)]

@@ -17,6 +17,8 @@ using TeamworkProjects.HTTPClient;
 
 namespace TeamworkProjects
 {
+    using System.Net.Http.Handlers;
+
     /// <summary>
     /// Main entry point for the API
     /// </summary>
@@ -55,11 +57,19 @@ namespace TeamworkProjects
         /// <param name="pDomain">Your Projects Domain eg: https://name.teamwork.com</param>
         /// <param name="pApiKey">Your API Key</param>
         /// <returns></returns>
-        public static Client GetTeamworkClient(Uri pDomain, string pApiKey)
+        public static Client GetTeamworkClient(Uri pDomain, string pApiKey, ProgressMessageHandler messageHandler = null)
         {
             try
             {
-                var newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(pApiKey, pDomain)};
+                Client newTeamworkClient = null;
+                if (messageHandler != null)
+                {
+                    newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(pApiKey, pDomain, messageHandler) };
+                }
+                else
+                {
+                    newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(pApiKey, pDomain) };
+                }
                 newTeamworkClient.HttpClient.BaseAddress = pDomain;
                 return newTeamworkClient;
             }
@@ -69,6 +79,55 @@ namespace TeamworkProjects
                return null;
             }
         }
+
+
+        /// <summary>
+        /// Returns a new instance of the Teamwork API Client
+        /// </summary>
+        /// <param name="pDomain">Your Projects Domain eg: https://name.teamwork.com</param>
+        /// <param name="pApiKey">Your API Key</param>
+        /// <returns></returns>
+        public Client ReInitClientWithHandler(ProgressMessageHandler messageHandler = null)
+        {
+            try
+            {
+                var oldClient = this.HttpClient;
+                Client newTeamworkClient = null;
+                newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(ApiKey, Domain, messageHandler) };
+                newTeamworkClient.HttpClient.BaseAddress = oldClient.BaseAddress;
+                oldClient.Dispose();
+                return newTeamworkClient;
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.ThrowGenericTeamworkError(ex);
+                return null;
+            }
+        }
+
+
+        /// <summary>
+        /// Returns a new instance of the Teamwork API Client
+        /// </summary>
+        /// <param name="pDomain">Your Projects Domain eg: https://name.teamwork.com</param>
+        /// <param name="pApiKey">Your API Key</param>
+        /// <returns></returns>
+        public static Client GetTeamworkClient(string AuthToken)
+        {
+            try
+            {
+                var newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient() };
+                newTeamworkClient.HttpClient.BaseAddress = new Uri("http://sunbeam.teamwork.dev");
+                newTeamworkClient.HttpClient.DefaultRequestHeaders.Add("apiToken", AuthToken);
+                return newTeamworkClient;
+            }
+            catch (Exception ex)
+            {
+                ErrorHandler.ThrowGenericTeamworkError(ex);
+                return null;
+            }
+        }
+
 
         /// <summary>
         /// Returns a new instance of the Teamwork API Client using Username & Password

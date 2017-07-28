@@ -55,11 +55,17 @@ namespace TeamworkProjects.Model
 
     [JsonProperty("replyNo", NullValueHandling = NullValueHandling.Ignore)]
     public string ReplyNo { get; set; }
-  }
+        [JsonProperty("grant-access-to", NullValueHandling = NullValueHandling.Ignore)]
+        public string GrantAccessTo { get; set; }
+
+    }
 
 
     public class MessageCreate
     {
+        [JsonProperty("grant-access-to", NullValueHandling = NullValueHandling.Ignore)]
+        public string GrantAccessTo { get; set; }
+
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
         public string title { get; set; }
         [JsonProperty("category-id", NullValueHandling = NullValueHandling.Ignore)]
@@ -74,7 +80,7 @@ namespace TeamworkProjects.Model
         public string pendingFileAttachments { get; set; }
 
         [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
-        public Tag[] tags { get; set; }
+        public string tags { get; set; }
 
     }
 }

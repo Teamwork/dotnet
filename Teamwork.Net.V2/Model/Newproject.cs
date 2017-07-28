@@ -66,10 +66,11 @@ namespace TeamworkProjects.Model
     [JsonProperty("start-page", NullValueHandling = NullValueHandling.Ignore)]
     public string StartPage { get; set; }
 
-
+        [JsonProperty("People", NullValueHandling = NullValueHandling.Ignore)]
+        public string People { get; set; }
 
         [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
-        public Tag[] tags { get; set; }
+        public string tags { get; set; }
 
     }
 }

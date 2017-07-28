@@ -23,6 +23,9 @@ namespace TeamworkProjects.Model
         [JsonProperty("todo-items", NullValueHandling = NullValueHandling.Ignore)]
         public TodoItem[] TodoItems { get; set; }
 
+        [JsonProperty("grant-access-to", NullValueHandling = NullValueHandling.Ignore)]
+        public string GrantAccessTo { get; set; }
+
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
@@ -37,7 +40,9 @@ namespace TeamworkProjects.Model
 
         [JsonProperty("newTaskDefaults", NullValueHandling = NullValueHandling.Ignore)]
         public NewTaskDefaults newTaskDefaults { get; set; }
-        
+
+        [JsonProperty("lockdownId", NullValueHandling = NullValueHandling.Ignore)]
+        public int lockdownId { get; set; }
 
 
         public bool Complete
@@ -52,7 +57,7 @@ namespace TeamworkProjects.Model
 
         public bool Private
         {
-            get { return _private == "1"; }
+            get { return _private == "1" || _private == "true"; }
             set { _private = value ? "1" : "0"; }
         }
 
@@ -79,6 +84,11 @@ namespace TeamworkProjects.Model
 
         [JsonProperty("completed-count", NullValueHandling = NullValueHandling.Ignore)]
         public string CompletedCount { get; set; }
+
+
+
+        [JsonProperty("todo-list-template-id", NullValueHandling = NullValueHandling.Ignore)]
+        public string TemplateId { get; set; }
 
         [JsonIgnore]
         public double TodolistProgress

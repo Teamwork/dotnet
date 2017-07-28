@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace TeamworkProjects.Model
 {
-  class ErrorResponse
+  public class ErrorResponse
   {
     [JsonProperty(PropertyName = "MESSAGE", NullValueHandling = NullValueHandling.Ignore)]
     public string Message { get; set; }
