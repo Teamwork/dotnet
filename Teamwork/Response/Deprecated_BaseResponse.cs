@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Http.Headers;
 
-namespace TeamworkProjects.Response
+namespace Teamwork.Response
 {
   /// <summary>
   /// The service response.

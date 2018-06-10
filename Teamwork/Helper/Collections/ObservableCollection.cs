@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamworkProjects.Extensions.Collections
+namespace Teamwork.Extensions.Collections
 {
   public static class ObservableCollectionExtension
   {

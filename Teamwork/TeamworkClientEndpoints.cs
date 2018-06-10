@@ -15,13 +15,13 @@
 #region Imports
 
 using System.ComponentModel;
-using TeamworkProjects.Endpoints;
 using Teamwork;
+using Teamwork.Endpoints;
 using TeamWorkNet.Handler;
 
 #endregion
 
-namespace TeamworkProjects
+namespace Teamwork
 {
     /// <summary>
     /// Main entry point for the API
@@ -34,12 +34,11 @@ namespace TeamworkProjects
         private TodoListHandler todolists;
         private CompanyHandler companies;
         private CategoryHandler categories;
-        private FileHandler files;
         private TagHandler tags;
         private TaskHandler tasks;
         private PeopleHandler people;
         private BoardsHandler boards;
-				private ChatHandler chat;
+		private ChatHandler chat;
 
 
 
@@ -49,7 +48,6 @@ namespace TeamworkProjects
         public TodoListHandler TodoLists => todolists ?? (todolists = new TodoListHandler(this));
         public CompanyHandler Companies => companies ?? (companies = new CompanyHandler(this));
         public CategoryHandler Categories => categories ?? (categories = new CategoryHandler(this));
-        public FileHandler Files => files ?? (files = new FileHandler(this));
         public TagHandler Tags => tags ?? (tags = new TagHandler(this));
         public TaskHandler Tasks => tasks ?? (tasks = new TaskHandler(this));
         public PeopleHandler People => people ?? (people = new PeopleHandler(this));

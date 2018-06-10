@@ -7,7 +7,7 @@
 // License: Apache License 2.0
 // ==========================================================
 
-namespace TeamworkProjects.Extensions.Numeric
+namespace Teamwork.Extensions.Numeric
 {
   public static class DoubleExtensions
   {

@@ -6,11 +6,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TeamworkProjects.Generic;
-using TeamworkProjects.HTTPClient;
+using Teamworks.Generic;
+using Teamworks.HTTPClient;
 using Teamwork;
 
-namespace TeamworkProjects.Endpoints
+namespace Teamwork.Endpoints
 {
     public class MeHandler
     {

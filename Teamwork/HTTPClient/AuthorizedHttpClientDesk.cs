@@ -22,13 +22,13 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TeamworkProjects.Generic;
+using Teamworks.Generic;
 using Teamwork;
-using TeamworkProjects.Response;
+using Teamworks.Response;
 
 #endregion
 
-namespace TeamworkProjects.HTTPClient
+namespace Teamwork.HTTPClient
 {
     using System.Linq;
 

@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using Newtonsoft.Json;
-using TeamworkProjects.Extensions.DateTime;
+using Teamworks.Extensions.DateTime;
 
 namespace Teamwork.Model.Projects.V1
 {

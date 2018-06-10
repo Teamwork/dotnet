@@ -10,7 +10,7 @@
 using System.Collections.Generic;
 using  Teamwork;
 
-namespace TeamworkProjects.Response
+namespace Teamwork.Response
 {
   public class ProjectsResponse
   {

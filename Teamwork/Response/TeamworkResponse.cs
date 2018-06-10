@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TeamworkProjects.Base.Model;
+using Teamworks.Base.Model;
 
-namespace TeamworkProjects.Base.Response
+namespace Teamwork.Base.Response
 {
   public class TeamworkResponse<t> where t : class
   {

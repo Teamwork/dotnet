@@ -14,7 +14,7 @@
 #region Imports
 
 using Newtonsoft.Json;
-using TeamworkProjects.Base.Model;
+using Teamworks.Base.Model;
 
 #endregion
 

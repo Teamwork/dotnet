@@ -17,11 +17,11 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using Teamwork.Net;
-using TeamworkProjects.Base.Response;
-using TeamworkProjects.HTTPClient;
+using Teamworks.Base.Response;
+using Teamworks.HTTPClient;
 using Teamwork;
 
-namespace TeamworkProjects
+namespace Teamwork
 {
     /// <summary>
     /// Main entry point for the API

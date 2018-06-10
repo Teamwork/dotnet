@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TeamworkProjects.Generic;
+using Teamworks.Generic;
 
-namespace TeamworkProjects.Response
+namespace Teamwork.Response
 {
     public class BaseSingleResponse<T> : BaseResponse
     {

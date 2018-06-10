@@ -12,9 +12,9 @@
 #endregion
 
 using Newtonsoft.Json;
-using TeamworkProjects.Response;
 
-namespace TeamworkProjects.Exceptions
+
+namespace Teamwork.Exceptions
 {
     public class ErrorResponse
     {

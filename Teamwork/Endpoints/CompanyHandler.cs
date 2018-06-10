@@ -19,13 +19,13 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TeamworkProjects.HTTPClient;
+using Teamworks.HTTPClient;
 using Teamwork;
-using TeamworkProjects.Response;
+using Teamworks.Response;
 
 #endregion
 
-namespace TeamworkProjects.Endpoints
+namespace Teamwork.Endpoints
 {
   public class CompanyHandler
   {

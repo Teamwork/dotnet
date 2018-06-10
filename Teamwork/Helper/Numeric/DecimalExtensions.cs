@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamworkProjects.Extensions.Numeric
+namespace Teamwork.Extensions.Numeric
 {
 
     /// <summary>

@@ -11,7 +11,7 @@ using System;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 
-namespace TeamworkProjects.Extensions.DateTime
+namespace Teamwork.Extensions.DateTime
 {
   public static partial class DateTimeExtensions
   {

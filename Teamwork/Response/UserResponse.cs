@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Teamwork;
 
-namespace TeamworkProjects.Base.Response
+namespace Teamwork.Base.Response
 {
   public class UserResponse
   {

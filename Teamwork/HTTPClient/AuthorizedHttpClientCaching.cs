@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamworkProjects.HTTPClient
+namespace Teamwork.HTTPClient
 {
     using System.Net.Http;
 

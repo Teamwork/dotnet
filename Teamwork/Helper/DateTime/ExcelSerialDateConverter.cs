@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TeamworkProjects.Extensions.DateTime
+namespace Teamwork.Extensions.DateTime
 {
     public static class ExcelSerialDateConverter
     {

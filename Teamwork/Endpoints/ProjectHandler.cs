@@ -20,16 +20,16 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TeamworkProjects.Base.Response;
-using TeamworkProjects.Generic;
-using TeamworkProjects.HTTPClient;
+using Teamworks.Base.Response;
+using Teamworks.Generic;
+using Teamworks.HTTPClient;
 using Teamwork;
-using TeamworkProjects.Response;
+using Teamworks.Response;
 using PostResponse = Teamwork.PostResponse;
 
 #endregion
 
-namespace TeamworkProjects.Endpoints
+namespace Teamwork.Endpoints
 {
     /// <summary>
     /// https://domain.teamwork.com/projects/xxxxx

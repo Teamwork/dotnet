@@ -11,7 +11,7 @@ using System;
 using Newtonsoft.Json;
 using  Teamwork;
 
-namespace TeamworkProjects.Response
+namespace Teamwork.Response
 {
   public partial class MileStonesResponse
   {

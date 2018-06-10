@@ -20,12 +20,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using TeamworkProjects.Generic;
-using TeamworkProjects.Response;
+using Teamworks.Generic;
+using Teamworks.Response;
 
 #endregion
 
-namespace TeamworkProjects.HTTPClient
+namespace Teamwork.HTTPClient
 {
     public partial class AuthorizedHttpClient : HttpClient
   {

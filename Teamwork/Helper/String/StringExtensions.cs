@@ -6,10 +6,11 @@
 // Copyright (C) 2014 Tim Cadenbach
 // License: Apache License 2.0
 // ==========================================================
+
 using System;
 using System.Globalization;
 
-namespace TeamworkProjects.Extensions.String
+namespace Teamwork.Helper.String
 {
   public static partial class StringExtensions
   {

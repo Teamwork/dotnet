@@ -8,10 +8,10 @@
 // ==========================================================
 
 using Newtonsoft.Json;
-using TeamworkProjects.Base.Model;
+using Teamworks.Base.Model;
 using  Teamwork;
 
-namespace TeamworkProjects.Response
+namespace Teamwork.Response
 {
   public class TagResponse
   {

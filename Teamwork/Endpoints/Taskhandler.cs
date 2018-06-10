@@ -16,13 +16,13 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TeamworkProjects.Helper;
-using TeamworkProjects.HTTPClient;
+using Teamworks.Helper;
+using Teamworks.HTTPClient;
 using Teamwork;
-using TeamworkProjects.Response;
+using Teamworks.Response;
 
 
-namespace TeamworkProjects.Endpoints
+namespace Teamwork.Endpoints
 {
   /// <summary>
   /// Handler for Projects

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamworkProjects.Extensions.DateTime
+namespace Teamwork.Extensions.DateTime
 {
   public static partial class DateTimeExtensions
   {

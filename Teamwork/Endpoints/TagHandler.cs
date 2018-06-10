@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 
-namespace TeamworkProjects.Endpoints
+namespace Teamwork.Endpoints
 {
-    using TeamworkProjects;
-    using TeamworkProjects.Base.Model;
-    using TeamworkProjects.HTTPClient;
-    using TeamworkProjects.Response;
+    using Teamworks;
+    using Teamworks.Base.Model;
+    using Teamworks.HTTPClient;
+    using Teamworks.Response;
 
     public class TagHandler
     {

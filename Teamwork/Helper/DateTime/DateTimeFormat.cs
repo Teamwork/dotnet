@@ -6,7 +6,7 @@
 // Copyright (C) 2014 Tim Cadenbach
 // License: Apache License 2.0
 // ==========================================================
-namespace TeamworkProjects.Extensions.DateTime
+namespace Teamwork.Extensions.DateTime
 {
   public static class DateTimeFormat
   {

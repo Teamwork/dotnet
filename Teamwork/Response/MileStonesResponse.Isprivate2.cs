@@ -9,7 +9,7 @@
 
 using Newtonsoft.Json;
 
-namespace TeamworkProjects.Response
+namespace Teamwork.Response
 {
   public partial class MileStonesResponse
   {

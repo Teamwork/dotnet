@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using  Teamwork;
 
-namespace TeamworkProjects.Response
+namespace Teamwork.Response
 {
   public class TaskListsResponse
   {

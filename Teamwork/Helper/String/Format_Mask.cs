@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TeamworkProjects.Extensions.String
+﻿namespace Teamwork.Helper.String
 {
   public static partial class StringExtensions
   {

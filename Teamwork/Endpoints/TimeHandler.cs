@@ -23,7 +23,7 @@ using Teamwork;
 
 #endregion
 
-namespace TeamworkProjects.Endpoints
+namespace Teamwork.Endpoints
 {
     /// <summary>
     /// https://domain.teamwork.com/projects/xxxxx

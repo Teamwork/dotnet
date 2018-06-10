@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using TeamworkProjects.Response;
+using Teamworks.Response;
 
-namespace TeamworkProjects.Generic
+namespace Teamwork.Generic
 {
    public class CustomResolver : DefaultContractResolver
     {

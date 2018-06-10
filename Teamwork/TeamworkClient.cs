@@ -12,12 +12,11 @@
 #endregion
 
 using System;
+using Teamwork.HTTPClient;
 using Teamwork.Net;
-using TeamworkProjects.HTTPClient;
 
-namespace TeamworkProjects
+namespace Teamwork
 {
-    using System.Net.Http.Handlers;
 
     /// <summary>
     /// Main entry point for the API
@@ -57,19 +56,13 @@ namespace TeamworkProjects
         /// <param name="pDomain">Your Projects Domain eg: https://name.teamwork.com</param>
         /// <param name="pApiKey">Your API Key</param>
         /// <returns></returns>
-        public static Client GetTeamworkClient(Uri pDomain, string pApiKey, ProgressMessageHandler messageHandler = null)
+        public static Client GetTeamworkClient(Uri pDomain, string pApiKey)
         {
             try
             {
                 Client newTeamworkClient = null;
-                if (messageHandler != null)
-                {
-                    newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(pApiKey, pDomain, messageHandler) };
-                }
-                else
-                {
-                    newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(pApiKey, pDomain) };
-                }
+                newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(pApiKey, pDomain) };
+       
                 newTeamworkClient.HttpClient.BaseAddress = pDomain;
                 return newTeamworkClient;
             }
@@ -80,30 +73,6 @@ namespace TeamworkProjects
             }
         }
 
-
-        /// <summary>
-        /// Returns a new instance of the Teamwork API Client
-        /// </summary>
-        /// <param name="pDomain">Your Projects Domain eg: https://name.teamwork.com</param>
-        /// <param name="pApiKey">Your API Key</param>
-        /// <returns></returns>
-        public Client ReInitClientWithHandler(ProgressMessageHandler messageHandler = null)
-        {
-            try
-            {
-                var oldClient = this.HttpClient;
-                Client newTeamworkClient = null;
-                newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(ApiKey, Domain, messageHandler) };
-                newTeamworkClient.HttpClient.BaseAddress = oldClient.BaseAddress;
-                oldClient.Dispose();
-                return newTeamworkClient;
-            }
-            catch (Exception ex)
-            {
-                ErrorHandler.ThrowGenericTeamworkError(ex);
-                return null;
-            }
-        }
 
 
         /// <summary>
