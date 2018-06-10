@@ -13,7 +13,7 @@ using System.Linq;
 using Newtonsoft.Json;
 using TeamworkProjects.Base.Model;
 
-namespace TeamworkProjects.Model
+namespace Teamwork.Model.Projects.V1
 {
     public class TodoList
     {

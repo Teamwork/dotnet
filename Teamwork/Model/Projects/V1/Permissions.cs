@@ -10,7 +10,7 @@
 using Newtonsoft.Json;
 using TeamworkProjects.Helper;
 
-namespace TeamworkProjects.Model
+namespace Teamwork.Model.Projects.V1
 {
   public class Permissions
   {

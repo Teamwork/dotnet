@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamworkProjects", "Teamwork.Net.V2\TeamworkProjects.csproj", "{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "TestClient\TestClient.csproj", "{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamworkNet.Base", "..\..\_net\common\TeamworkNet\TeamWorkNet.Base\TeamworkNet.Base.csproj", "{A2549B85-8B85-4AB8-BD11-0F2FA43C921B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamwork", "Teamwork\Teamwork.csproj", "{22146072-DD8B-4965-97F8-C2DB3CED0B81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamwork.Test", "Teamwork.Test\Teamwork.Test.csproj", "{C7ADFEB2-C749-482C-AB6A-A48DC4679822}"
@@ -19,18 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A2549B85-8B85-4AB8-BD11-0F2FA43C921B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A2549B85-8B85-4AB8-BD11-0F2FA43C921B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2549B85-8B85-4AB8-BD11-0F2FA43C921B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2549B85-8B85-4AB8-BD11-0F2FA43C921B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{22146072-DD8B-4965-97F8-C2DB3CED0B81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{22146072-DD8B-4965-97F8-C2DB3CED0B81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22146072-DD8B-4965-97F8-C2DB3CED0B81}.Release|Any CPU.ActiveCfg = Release|Any CPU

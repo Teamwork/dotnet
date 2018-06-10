@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TeamworkProjects.Generic;
 using TeamworkProjects.HTTPClient;
-using TeamworkProjects.Model;
+using Teamwork;
 
 namespace TeamworkProjects.Endpoints
 {

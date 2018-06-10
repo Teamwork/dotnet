@@ -23,7 +23,7 @@ using TeamworkProjects.Response;
 
 #endregion
 
-namespace TeamworkProjects.Model
+namespace Teamwork.Model.Projects.V1
 {
 
     public class ProjectNew

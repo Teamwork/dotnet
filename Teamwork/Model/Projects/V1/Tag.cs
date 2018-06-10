@@ -10,7 +10,7 @@
 using System;
 using Newtonsoft.Json;
 
-namespace TeamworkProjects.Base.Model
+namespace Teamwork.Model.Projects.V1
 {
     [Serializable]
   public class Tag

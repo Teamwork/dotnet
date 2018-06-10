@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TeamworkProjects.Generic;
 using TeamworkProjects.Helper;
-using TeamworkProjects.Model;
+using Teamwork;
 using TeamworkProjects.Response;
 using AuthorizedHttpClient = TeamworkProjects.HTTPClient.AuthorizedHttpClient;
 

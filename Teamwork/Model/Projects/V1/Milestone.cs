@@ -14,7 +14,7 @@ using TeamworkProjects.Base;
 using TeamworkProjects.Base.Model;
 using TeamworkProjects.Extensions.DateTime;
 
-namespace TeamworkProjects.Model
+namespace Teamwork.Model.Projects.V1
 {
   public class Milestone
   {

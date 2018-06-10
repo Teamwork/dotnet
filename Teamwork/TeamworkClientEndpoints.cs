@@ -16,7 +16,7 @@
 
 using System.ComponentModel;
 using TeamworkProjects.Endpoints;
-using TeamworkProjects.Model;
+using Teamwork;
 using TeamWorkNet.Handler;
 
 #endregion

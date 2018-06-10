@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace TeamworkProjects.Model
+namespace Teamwork.Model.Projects.V1
 {
     public class UserStatus2
     {

@@ -23,9 +23,9 @@ using Newtonsoft.Json;
 using TeamworkProjects.Base.Response;
 using TeamworkProjects.Generic;
 using TeamworkProjects.HTTPClient;
-using TeamworkProjects.Model;
+using Teamwork;
 using TeamworkProjects.Response;
-using PostResponse = TeamworkProjects.Model.PostResponse;
+using PostResponse = Teamwork.PostResponse;
 
 #endregion
 

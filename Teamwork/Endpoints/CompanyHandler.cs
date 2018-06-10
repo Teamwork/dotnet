@@ -20,7 +20,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TeamworkProjects.HTTPClient;
-using TeamworkProjects.Model;
+using Teamwork;
 using TeamworkProjects.Response;
 
 #endregion

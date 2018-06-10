@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TeamworkProjects;
 using TeamworkProjects.HTTPClient;
-using TeamworkProjects.Model;
+using Teamwork;
 using TeamworkProjects.Response;
 
 #endregion

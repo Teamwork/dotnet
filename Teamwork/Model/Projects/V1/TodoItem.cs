@@ -20,7 +20,7 @@ using TeamworkProjects.Extensions.DateTime;
 
 #endregion
 
-namespace TeamworkProjects.Model
+namespace Teamwork.Model.Projects.V1
 {
     public class TodoItemCreate
     {

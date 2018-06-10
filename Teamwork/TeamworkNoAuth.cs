@@ -19,7 +19,7 @@ using System.Web;
 using Teamwork.Net;
 using TeamworkProjects.Base.Response;
 using TeamworkProjects.HTTPClient;
-using TeamworkProjects.Model;
+using Teamwork;
 
 namespace TeamworkProjects
 {

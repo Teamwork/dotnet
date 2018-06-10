@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using TeamworkProjects.Model;
+using Teamwork;
 
 namespace TeamworkProjects.Response
 {

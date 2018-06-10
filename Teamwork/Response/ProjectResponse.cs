@@ -8,7 +8,7 @@
 // ==========================================================
 
 using System.Collections.Generic;
-using  TeamworkProjects.Model;
+using  Teamwork;
 
 namespace TeamworkProjects.Response
 {

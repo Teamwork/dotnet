@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TeamworkProjects.Model
+namespace Teamwork.Model.Projects.V1
 {
 	public class PeopleStatus
 	{
