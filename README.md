@@ -1,4 +1,5 @@
 # Teamwork.Net
+[![Build Status](https://travis-ci.com/Teamwork/teamwork-api-client-go.svg?token=R12oYgGSHPyyQRhqQcMP&branch=master)](https://travis-ci.com/Teamwork/teamwork-api-client-go)
 
 ## .Net C# Library for Project´s API
 Requirements -> .Net 4.5.6 , Newtonsoft.Json 8 or newer
