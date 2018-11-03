@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>b4f380f9-cc6b-414b-a36d-77dc00c2e386</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Teamwork.Shared.Schema</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Account.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Activity.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Board.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Category.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Comment.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Company.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\CountryCodes.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\ErrorResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Events.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\File.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Link.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\LockDown.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\MessageReply.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Milestone.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Newproject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Notebook.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\PeopleStatus.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Permissions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Person.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Post.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\PostResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Predecessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Project.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\ProjectMailAddress.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\AccountResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\CategoriesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\CompaniesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\CompanyResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\Deprecated_BaseResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\MileStoneResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\MileStonesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\MileStonesResponse.Isprivate2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\PeopleResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\PostResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\ProjectResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\ProjectsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\StatsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\TagResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\TaskListsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\TasksResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\TeamworkResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\TimeEntriesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\UserResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Role.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\StatusEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Tag.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\TeamworkObjectBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Time.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\TimeEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\TodoItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\TodoList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\UserEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v2\Tasks2.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)CRM\" />
+  </ItemGroup>
+</Project>
