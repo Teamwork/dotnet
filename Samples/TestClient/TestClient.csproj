@@ -86,7 +86,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Teamwork.Net.V2\Teamwork.Projects.csproj">
+    <ProjectReference Include="..\..\Libraries\Teamwork.Projects\Teamwork.Projects.csproj">
       <Project>{d0f01239-903f-43cb-b12b-fd9c4fce9fc2}</Project>
       <Name>Teamwork.Projects</Name>
     </ProjectReference>

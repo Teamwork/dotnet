@@ -18,26 +18,9 @@ namespace TestClient
             InitializeComponent();
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void cmdLogin_Click(object sender, EventArgs e)
         {
-			try
-			{
-
-				var client = new TeamworkProjects.Client(new Uri("https://tcdev.teamwork.com"), "saturn727disk");
-
-
-				var stopwatch = new Stopwatch();
-				stopwatch.Start();
-				var project = await client.Projects.GetProject(190465, false, true, true, true);
-				stopwatch.Stop();
-
-				textBox1.Text = stopwatch.Elapsed.Minutes + "." + stopwatch.Elapsed.Seconds;
-			}
-			catch(Exception ex)
-			{
-
-			}
-
+            
         }
     }
 }

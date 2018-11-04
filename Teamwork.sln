@@ -7,15 +7,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{745447FA-3C02-4162-83A9-F4A37EDD6FE1}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Teamwork.Shared.Common", "Libraries\Teamwork.Shared.Common\Teamwork.Shared.Common.shproj", "{5A3CD91B-993B-4668-BDFC-828E9DC2E75F}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Teamwork.Common", "Libraries\Teamwork.Shared.Common\Teamwork.Common.shproj", "{5A3CD91B-993B-4668-BDFC-828E9DC2E75F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "Samples\TestClient\TestClient.csproj", "{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamwork.Projects", "Libraries\Teamwork.Net.V2\Teamwork.Projects.csproj", "{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamwork.Projects", "Libraries\Teamwork.Projects\Teamwork.Projects.csproj", "{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Teamwork.Shared.Schema", "Libraries\Teamwork.Shared.Schema\Teamwork.Shared.Schema.shproj", "{B4F380F9-CC6B-414B-A36D-77DC00C2E386}"
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Teamwork.Schema", "Libraries\Teamwork.Shared.Schema\Teamwork.Schema.shproj", "{B4F380F9-CC6B-414B-A36D-77DC00C2E386}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamwork.Projects.Core", "Teamwork.Projects.Core\Teamwork.Projects.Core.csproj", "{22C09FDA-2079-467A-ACE6-3E6E86C031B0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamwork.Projects.Core", "Libraries\Teamwork.Projects.Core\Teamwork.Projects.Core.csproj", "{22C09FDA-2079-467A-ACE6-3E6E86C031B0}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

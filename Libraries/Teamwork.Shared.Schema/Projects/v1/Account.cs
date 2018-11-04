@@ -9,7 +9,7 @@
 
 using Newtonsoft.Json;
 
-namespace Teamwork.Shared.Schema.Projects.V1
+namespace Teamwork.Schema.Projects.V1
 {
     public class Account
     {

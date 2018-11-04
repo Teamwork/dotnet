@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Teamwork.Shared.Common.Generic;
-using TeamworkProjects.Generic;
 
 namespace Teamwork.Shared.Common.Response
 {

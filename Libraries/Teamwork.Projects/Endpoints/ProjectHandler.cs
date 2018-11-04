@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Teamwork.Client;
 using Teamwork.Projects.Base.Response;
+using Teamwork.Projects.Schema.V1.Response;
 using Teamwork.Shared.Common.Generic;
 using Teamwork.Shared.Common.Response;
 using Teamwork.Shared.Schema.Projects.V1;
@@ -46,10 +47,6 @@ namespace Teamwork.Projects.Endpoints
         {
             this.client = pClient;
         }
-
-
-
-        // http://sunbeam.teamwork.dev/v2/tasks.json?dataSet=basic&nestSubTasks=1&include=taskListNames,projectNames
 
 
 
@@ -227,7 +224,7 @@ namespace Teamwork.Projects.Endpoints
         {
             try
             {
-                using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+                using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
                 {
                     var data =
                         await
@@ -332,7 +329,7 @@ namespace Teamwork.Projects.Endpoints
 
         public async Task<StatsResponse> GetProjectStatus(int projectID)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
             {
                 var data = await client.GetAsync<StatsResponse>("/projects/" + projectID + "/stats.json", null);
                 if (data.StatusCode == HttpStatusCode.OK)
@@ -355,7 +352,7 @@ namespace Teamwork.Projects.Endpoints
         /// <returns>Milestone List</returns>
         public async Task<MileStonesResponse> GetProjectMilestones(int projectid, MilestoneFindType type)
         {
-            using (var client = new AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+            using (var client = new AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
             {
                 var data =
                     await
@@ -374,7 +371,7 @@ namespace Teamwork.Projects.Endpoints
         /// <returns></returns>
         public async Task<CompaniesResponse> GetProjectCompanies(int projectid)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
             {
                 var data = await client.GetAsync<CompaniesResponse>("/projects/" + projectid + "/companies.json", null);
                 if (data.StatusCode == HttpStatusCode.OK) return (CompaniesResponse) data.ContentObj;
@@ -390,7 +387,7 @@ namespace Teamwork.Projects.Endpoints
         /// <returns></returns>
         public async Task<RoleResponse> GetProjectRoles(int projectid)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
             {
                 var data = await client.GetAsync<RoleResponse>("/projects/" + projectid + "/projectroles.json", null);
                 if (data.StatusCode == HttpStatusCode.OK) return (RoleResponse) data.ContentObj;
@@ -423,7 +420,7 @@ namespace Teamwork.Projects.Endpoints
         /// <returns>Milestone ID</returns>
         public async Task<BaseResponse<int>> AddMilestone(Milestone milestone, int projectId)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
             {
                 string post = JsonConvert.SerializeObject(milestone);
                 return
@@ -576,7 +573,7 @@ throw new Exception("Something went wrong whilea dding the task");
 
             try
             {
-                using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+                using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
                 {
                     string post = JsonConvert.SerializeObject(message);
                     await
@@ -668,7 +665,7 @@ throw new Exception("Something went wrong whilea dding the task");
         /// <returns>Project ID</returns>
         public async Task<BaseResponse<bool>> UpdateProject(Project project)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
             {
                 string post = JsonConvert.SerializeObject(project);
                 return
@@ -688,7 +685,7 @@ throw new Exception("Something went wrong whilea dding the task");
         /// <returns>Project ID</returns>
         public async Task<BaseResponse<ProjectMailResponse>> SetProjectEmailAddressCode(string code, int projectId)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
             {
                 return
                     await
@@ -708,7 +705,7 @@ throw new Exception("Something went wrong whilea dding the task");
         /// <returns>true/false</returns>
         public async Task<bool> DeleteProject(Project project)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
             {
                 await client.DeleteAsync("/projects/" + project.Id + ".json");
                 return true;
@@ -721,7 +718,7 @@ throw new Exception("Something went wrong whilea dding the task");
         /// <returns></returns>
         public BaseListResponse<Project> GetAllProjects(bool useDefaultParser = false)
         {
-            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain))
+            using (var client = new  AuthorizedHttpClient(this.client.ApiKey,this.client.Domain, this.client.UseOauth))
             {
                 var requestString = "projects.json";
                 if (useDefaultParser) requestString += "?useDefaultParser=true";

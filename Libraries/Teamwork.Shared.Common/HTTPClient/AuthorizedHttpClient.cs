@@ -1,6 +1,6 @@
 ﻿// ==========================================================
-// File: Teamwork.Client.AuthorizedHttpClient.cs
-// Created: 2018.11.03
+// File: Teamwork.Projects.AuthorizedHttpClient.cs
+// Created: 2018.11.04
 // Created By: Tim cadenbach
 //  
 // Copyright (C) 2018 Teamwork.com
@@ -20,9 +20,9 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Teamwork.Shared.Common.Generic;
 using Teamwork.Shared.Schema.Projects.V1;
 using Teamwork.Shared.Schema.Projects.V1.Response;
-using TeamworkProjects.Generic;
 
 #endregion
 
@@ -38,12 +38,11 @@ namespace Teamwork.Client
         /// </summary>
         /// <param name="pApiKey">APIKey for Projects API</param>
         /// <param name="pBaseuri"></param>
-        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri)
+        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, bool pUseOauth)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             BaseAddress = pBaseuri;
-            DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));
+            DefaultRequestHeaders.Authorization = pUseOauth ? new AuthenticationHeaderValue("Bearer",pApiKey) : new AuthenticationHeaderValue("Basic",Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));
             DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             DefaultRequestHeaders.Add("User-Agent",
@@ -55,12 +54,11 @@ namespace Teamwork.Client
         /// </summary>
         /// <param name="pApiKey">APIKey for Projects API</param>
         /// <param name="pBaseuri"></param>
-        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, HttpMessageHandler handler) : base(handler)
+        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, HttpMessageHandler handler, bool pUseOauth) : base(handler)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             BaseAddress = pBaseuri;
-            DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic",
-                Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));
+            DefaultRequestHeaders.Authorization = pUseOauth ? new AuthenticationHeaderValue("Bearer", pApiKey) : new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));
             DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             DefaultRequestHeaders.Add("User-Agent",

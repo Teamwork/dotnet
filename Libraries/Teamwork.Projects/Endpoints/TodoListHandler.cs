@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Teamwork.Client;
+using Teamwork.Projects.Projects.v1.Response;
 using Teamwork.Shared.Common.Generic;
 using Teamwork.Shared.Common.Helper;
 using Teamwork.Shared.Schema.Projects.V1;

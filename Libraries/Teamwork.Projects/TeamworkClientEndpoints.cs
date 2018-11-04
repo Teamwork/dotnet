@@ -15,6 +15,8 @@
 #region Imports
 
 using System.ComponentModel;
+using Teamwork.Projects.Endpoints;
+using Teamwork.Projects.Handler;
 using TeamworkProjects.Endpoints;
 using Teamwork.Shared.Schema.Projects.V1;
 using TeamWorkNet.Handler;
