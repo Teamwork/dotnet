@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseListResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IEndpointHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BaseResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BaseSingleResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Exceptions\ErrorHandler.cs" />

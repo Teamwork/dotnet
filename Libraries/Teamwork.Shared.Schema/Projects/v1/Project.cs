@@ -22,6 +22,10 @@ namespace Teamwork.Shared.Schema.Projects.V1
 {
     public partial class Project : TeamworkObjectBase
     {
+
+        public string PathSingle => $"/projects/{Id}.json";
+        public string PathList => $"/projects.json";
+
         [JsonProperty("last-changed-on", NullValueHandling = NullValueHandling.Ignore)]
         public string lastChangedOn;
 

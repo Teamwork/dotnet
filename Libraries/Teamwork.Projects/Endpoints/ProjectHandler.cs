@@ -36,7 +36,7 @@ namespace Teamwork.Projects.Endpoints
     /// <summary>
     /// https://domain.teamwork.com/projects/xxxxx
     /// </summary>
-    public class ProjectHandler
+    public class ProjectHandler : IEndpointHandler
     {
         private readonly Client.Client client;
 
@@ -54,7 +54,7 @@ namespace Teamwork.Projects.Endpoints
         ///   Returns all projects the user has access to
         /// </summary>
         /// <returns></returns>
-        public async Task<List<Project>> GetAllProjectsAsync(bool pStarredOnly)
+        public async Task<List<Project>> GetAsync(bool pStarredOnly)
         {
             try
             {
@@ -66,30 +66,14 @@ namespace Teamwork.Projects.Endpoints
                 {
                     throw new Exception(data.Message);
                 }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error processing Teamwork API Request: ", ex);
-            }
-        }
 
-
-        /// <summary>
-        ///   Returns all projects the user has access that have messages enabled
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<Project>> GetAllProjectsAsyncMessages(bool pStarredOnly)
-        {
-            try
-            {
-                var requestString = "/messages/projects.json?status=active&orderby=lastActivityDate&type=featureEnabled";
-                if (pStarredOnly) requestString += "&starredOnly=true&type=featurenabled";
-                var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
-                if (data.StatusCode == HttpStatusCode.OK) return data.List.OrderBy(p=>p.Name).ToList();
-                if (data.StatusCode == HttpStatusCode.InternalServerError)
-                {
-                    throw new Exception(data.Message);
+                switch (data.StatusCode) {
+                    case HttpStatusCode.OK:
+                        return data.List;
+                    case HttpStatusCode.Forbidden:
+                        throw new Exception("Not authenticated, the token you have used is either invalid or revoked");
+                    case HttpStatusCode.InternalServerError:
+                        throw new Exception("There was an error executing your request on the server");
                 }
                 return null;
             }
@@ -98,80 +82,6 @@ namespace Teamwork.Projects.Endpoints
                 throw new Exception("Error processing Teamwork API Request: ", ex);
             }
         }
-
-        /// <summary>
-        ///   Returns all projects the user has access that have messages enabled
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<Project>> GetAllProjectsAsyncMilestones(bool pStarredOnly)
-        {
-            try
-            {
-                var requestString = "/Milestones/projects.json?status=active&orderby=lastActivityDate";
-                if (pStarredOnly) requestString += "&starredOnly=true&type=featurenabled";
-                var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
-                if (data.StatusCode == HttpStatusCode.OK) return data.List;
-                if (data.StatusCode == HttpStatusCode.InternalServerError)
-                {
-                    throw new Exception(data.Message);
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error processing Teamwork API Request: ", ex);
-            }
-        }
-
-        /// <summary>
-        ///   Returns all projects the user has access that have messages enabled
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<Project>> GetAllProjectsAsyncNotebooks(bool pStarredOnly)
-        {
-            try
-            {
-                var requestString = "/notebooks/projects.json?status=active&orderby=lastActivityDate";
-                if (pStarredOnly) requestString += "&starredOnly=true&type=featurenabled";
-                var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
-                if (data.StatusCode == HttpStatusCode.OK) return data.List;
-                if (data.StatusCode == HttpStatusCode.InternalServerError)
-                {
-                    throw new Exception(data.Message);
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error processing Teamwork API Request: ", ex);
-            }
-        }
-
-
-        /// <summary>
-        ///   Returns all projects the user has access that have messages enabled
-        /// </summary>
-        /// <returns></returns>
-        public async Task<List<Project>> GetAllProjectsAsyncTime(bool pStarredOnly)
-        {
-            try
-            {
-                var requestString = "/Time/projects.json?status=active&orderby=lastActivityDate";
-                if (pStarredOnly) requestString += "&starredOnly=true&type=featurenabled";
-                var data = await client.HttpClient.GetListAsync<Project>(requestString, "projects", null);
-                if (data.StatusCode == HttpStatusCode.OK) return data.List;
-                if (data.StatusCode == HttpStatusCode.InternalServerError)
-                {
-                    throw new Exception(data.Message);
-                }
-                return null;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception("Error processing Teamwork API Request: ", ex);
-            }
-        }
-
 
         /// <summary>
         ///   Returns all projects the user has access to
@@ -894,5 +804,7 @@ throw new Exception("Something went wrong whilea dding the task");
             }
         }
 
+
+        public string Path { get; set; }
     }
 }
