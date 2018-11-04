@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace TeamworkProjects.Base.Response
+namespace Teamwork.Projects.Base.Response
 {
   public class StatsResponse
   {

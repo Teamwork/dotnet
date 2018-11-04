@@ -21,14 +21,14 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Teamwork.Client.HTTPClient;
+using Teamwork.Shared.Common.Generic;
 using Teamwork.Shared.Common.Response;
 using Teamwork.Shared.Schema.Projects.V1.Response;
 using TeamworkProjects.Generic;
 using TeamworkProjects.Response;
 
 #endregion
-
-namespace TeamworkProjects.HTTPClient
+namespace Teamwork.Client
 {
     public partial class AuthorizedHttpClient : HttpClient
   {

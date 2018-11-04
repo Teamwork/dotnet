@@ -7,8 +7,8 @@
     <ProjectGuid>{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TeamworkProjects</RootNamespace>
-    <AssemblyName>Teamwork.Net.V2</AssemblyName>
+    <RootNamespace>Teamwork.Projects</RootNamespace>
+    <AssemblyName>Teamwork.Projects</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -75,7 +75,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TeamworkClientEndpoints.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="..\Teamwork.Shared.Common\Teamwork.Shared.Common.projitems" Label="Shared" />
   <Import Project="..\Teamwork.Shared.Schema\Teamwork.Shared.Schema.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

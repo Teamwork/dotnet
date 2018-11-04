@@ -14,7 +14,7 @@ using Teamwork.Shared.Schema.Projects.V1;
 
 #endregion
 
-namespace TeamworkProjects.Base.Response
+namespace Teamwork.Projects.Base.Response
 {
     public class PostResponse
     {

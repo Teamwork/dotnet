@@ -9,9 +9,9 @@
 
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using  Teamwork.Shared.Schema.Projects.V1;
+using Teamwork.Shared.Schema.Projects.V1;
 
-namespace Teamwork.Shared.Schema.Projects.V1.Response
+namespace Teamwork.Projects.Schema.V1.Response
 {
   public class TaskListsResponse
   {

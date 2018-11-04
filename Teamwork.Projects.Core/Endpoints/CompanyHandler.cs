@@ -19,24 +19,22 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamwork.Client;
 using TeamworkProjects.HTTPClient;
 using Teamwork.Shared.Schema.Projects.V1;
-using Teamwork.Shared.Schema.Projects.V1.Response;
 using TeamworkProjects.Response;
 
 #endregion
 
-namespace Teamwork.Projects.Endpoints
+namespace TeamworkProjects.Endpoints
 {
   public class CompanyHandler
   {
-      private readonly Client.Client client;
+      private readonly Client client;
 
       /// <summary>
         /// Constructor for Project Handler
         /// </summary>
-        public CompanyHandler(Client.Client pClient)
+        public CompanyHandler(Client pClient)
         {
             client = pClient;
         }

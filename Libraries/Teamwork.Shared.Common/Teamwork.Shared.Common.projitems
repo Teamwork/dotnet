@@ -36,6 +36,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helper\String\IsValidEmail.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\String\StringContent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helper\String\StringExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HTTPClient\AuthorizedHttpClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HTTPClient\AuthorizedHttpClientCaching.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HTTPClient\AuthorizedHttpClientDesk.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)HTTPClient\HttpClientOverrides.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TeamworkClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TeamworkClientOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TeamworkNoAuth.cs" />
   </ItemGroup>
 </Project>

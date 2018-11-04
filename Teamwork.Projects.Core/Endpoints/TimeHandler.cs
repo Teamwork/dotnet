@@ -23,19 +23,19 @@ using Teamwork.Shared.Schema.Projects.V1;
 
 #endregion
 
-namespace Teamwork.Projects.Endpoints
+namespace TeamworkProjects.Endpoints
 {
     /// <summary>
     /// https://domain.teamwork.com/projects/xxxxx
     /// </summary>
     public class TimeHandler
     {
-        private readonly Client.Client client;
+        private readonly Client client;
 
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
-        public TimeHandler(Client.Client pClient)
+        public TimeHandler(Client pClient)
         {
             client = pClient;
         }

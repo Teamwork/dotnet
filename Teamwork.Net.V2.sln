@@ -7,20 +7,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{745447FA-3C02-4162-83A9-F4A37EDD6FE1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamwork.Client", "Libraries\Teamwork.Client\Teamwork.Client.csproj", "{4413CFE5-0918-4DA0-8F04-C5DF526BBC56}"
-EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Teamwork.Shared.Common", "Libraries\Teamwork.Shared.Common\Teamwork.Shared.Common.shproj", "{5A3CD91B-993B-4668-BDFC-828E9DC2E75F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestClient", "Samples\TestClient\TestClient.csproj", "{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamworkProjects", "Libraries\Teamwork.Net.V2\TeamworkProjects.csproj", "{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamwork.Projects", "Libraries\Teamwork.Net.V2\Teamwork.Projects.csproj", "{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Teamwork.Shared.Schema", "Libraries\Teamwork.Shared.Schema\Teamwork.Shared.Schema.shproj", "{B4F380F9-CC6B-414B-A36D-77DC00C2E386}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamwork.Projects.Core", "Teamwork.Projects.Core\Teamwork.Projects.Core.csproj", "{22C09FDA-2079-467A-ACE6-3E6E86C031B0}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Libraries\Teamwork.Shared.Common\Teamwork.Shared.Common.projitems*{4413cfe5-0918-4da0-8f04-c5df526bbc56}*SharedItemsImports = 4
-		Libraries\Teamwork.Shared.Schema\Teamwork.Shared.Schema.projitems*{4413cfe5-0918-4da0-8f04-c5df526bbc56}*SharedItemsImports = 4
 		Libraries\Teamwork.Shared.Common\Teamwork.Shared.Common.projitems*{5a3cd91b-993b-4668-bdfc-828e9dc2e75f}*SharedItemsImports = 13
 		Libraries\Teamwork.Shared.Schema\Teamwork.Shared.Schema.projitems*{b4f380f9-cc6b-414b-a36d-77dc00c2e386}*SharedItemsImports = 13
 		Libraries\Teamwork.Shared.Common\Teamwork.Shared.Common.projitems*{d0f01239-903f-43cb-b12b-fd9c4fce9fc2}*SharedItemsImports = 4
@@ -31,10 +29,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4413CFE5-0918-4DA0-8F04-C5DF526BBC56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4413CFE5-0918-4DA0-8F04-C5DF526BBC56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4413CFE5-0918-4DA0-8F04-C5DF526BBC56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4413CFE5-0918-4DA0-8F04-C5DF526BBC56}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,16 +37,20 @@ Global
 		{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22C09FDA-2079-467A-ACE6-3E6E86C031B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22C09FDA-2079-467A-ACE6-3E6E86C031B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22C09FDA-2079-467A-ACE6-3E6E86C031B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22C09FDA-2079-467A-ACE6-3E6E86C031B0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{4413CFE5-0918-4DA0-8F04-C5DF526BBC56} = {38AEE918-184C-4DB6-A0B9-09866772E66F}
 		{5A3CD91B-993B-4668-BDFC-828E9DC2E75F} = {38AEE918-184C-4DB6-A0B9-09866772E66F}
 		{BFEA5E31-0A75-4E5F-8E63-2F9B9F5DC413} = {745447FA-3C02-4162-83A9-F4A37EDD6FE1}
 		{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2} = {38AEE918-184C-4DB6-A0B9-09866772E66F}
 		{B4F380F9-CC6B-414B-A36D-77DC00C2E386} = {38AEE918-184C-4DB6-A0B9-09866772E66F}
+		{22C09FDA-2079-467A-ACE6-3E6E86C031B0} = {38AEE918-184C-4DB6-A0B9-09866772E66F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4F5FBA1-2871-4682-9CDB-BC7A351555BD}

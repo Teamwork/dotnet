@@ -16,23 +16,25 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using TeamworkProjects.Helper;
+using TeamworkProjects.HTTPClient;
 using Teamwork.Shared.Schema.Projects.V1;
+using TeamworkProjects.Response;
 
 
-
-namespace Teamwork.Projects.Endpoints
+namespace TeamworkProjects.Endpoints
 {
   /// <summary>
   /// Handler for Projects
   /// </summary>
   public class TaskHandler
   {
-        private readonly Client.Client client;
+        private readonly Client client;
 
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
-        public TaskHandler(Client.Client pClient)
+        public TaskHandler(Client pClient)
         {
             client = pClient;
         }

@@ -30,16 +30,16 @@ using TeamworkProjects.Response;
 
 #endregion
 
-namespace Teamwork.Projects.Handler
+namespace TeamWorkNet.Handler
 {
     public class PeopleHandler
     {
-        private readonly Client.Client client;
+        private readonly Client client;
 
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
-        public PeopleHandler(Client.Client pClient)
+        public PeopleHandler(Client pClient)
         {
             client = pClient;
         }

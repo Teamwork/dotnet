@@ -23,7 +23,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamwork.Client;
 using TeamworkProjects;
 using TeamworkProjects.HTTPClient;
 using Teamwork.Shared.Schema.Projects.V1;
@@ -31,7 +30,7 @@ using TeamworkProjects.Response;
 
 #endregion
 
-namespace Teamwork.Projects.Handler
+namespace TeamWorkNet.Handler
 {
 
 	public class ChatMessage
@@ -42,12 +41,12 @@ namespace Teamwork.Projects.Handler
 
 	public class ChatHandler
     {
-        private readonly Client.Client client;
+        private readonly Client client;
 
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
-        public ChatHandler(Client.Client pClient)
+        public ChatHandler(Client pClient)
         {
             client = pClient;
         }

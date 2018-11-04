@@ -23,7 +23,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamwork.Client;
 using TeamworkProjects;
 using TeamworkProjects.HTTPClient;
 using Teamwork.Shared.Schema.Projects.V1;
@@ -31,37 +30,29 @@ using TeamworkProjects.Response;
 
 #endregion
 
-namespace Teamwork.Projects.Handler
+namespace TeamWorkNet.Handler
 {
-    public class CategoryHandler
+    public class BoardsHandler
     {
-        private readonly Client.Client client;
+        private readonly Client client;
 
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
-        public CategoryHandler(Client.Client pClient)
+        public BoardsHandler(Client pClient)
         {
             client = pClient;
         }
 
 
-        public async Task<List<Category>> GetProjectCategoriesAsync()
+        public async Task<List<Column>> GetProjectBoardssAsync(int projectId)
         {
             try
             {
-                var requestString = "projectCategories.json";
-                var data = await client.HttpClient.GetListAsync<Category>(requestString, "categories", null);
+                var requestString = "/projects/" + projectId + "/boards/columns.json";
+                var data = await client.HttpClient.GetListAsync<Column>(requestString, "columns", null);
                 if (data.StatusCode == HttpStatusCode.OK)
                 {
-                    // Prepare Categories
-
-                    foreach (var cat in data.List)
-                    {
-                        cat.Children = data.List.Where(p => p.ParentId == cat.Id).ToList();
-                        if (cat.Children.Count > 0) cat.HasChildren = true;
-                        cat.Children.ForEach(p => p.ParentName = cat.Name);
-                    }
                     
                     return data.List;
                 }
@@ -74,7 +65,7 @@ namespace Teamwork.Projects.Handler
             }
         }
 
-        public async Task<bool> AddProjectCategory(Category company)
+        public async Task<bool> AddBoard(Category company)
         {
             using (var client = new AuthorizedHttpClient(this.client.ApiKey, this.client.Domain))
             {
@@ -87,7 +78,7 @@ namespace Teamwork.Projects.Handler
             return false;
         }
 
-        public async Task<bool> UpdateProjectCategory(Category company)
+        public async Task<bool> UpdateBoard(Category company)
         {
             using (var client = new AuthorizedHttpClient(this.client.ApiKey, this.client.Domain))
             {
@@ -100,7 +91,7 @@ namespace Teamwork.Projects.Handler
             return false;
         }
 
-        public async Task<bool> DeleteCProjectCategory(Category company)
+        public async Task<bool> DeleteBoard(Category company)
         {
             using (var client = new AuthorizedHttpClient(this.client.ApiKey, this.client.Domain))
             {

@@ -11,7 +11,7 @@
 //  ==========================================================
 #endregion
 
-namespace TeamworkProjects.Generic
+namespace Teamwork.Shared.Common.Generic
 {
   public enum TaskSearchType
   {

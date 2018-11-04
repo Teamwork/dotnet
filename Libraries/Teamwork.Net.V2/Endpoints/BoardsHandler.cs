@@ -23,23 +23,20 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TeamworkProjects;
-using TeamworkProjects.HTTPClient;
+using Teamwork.Client;
 using Teamwork.Shared.Schema.Projects.V1;
-using TeamworkProjects.Response;
-
 #endregion
 
-namespace TeamWorkNet.Handler
+namespace Teamwork.Projects.Handler
 {
     public class BoardsHandler
     {
-        private readonly Client client;
+        private readonly Client.Client client;
 
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
-        public BoardsHandler(Client pClient)
+        public BoardsHandler(Client.Client pClient)
         {
             client = pClient;
         }

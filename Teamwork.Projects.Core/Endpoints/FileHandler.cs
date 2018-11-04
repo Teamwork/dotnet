@@ -22,16 +22,16 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamwork.Client;
 using TeamworkProjects.HTTPClient;
 using Teamwork.Shared.Schema.Projects.V1;
-using Teamwork.Shared.Schema.Projects.V1.Response;
 using TeamworkProjects.Response;
 
 #endregion
 
-namespace Teamwork.Projects.Endpoints
+namespace TeamworkProjects.Endpoints
 {
+    using System.Net.Http.Handlers;
+    using System.Net.Http.Headers;
 
     /// <summary>
     /// 
@@ -97,7 +97,7 @@ namespace Teamwork.Projects.Endpoints
     /// </summary>
     public class FileHandler
     {
-        private readonly Client.Client client;
+        private readonly Client client;
 
 
         public delegate void ProgressChangesd(object sender, double e);
@@ -106,7 +106,7 @@ namespace Teamwork.Projects.Endpoints
         /// Constructor for Project Handler
         /// </summary>
         /// <param name="client">TeamworkClient (Init needed!)</param>
-        public FileHandler(Client.Client client)
+        public FileHandler(Client client)
         {
             this.client = client;
         }

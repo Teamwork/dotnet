@@ -62,8 +62,14 @@
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\TodoList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\UserEntry.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v2\Tasks2.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Spaces\v1\Space.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Spaces\v1\Responses\SpacesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Spaces\v1\TypeEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Spaces\v1\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)CRM\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Desk\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Chat\" />
   </ItemGroup>
 </Project>

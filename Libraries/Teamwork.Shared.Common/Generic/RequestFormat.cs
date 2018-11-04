@@ -10,7 +10,7 @@
 //  23.05.2016 - Created
 //  ==========================================================
 #endregion
-namespace TeamworkProjects.Generic
+namespace Teamwork.Shared.Common.Generic
 {
   public enum RequestFormat
   {

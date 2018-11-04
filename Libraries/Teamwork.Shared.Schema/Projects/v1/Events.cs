@@ -15,7 +15,7 @@ using System.Globalization;
 using Newtonsoft.Json;
 using TeamworkProjects.Extensions.DateTime;
 
-namespace TeamworkProjects.Base.Model
+namespace Teamwork.Projects.Base.Model
 {
   public class Owner
   {

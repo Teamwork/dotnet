@@ -17,25 +17,25 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Teamwork.Client;
-using Teamwork.Shared.Common.Generic;
 using Teamwork.Shared.Common.Helper;
 using Teamwork.Shared.Schema.Projects.V1;
 using Teamwork.Shared.Schema.Projects.V1.Response;
+using TeamworkProjects.Generic;
 using AuthorizedHttpClient = Teamwork.Client.AuthorizedHttpClient;
 
-namespace Teamwork.Projects.Endpoints
+namespace TeamworkProjects.Endpoints
 {
     /// <summary>
     /// Handler for Projects
     /// </summary>
     public class TodoListHandler
     {
-        private readonly Client.Client client;
+        private readonly Client client;
 
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
-        public TodoListHandler(Client.Client pClient)
+        public TodoListHandler(Client pClient)
         {
             client = pClient;
         }

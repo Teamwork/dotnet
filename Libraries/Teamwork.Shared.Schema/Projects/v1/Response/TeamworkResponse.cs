@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using TeamworkProjects.Base.Model;
 
-namespace TeamworkProjects.Base.Response
+namespace Teamwork.Projects.Base.Response
 {
   public class TeamworkResponse<t> where t : class
   {

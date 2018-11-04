@@ -7,22 +7,24 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamwork.Projects.Base.Model;
-using Teamwork.Shared.Schema.Projects.V1.Response;
 
 
-namespace Teamwork.Projects.Endpoints
+namespace TeamworkProjects.Endpoints
 {
+    using TeamworkProjects;
+    using TeamworkProjects.Base.Model;
+    using TeamworkProjects.HTTPClient;
+    using TeamworkProjects.Response;
 
     public class TagHandler
     {
-        private readonly Client.Client _client;
+        private readonly Client _client;
 
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
         /// <param name="client">TeamworkClient (Init needed!)</param>
-        public TagHandler(Client.Client client)
+        public TagHandler(Client client)
         {
             _client = client;
         }

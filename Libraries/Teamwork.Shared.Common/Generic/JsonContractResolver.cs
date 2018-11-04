@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Teamwork.Shared.Common.Response;
 
 namespace Teamwork.Shared.Common.Generic
 {

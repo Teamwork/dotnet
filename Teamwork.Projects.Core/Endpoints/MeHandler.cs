@@ -6,18 +6,19 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamwork.Shared.Common.Generic;
+using TeamworkProjects.Generic;
+using TeamworkProjects.HTTPClient;
 using Teamwork.Shared.Schema.Projects.V1;
 
-namespace Teamwork.Projects.Endpoints
+namespace TeamworkProjects.Endpoints
 {
     public class MeHandler
     {
-        private readonly Client.Client client;
+        private readonly Client client;
         /// <summary>
         /// Constructor for Project Handler
         /// </summary>
-        public MeHandler(Client.Client pClient)
+        public MeHandler(Client pClient)
         {
             this.client = pClient;
         }
