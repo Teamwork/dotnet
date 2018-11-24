@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Teamwork</id>
+    <version>1.0.3-beta</version>
+    <title>Teamwork SDK</title>
+    <authors>Tim Cadenbach</authors>
+    <owners>http://www.teamwork.com</owners>
+    <licenseUrl>http://teamwork.com</licenseUrl>
+    <projectUrl>http://github.com/teamwork/dotnet</projectUrl>
+    <iconUrl>https://website-assets.teamwork.com/assets/downloads/presskit/teamwork/svg/teamwork-mark-brand-colours.svg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Teamwork API SDK</description>
+    <releaseNotes>First beta release of new SDK</releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags></tags>
+  </metadata>
+</package>
