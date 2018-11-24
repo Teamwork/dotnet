@@ -17,15 +17,17 @@ Note, to get the Token and domain you need to use our [App Loginflow] (https://d
 
 When using the SDK you only need to handle the first step yourself, once you got a code back from our system you can use our helper to retrieve the final access token along with user data:
 
-`var response = await GetLoginDataAsync(code);`
+            var response = await GetLoginDataAsync(code);
 
 With that you can get an instance of the client itself:
 
-`var client = Teamwork.Client.GetTeamworkClient(response.TokenData.Installation.Url,response.TokenData.AccessToken, true);`
+            var client = Teamwork.Client.GetTeamworkClient(
+            response.TokenData.Installation.Url,
+            response.TokenData.AccessToken, true);
 
 If you are using our legacy api key (deprecated and not recomended to use)
 
-`var client = TeamworkProjects.Client.GetTeamworkClient(apiKey, Domain,false)`
+            var client = TeamworkProjects.Client.GetTeamworkClient(apiKey, Domain,false)
 
 
 
@@ -34,9 +36,8 @@ If you are using our legacy api key (deprecated and not recomended to use)
 ## Fetching Data
 Fetching data is really simple, just like this:
 
-`var myProjects = client.Projects.Projects.GetAllAsync()`
-
-`var taskOfAProjects = client.Projects.Tasks.GetAllAsync(projectid, optional: tasklistid)`
+            var myProjects = client.Projects.Projects.GetAllAsync()
+            var taskOfAProjects = client.Projects.Tasks.GetAllAsync(projectid, optional: tasklistid)
 
 ## Manipulating data
 You can also create or update items using the sdk, done like this:
@@ -47,7 +48,7 @@ To create a new task to a project
                 Description = "My Task Description",
                 Content = "My Task Title"
             };
-            var result = client.Projects.Projects.AddTodoItem(myNewTask,  optional: tasklistid,  optional: issubtask,  optional: parenttaskid);
+            var result = client.Projects.Projects.AddTodoItem(myNewTask);
 
 To update an existing task
 
@@ -59,4 +60,7 @@ To update an existing task
             };
 
             result = client.Projects.Tasks.UpdateTask(myNewTask);
+            
+## Support and feedback
+if you have any question, need support or have any feedback please send us a message to [api@teamwork.com](mailto:api@teamwork.com)
 
