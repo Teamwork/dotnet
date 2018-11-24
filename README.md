@@ -13,7 +13,7 @@ Install the SDK
 `install-package Teamwork`
 
 ## Authentication
-Note, to get the Token and domain you need to use our [App Loginflow] (https://developer.teamwork.com/projects/authentication-questions/how-to-authenticate-via-app-login-flow)
+Note, to get the Token and domain you need to use our [App Loginflow](https://developer.teamwork.com/projects/authentication-questions/how-to-authenticate-via-app-login-flow)
 
 When using the SDK you only need to handle the first step yourself, once you got a code back from our system you can use our helper to retrieve the final access token along with user data:
 
