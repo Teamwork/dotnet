@@ -21,12 +21,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Teamwork.Shared.Common.Generic;
+using Teamwork.Shared.Common.Response;
 using Teamwork.Shared.Schema.Projects.V1;
 using Teamwork.Shared.Schema.Projects.V1.Response;
 
 #endregion
 
-namespace Teamwork.Client
+namespace Teamwork
 {
     /// <summary>
     /// Authorized Http Client is a derived HTTPClient with added Authentication Header
@@ -97,6 +98,212 @@ namespace Teamwork.Client
 
             return new BaseResponse<T>(HttpStatusCode.InternalServerError);
         }
+
+        public async Task<BaseListResponse<T>> GetListAsync<T>(string pEndpoint, string pObjName, Dictionary<string, string> pParamsDictionary, RequestFormat pFormat = RequestFormat.Json)
+        {
+            try
+            {
+                ClientCacheEntry OldData = null;
+                // Try to find cached results
+                if (this.Cache != null)
+                {
+                    OldData = Cache.FindEntry(this.BaseAddress + "/" + pEndpoint + "/" + this.DefaultRequestHeaders);
+                }
+                if (OldData == null || (OldData.DateCreated < DateTime.Now.AddMinutes(5)))
+                {
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    var response = Task.Run(() => GetAsync(pEndpoint)).Result;
+                    using (var responseStream = await response.Content.ReadAsStreamAsync())
+                    {
+                        var jsonMessage = new StreamReader(responseStream).ReadToEnd();
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var returndata = BaseListResponse<T>.Deserialize<T>(jsonMessage, pObjName);
+                            // Add Header from Response
+                            returndata.Headers = response.Headers;
+                            returndata.StatusCode = response.StatusCode;
+
+
+                            Cache?.AddEntry(this.BaseAddress + "/" + pEndpoint, jsonMessage, DateTime.Now, response.Headers, response.StatusCode);
+                            return returndata;
+                        }
+                        return new BaseListResponse<T>
+                        {
+                            Headers = response.Headers,
+                            StatusCode = response.StatusCode,
+                            Message = jsonMessage
+                        };
+                    }
+                }
+                else
+                {
+                    var returndata = BaseListResponse<T>.Deserialize<T>(OldData.Data, pObjName);
+                    // Add Header from Response
+                    returndata.Headers = OldData.Headers;
+                    returndata.StatusCode = OldData.StatusCode;
+                    return returndata;
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                if (Debugger.IsAttached) Console.WriteLine(ex.Message);
+                return new BaseListResponse<T>
+                {
+                    Headers = null,
+                    StatusCode = HttpStatusCode.UnsupportedMediaType,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+
+        public async Task<BaseListResponse<T>> GetListParallelAsync<T>(string pEndpoint, string pObjName, Dictionary<string, string> pParamsDictionary, RequestFormat pFormat = RequestFormat.Json)
+        {
+            try
+            {
+                var response = Task.Run(() => GetAsync(pEndpoint)).Result;
+                using (var responseStream = await response.Content.ReadAsStreamAsync())
+                {
+
+                    var rateLimit = 0;
+                    var rateLimitRemaining = 250;
+                    var pages = 0;
+                    var page = 0;
+                    var items = 0;
+
+                    var returnList = new List<T>();
+
+                    var jsonMessage = new StreamReader(responseStream).ReadToEnd();
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+
+
+                        // Lets see if there's more to fetch
+                        rateLimit = int.Parse(response.Headers.GetValues("X-Ratelimit-Limit").FirstOrDefault()?.ToString());
+                        rateLimitRemaining = int.Parse(response.Headers.GetValues("X-Ratelimit-Remaining").FirstOrDefault()?.ToString());
+                        page = int.Parse(response.Headers.GetValues("X-Page").FirstOrDefault()?.ToString());
+                        pages = int.Parse(response.Headers.GetValues("X-Pages").FirstOrDefault()?.ToString());
+
+                        var data = BaseListResponse<T>.Deserialize<T>(jsonMessage, pObjName);
+                        returnList.AddRange(data.List);
+
+                        if (page != pages)
+                        {
+                            List<string> urls = new List<string>();
+                            while (page < pages)
+                            {
+                                urls.Add(pEndpoint + "&page=" + page);
+                                page++;
+                            }
+                            await Task.WhenAll(urls.Select(pagedUrl => Task.Run(() => {
+
+                                //Lets check rate limits first
+                                response = Task.Run(() => GetAsync(pagedUrl)).Result;
+                                rateLimit = int.Parse(response.Headers.GetValues("X-Ratelimit-Limit").FirstOrDefault()?.ToString());
+                                rateLimitRemaining = int.Parse(response.Headers.GetValues("X-Ratelimit-Remaining").FirstOrDefault()?.ToString());
+
+                                if (rateLimitRemaining < 1) System.Threading.Thread.Sleep(60000);
+
+
+                                data = BaseListResponse<T>.Deserialize<T>(jsonMessage, pObjName);
+                                returnList.AddRange(data.List);
+
+                            })));
+                        }
+                        var returndata = new BaseListResponse<T>
+                        {
+                            Headers = response.Headers,
+                            StatusCode = response.StatusCode,
+                            Message = jsonMessage,
+                            List = returnList
+                        };
+
+                        return returndata;
+                    }
+                    return new BaseListResponse<T>
+                    {
+                        Headers = response.Headers,
+                        StatusCode = response.StatusCode,
+                        Message = jsonMessage
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                if (Debugger.IsAttached) Console.WriteLine(ex.Message);
+                return new BaseListResponse<T>
+                {
+                    Headers = null,
+                    StatusCode = HttpStatusCode.UnsupportedMediaType,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
+
+        public async Task<BaseSingleResponse<T>> GetAsync<T>(string pEndpoint, string pObjName, Dictionary<string, string> pParamsDictionary, RequestFormat pFormat = RequestFormat.Json)
+        {
+            try
+            {
+                ClientCacheEntry OldData = null;
+                // Try to find cached results
+                if (this.Cache != null)
+                {
+                    OldData = Cache.FindEntry(pEndpoint);
+                }
+                if (OldData == null)
+                {
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    var response = Task.Run(() => GetAsync(pEndpoint)).Result;
+                    using (var responseStream = await response.Content.ReadAsStreamAsync())
+                    {
+                        var jsonMessage = new StreamReader(responseStream).ReadToEnd();
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var returndata = BaseSingleResponse<T>.Deserialize<T>(jsonMessage, pObjName);
+                            // Add Header from Response
+                            returndata.Headers = response.Headers;
+                            returndata.StatusCode = response.StatusCode;
+                            Cache?.AddEntry(pEndpoint, jsonMessage, DateTime.Now, response.Headers, response.StatusCode);
+                            return returndata;
+                        }
+                        return new BaseSingleResponse<T>
+                        {
+                            Headers = response.Headers,
+                            StatusCode = response.StatusCode,
+                            Message = jsonMessage
+                        };
+                    }
+                }
+                else
+                {
+                    var returndata = BaseSingleResponse<T>.Deserialize<T>(OldData.Data, pObjName);
+                    returndata.Headers = OldData.Headers;
+                    returndata.StatusCode = OldData.StatusCode;
+                    return returndata;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                if (Debugger.IsAttached) Console.WriteLine(ex.Message);
+                return new BaseSingleResponse<T>
+                {
+                    Data = default(T),
+                    Headers = null,
+                    StatusCode = HttpStatusCode.UnsupportedMediaType,
+                    Message = ex.Message
+                };
+            }
+        }
+
+
 
         public async Task<BaseResponse<int>> PostWithReturnAsync(string pRequestUri, HttpContent pContent)
         {

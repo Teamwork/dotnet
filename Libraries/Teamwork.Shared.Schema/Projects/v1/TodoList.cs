@@ -11,7 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using TeamworkProjects.Base.Model;
+using Teamwork.Projects.Base.Model;
+
 
 namespace Teamwork.Shared.Schema.Projects.V1
 {

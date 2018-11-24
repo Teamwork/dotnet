@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Teamwork.Client.HTTPClient;
-
-namespace Teamwork.Client
+﻿namespace Teamwork
 {
     using System.Net.Http;
 

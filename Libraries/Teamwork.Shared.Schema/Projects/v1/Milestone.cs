@@ -10,9 +10,8 @@
 using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using TeamworkProjects.Base;
-using TeamworkProjects.Base.Model;
-using TeamworkProjects.Extensions.DateTime;
+using Teamwork.Projects.Base.Model;
+using Teamwork.Shared.Common.Helper.DateTime;
 
 namespace Teamwork.Shared.Schema.Projects.V1
 {

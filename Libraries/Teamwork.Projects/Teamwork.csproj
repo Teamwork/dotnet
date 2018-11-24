@@ -60,20 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Endpoints\ChatHandler.cs" />
-    <Compile Include="Endpoints\BoardsHandler.cs" />
-    <Compile Include="Endpoints\PeopleHandler.cs" />
-    <Compile Include="Endpoints\CategoryHandler.cs" />
-    <Compile Include="Endpoints\CompanyHandler.cs" />
-    <Compile Include="Endpoints\FileHandler.cs" />
-    <Compile Include="Endpoints\MeHandler.cs" />
-    <Compile Include="Endpoints\TagHandler.cs" />
-    <Compile Include="Endpoints\Taskhandler.cs" />
-    <Compile Include="Endpoints\TimeHandler.cs" />
-    <Compile Include="Endpoints\TodoListHandler.cs" />
-    <Compile Include="Endpoints\ProjectHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TeamworkClientEndpoints.cs" />
   </ItemGroup>
   <Import Project="..\Teamwork.Shared.Common\Teamwork.Shared.Common.projitems" Label="Shared" />
   <Import Project="..\Teamwork.Shared.Schema\Teamwork.Shared.Schema.projitems" Label="Shared" />

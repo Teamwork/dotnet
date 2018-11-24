@@ -10,10 +10,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using Newtonsoft.Json;
-using TeamworkProjects.Extensions.DateTime;
+using Teamwork.Shared.Common.Helper.DateTime;
+
 
 namespace Teamwork.Projects.Base.Model
 {
@@ -154,11 +154,9 @@ namespace Teamwork.Projects.Base.Model
     [JsonProperty("last-changed-on", NullValueHandling = NullValueHandling.Ignore)]
     public string lastChangedOn { get; set; }
     [JsonIgnore]
-    public DateTime LastChangedOn
-    {
-      get { return lastChangedOn.ToDateTimeExactMin("yyyy-MM-ddThh:mm:ssZ"); }
-    }
-    [JsonProperty("privacy", NullValueHandling = NullValueHandling.Ignore)]
+    public DateTime LastChangedOn => lastChangedOn.ToDateTimeExactMin("yyyy-MM-ddThh:mm:ssZ");
+
+      [JsonProperty("privacy", NullValueHandling = NullValueHandling.Ignore)]
     public Privacy Privacy { get; set; }
 
     [JsonProperty("attendees-can-edit", NullValueHandling = NullValueHandling.Ignore)]

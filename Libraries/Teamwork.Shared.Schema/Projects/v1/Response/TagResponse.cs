@@ -8,8 +8,7 @@
 // ==========================================================
 
 using Newtonsoft.Json;
-using TeamworkProjects.Base.Model;
-using  Teamwork.Shared.Schema.Projects.V1;
+using Teamwork.Projects.Base.Model;
 
 namespace Teamwork.Shared.Schema.Projects.V1.Response
 {

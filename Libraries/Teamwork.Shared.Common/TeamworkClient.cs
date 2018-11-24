@@ -14,7 +14,7 @@
 using System;
 using Teamwork.Shared.Common.Exceptions;
 
-namespace Teamwork.Client
+namespace Teamwork
 {
 
     /// <summary>
@@ -43,7 +43,7 @@ namespace Teamwork.Client
             {
                 ApiKey = pApiKey;
                 Domain = pDomain;
-                HttpClient = new AuthorizedHttpClient(pApiKey, pDomain, this.client.UseOauth) {BaseAddress = pDomain};
+                HttpClient = new AuthorizedHttpClient(pApiKey, pDomain, this.UseOauth) {BaseAddress = pDomain};
             }
             catch (Exception ex)
             {

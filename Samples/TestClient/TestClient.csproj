@@ -85,18 +85,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Libraries\Teamwork.Projects.Core\Teamwork.Projects.Core.csproj">
-      <Project>{22c09fda-2079-467a-ace6-3e6e86c031b0}</Project>
-      <Name>Teamwork.Projects.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\Teamwork.Projects\Teamwork.Projects.csproj">
-      <Project>{d0f01239-903f-43cb-b12b-fd9c4fce9fc2}</Project>
-      <Name>Teamwork.Projects</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <Import Project="..\..\Libraries\Teamwork.Shared.Common\Teamwork.Shared.Common.projitems" Label="Shared" />
-  <Import Project="..\..\Libraries\Teamwork.Shared.Schema\Teamwork.Shared.Schema.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

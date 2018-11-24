@@ -20,8 +20,8 @@ namespace TestClient
 
         private async void cmdLogin_Click(object sender, EventArgs e)
         {
-            var client = Teamwork.Client.Client.GetTeamworkClient("", "", true);
-            var result = await client.Projects.GetAsync(false);
+            //var client = Teamwork.Client.Client.GetTeamworkClient("", "", true);
+            //var result = await client.Projects.GetAsync(false);
         }
     }
 }

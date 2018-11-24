@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Teamwork.Schema.Projects.V1;
 using Teamwork.Shared.Schema.Projects.V1;
 
 namespace Teamwork.Shared.Schema.Projects.V1.Response

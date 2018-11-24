@@ -10,7 +10,6 @@ using Newtonsoft.Json;
 
 namespace Teamwork.Shared.Schema.Projects.V1
 {
-    using TeamworkProjects.Base.Model;
 
     public class MessageReply
   {

@@ -61,6 +61,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\TodoItem.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\TodoList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\UserEntry.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v2\Project.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v2\Tasks2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Spaces\v1\Space.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Spaces\v1\Responses\SpacesResponse.cs" />

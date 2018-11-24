@@ -19,7 +19,7 @@ using Teamwork.Shared.Schema.Projects.V1;
 
 #endregion
 
-namespace Teamwork.Client
+namespace Teamwork
 {
     /// <summary>
     /// Main entry point for the API
@@ -28,20 +28,6 @@ namespace Teamwork.Client
     {
         private AuthorizedHttpClient Client { get; set; }
 
-        /// <summary>
-        /// Returns a new instance of the Teamwork API Client
-        /// </summary>
-        /// <returns></returns>
-        public static TeamworkNoAuth GetTeamworkClient()
-        {
-            try {
-                return new TeamworkNoAuth {Client = new AuthorizedHttpClient(string.Empty, new Uri(""))};
-            }
-            catch (Exception ex) {
-                ErrorHandler.ThrowGenericTeamworkError(ex);
-                return null;
-            }
-        }
 
         /// <summary>
         /// Returns authentication details and infos of the current user
@@ -50,7 +36,7 @@ namespace Teamwork.Client
         public async Task<List<UserEntry>> GetAuthenticationtDetails(string pUserName, string pAssword)
         {
             var accountlist = new List<UserEntry>();
-            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.teamwork.com/"))) {
+            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.teamwork.com/"),false)) {
                 var data = await webclient.GetListAsync<UserEntry>(
                     @"accounts/search.json?email=" + pUserName + "&password=" + HttpUtility.UrlEncode(pAssword),
                     "accounts", null);
@@ -61,7 +47,7 @@ namespace Teamwork.Client
             }
 
 
-            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.eu.teamwork.com/"))) {
+            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.eu.teamwork.com/"),false)) {
                 var data = await webclient.GetListAsync<UserEntry>(
                     @"accounts/search.json?email=" + pUserName + "&password=" + HttpUtility.UrlEncode(pAssword),
                     "accounts", null);
@@ -86,7 +72,7 @@ namespace Teamwork.Client
         public async Task<List<UserEntry>> GetAuthenticationtDetailsTest(string pUserName, string pAssword)
         {
             var accountlist = new List<UserEntry>();
-            using (var webclient = new AuthorizedHttpClient("", new Uri("http://sunbeam.teamwork.dev/"))) {
+            using (var webclient = new AuthorizedHttpClient("", new Uri("http://sunbeam.teamwork.dev/"),true)) {
                 var data = await webclient.GetListAsync<UserEntry>(
                     @"accounts/search.json?email=" + pUserName + "&password=" + pAssword, "accounts", null);
                 if (data.StatusCode == HttpStatusCode.OK)
@@ -107,7 +93,7 @@ namespace Teamwork.Client
         public async Task<List<UserEntry>> FindAccounts(string pUserName)
         {
             var accountlist = new List<UserEntry>();
-            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.teamwork.com/"))) {
+            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.teamwork.com/"), true)) {
                 var data = await webclient.GetListAsync<UserEntry>(@"accounts/search.json?email=" + pUserName,
                     "accounts", null);
                 if (data.StatusCode == HttpStatusCode.OK)
@@ -116,7 +102,7 @@ namespace Teamwork.Client
                     throw new Exception(data.Status + " " + data.Message);
             }
 
-            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.eu.teamwork.com/"))) {
+            using (var webclient = new AuthorizedHttpClient("", new Uri("https://authenticate.eu.teamwork.com/"), true)) {
                 var data = await webclient.GetListAsync<UserEntry>(@"accounts/search.json?email=" + pUserName,
                     "accounts", null);
                 if (data.StatusCode == HttpStatusCode.OK) {
