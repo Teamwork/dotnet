@@ -10,6 +10,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)BaseListResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\BoardsHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\CalendarEndpoint.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\CategoryHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\ChatHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\CompanyHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\FileHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\MeHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\PeopleHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\ProjectHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\TagHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\Taskhandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\TimeHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\TodoListHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IEndpointHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BaseResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)BaseSingleResponse.cs" />
@@ -41,7 +54,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)HTTPClient\AuthorizedHttpClientCaching.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)HTTPClient\HttpClientOverrides.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TeamworkClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TeamworkClientEndpoints.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TeamworkClientOptions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TeamworkLoginFlow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TeamworkNoAuth.cs" />
   </ItemGroup>
 </Project>

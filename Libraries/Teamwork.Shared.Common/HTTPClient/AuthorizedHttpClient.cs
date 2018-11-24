@@ -39,7 +39,7 @@ namespace Teamwork
         /// </summary>
         /// <param name="pApiKey">APIKey for Projects API</param>
         /// <param name="pBaseuri"></param>
-        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, bool pUseOauth)
+        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, bool pUseOauth = false)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             BaseAddress = pBaseuri;
@@ -55,7 +55,7 @@ namespace Teamwork
         /// </summary>
         /// <param name="pApiKey">APIKey for Projects API</param>
         /// <param name="pBaseuri"></param>
-        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, HttpMessageHandler handler, bool pUseOauth) : base(handler)
+        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, HttpMessageHandler handler, bool pUseOauth = false) : base(handler)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             BaseAddress = pBaseuri;
