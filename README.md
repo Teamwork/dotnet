@@ -17,6 +17,7 @@ Init new Client instance:
 
 `var client = TeamworkProjects.Client.GetTeamworkClient(apiKey, Domain)`
 
+Note, to get the APIKey and domain you need to use our (https://developer.teamwork.com/projects/authentication-questions/how-to-authenticate-via-app-login-flow)[App Loginflow] 
 
 
 
