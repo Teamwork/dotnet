@@ -3,6 +3,7 @@
 
 ## Legacy SDK
 If you are still using or want to use our old legacy SDK, use the [Legacy Branch](https://github.com/Teamwork/dotnet/tree/legacy)
+Please note that we are not updating the old sdk any more and feature are only added to the new sdk. Its highly recommended to not start new projects with the legacy sdk. 
 
 ## Developer Docs
 If you are looking for API documentation go [here](http://developer.teamwork.com)
