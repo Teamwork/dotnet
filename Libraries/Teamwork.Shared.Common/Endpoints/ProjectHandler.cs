@@ -24,6 +24,7 @@ using Teamwork.Projects.Base.Response;
 using Teamwork.Projects.Schema.V1.Response;
 using Teamwork.Shared.Common.Generic;
 using Teamwork.Shared.Common.Response;
+using Teamwork.Shared.Schema.Projects.v1.Response;
 using Teamwork.Shared.Schema.Projects.V1;
 using Teamwork.Shared.Schema.Projects.V1.Response;
 #endregion
@@ -47,7 +48,28 @@ namespace Teamwork.Endpoints
 
 
 
-        // http://sunbeam.teamwork.dev/v2/tasks.json?dataSet=basic&nestSubTasks=1&include=taskListNames,projectNames
+        /// <summary>
+        ///   Returns all projects the user has access to
+        /// </summary>
+        /// <returns></returns>
+        public async Task<SearchResultClass> Search(string searchTerm, string searchType)
+        {
+            try
+            {
+                var requestString = "search.json?SearchFor=" + searchType + "&searchTerm=" + searchTerm;
+                var data = await this.client.HttpClient.GetAsync<SearchResultClass>(requestString, "searchResult", null);
+                if (data.StatusCode == HttpStatusCode.OK) return data.Data;
+                if (data.StatusCode == HttpStatusCode.InternalServerError)
+                {
+                    throw new Exception(data.Message);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error processing Teamwork API Request: ", ex);
+            }
+        }
 
 
 

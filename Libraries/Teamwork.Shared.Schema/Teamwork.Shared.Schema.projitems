@@ -45,6 +45,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\PostResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\ProjectResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\ProjectsResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\SearchResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\StatsResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\TagResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\TaskListsResponse.cs" />
