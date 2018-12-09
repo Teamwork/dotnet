@@ -17,9 +17,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using Teamworks.Base.Model;
-using Teamworks.Extensions.DateTime;
-using Teamworks.Response;
+
+using Teamwork.Extensions.DateTime;
+using Teamwork.Response;
 
 #endregion
 

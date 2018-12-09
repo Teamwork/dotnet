@@ -17,9 +17,11 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using Teamwork.Net;
-using Teamworks.Base.Response;
-using Teamworks.HTTPClient;
+using Teamwork.Base.Response;
+using Teamwork.HTTPClient;
 using Teamwork;
+using Teamwork.HTTPClient;
+using Teamwork.Model.Projects.V1;
 
 namespace Teamwork
 {

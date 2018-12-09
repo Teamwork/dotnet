@@ -10,10 +10,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using Newtonsoft.Json;
-using Teamworks.Extensions.DateTime;
+using Teamwork.Extensions.DateTime;
 
 namespace Teamwork.Model.Projects.V1
 {

@@ -20,12 +20,17 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamworks.Base.Response;
-using Teamworks.Generic;
-using Teamworks.HTTPClient;
+using Teamwork.Base.Response;
+using Teamwork.Generic;
+using Teamwork.HTTPClient;
 using Teamwork;
-using Teamworks.Response;
-using PostResponse = Teamwork.PostResponse;
+using Teamwork.Base.Response;
+using Teamwork.Generic;
+using Teamwork.HTTPClient;
+using Teamwork.Model.Projects.V1;
+using Teamwork.Response;
+using Teamwork.Response;
+
 
 #endregion
 

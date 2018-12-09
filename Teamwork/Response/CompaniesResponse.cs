@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Teamwork;
+using Teamwork.Model.Projects.V1;
 
 namespace Teamwork.Response
 {

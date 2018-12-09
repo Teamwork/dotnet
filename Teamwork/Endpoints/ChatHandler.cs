@@ -23,10 +23,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamworks;
-using Teamworks.HTTPClient;
 using Teamwork;
-using Teamworks.Response;
+using Teamwork.HTTPClient;
+using Teamwork;
+using Teamwork.Response;
 
 #endregion
 

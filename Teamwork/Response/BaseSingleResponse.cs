@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamworks.Generic;
+using Teamwork.Generic;
 
 namespace Teamwork.Response
 {

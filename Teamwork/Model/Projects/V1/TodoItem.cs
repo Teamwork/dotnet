@@ -15,8 +15,8 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using Teamworks.Base.Model;
-using Teamworks.Extensions.DateTime;
+
+using Teamwork.Extensions.DateTime;
 
 #endregion
 

@@ -8,7 +8,7 @@
 // ==========================================================
 
 using Newtonsoft.Json;
-using Teamworks.Helper;
+using Teamwork.Helper;
 
 namespace Teamwork.Model.Projects.V1
 {

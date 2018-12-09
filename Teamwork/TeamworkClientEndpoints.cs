@@ -34,7 +34,6 @@ namespace Teamwork
         private TodoListHandler todolists;
         private CompanyHandler companies;
         private CategoryHandler categories;
-        private TagHandler tags;
         private TaskHandler tasks;
         private PeopleHandler people;
         private BoardsHandler boards;
@@ -48,7 +47,6 @@ namespace Teamwork
         public TodoListHandler TodoLists => todolists ?? (todolists = new TodoListHandler(this));
         public CompanyHandler Companies => companies ?? (companies = new CompanyHandler(this));
         public CategoryHandler Categories => categories ?? (categories = new CategoryHandler(this));
-        public TagHandler Tags => tags ?? (tags = new TagHandler(this));
         public TaskHandler Tasks => tasks ?? (tasks = new TaskHandler(this));
         public PeopleHandler People => people ?? (people = new PeopleHandler(this));
         public BoardsHandler Boards => boards ?? (boards = new BoardsHandler(this));

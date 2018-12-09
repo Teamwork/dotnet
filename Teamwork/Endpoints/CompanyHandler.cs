@@ -19,9 +19,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamworks.HTTPClient;
+using Teamwork.HTTPClient;
 using Teamwork;
-using Teamworks.Response;
+using Teamwork.Model.Projects.V1;
+using Teamwork.Response;
 
 #endregion
 

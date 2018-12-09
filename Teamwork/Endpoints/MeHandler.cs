@@ -6,9 +6,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamworks.Generic;
-using Teamworks.HTTPClient;
+using Teamwork.Generic;
+using Teamwork.HTTPClient;
 using Teamwork;
+using Teamwork.Model.Projects.V1;
 
 namespace Teamwork.Endpoints
 {

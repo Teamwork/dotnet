@@ -22,9 +22,10 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamworks.Generic;
+using Teamwork.Generic;
 using Teamwork;
-using Teamworks.Response;
+using Teamwork.Model.Projects.V1;
+using Teamwork.Response;
 
 #endregion
 

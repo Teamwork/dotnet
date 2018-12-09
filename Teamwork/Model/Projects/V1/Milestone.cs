@@ -10,9 +10,9 @@
 using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamworks.Base;
-using Teamworks.Base.Model;
-using Teamworks.Extensions.DateTime;
+using Teamwork.Base;
+
+using Teamwork.Extensions.DateTime;
 
 namespace Teamwork.Model.Projects.V1
 {

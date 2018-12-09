@@ -10,6 +10,7 @@
 using System;
 using Newtonsoft.Json;
 using  Teamwork;
+using Teamwork.Model.Projects.V1;
 
 namespace Teamwork.Response
 {

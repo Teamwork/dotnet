@@ -11,7 +11,6 @@ using Newtonsoft.Json;
 
 namespace Teamwork.Model.Projects.V1
 {
-    using Teamworks.Base.Model;
 
     public class Notebook
   {

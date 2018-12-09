@@ -20,8 +20,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Teamworks.Generic;
-using Teamworks.Response;
+using Teamwork.Generic;
+using Teamwork.Response;
 
 #endregion
 

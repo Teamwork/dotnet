@@ -16,11 +16,13 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Teamworks.Generic;
-using Teamworks.Helper;
+using Teamwork.Generic;
+using Teamwork.Helper;
 using Teamwork;
-using Teamworks.Response;
-using AuthorizedHttpClient = TeamworkProjects.HTTPClient.AuthorizedHttpClient;
+using Teamwork.HTTPClient;
+using Teamwork.Model.Projects.V1;
+using Teamwork.Response;
+
 
 namespace Teamwork.Endpoints
 {
