@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using Teamwork.Projects.Base.Model;
+using Teamwork.Schema.Projects.V2;
+using Teamwork.Shared.Schema.Projects.V1;
 
 namespace Teamwork.Shared.Schema.Projects.v1.Response
 {
@@ -22,7 +26,7 @@ namespace Teamwork.Shared.Schema.Projects.v1.Response
         public List<Person> People { get; set; }
 
         [JsonProperty("projects", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Project> Projects { get; set; }
+        public List<V1.Project> Projects { get; set; }
 
         [JsonProperty("moreAvailable", NullValueHandling = NullValueHandling.Ignore)]
         public bool? MoreAvailable { get; set; }
