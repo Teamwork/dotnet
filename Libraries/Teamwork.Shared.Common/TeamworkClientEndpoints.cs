@@ -30,7 +30,7 @@ namespace Teamwork
     public partial class Client
     {
         private ProjectsAPI projects;
-        public ProjectsAPI Projects => projects ?? (projects = new ProjectsAPI());
+        public ProjectsAPI Projects => projects ?? (projects = new ProjectsAPI(this));
     }
 
 
@@ -39,9 +39,9 @@ namespace Teamwork
 
         private Client client { get; set; }
 
-        public ProjectsAPI()
+        public ProjectsAPI(Client pClient)
         {
-
+            client = pClient;
         }
 
         private ProjectHandler projects;

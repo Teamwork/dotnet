@@ -7,8 +7,8 @@
     <ApplicationIcon />
     <StartupObject />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>0.8.2.1</AssemblyVersion>
-    <FileVersion>0.8.2.1</FileVersion>
+    <AssemblyVersion>0.8.6.1</AssemblyVersion>
+    <FileVersion>0.8.6.1</FileVersion>
     <PackageReleaseNotes>First Beta Release</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/Teamwork/dotnet</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
@@ -18,7 +18,7 @@
     <Authors>Tim Cadenbach</Authors>
     <Company>Teamwork.com</Company>
     <Product>Teamwork Projects</Product>
-    <Version>0.8.5-beta</Version>
+    <Version>0.8.6-beta</Version>
     <PackageId>Teamwork.Core</PackageId>
     <PackageIconUrl>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKWUss70J4_BjpyEN-nIeQcRcPjUcQTyECUtN5xmfK6fhc3o2KmQ</PackageIconUrl>
   </PropertyGroup>
