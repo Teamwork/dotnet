@@ -18,7 +18,7 @@
     <Authors>Tim Cadenbach</Authors>
     <Company>Teamwork.com</Company>
     <Product>Teamwork Projects</Product>
-    <Version>0.8.6-beta</Version>
+    <Version>0.8.8-beta</Version>
     <PackageId>Teamwork.Core</PackageId>
     <PackageIconUrl>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKWUss70J4_BjpyEN-nIeQcRcPjUcQTyECUtN5xmfK6fhc3o2KmQ</PackageIconUrl>
   </PropertyGroup>

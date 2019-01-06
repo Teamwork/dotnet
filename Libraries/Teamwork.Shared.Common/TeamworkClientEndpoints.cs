@@ -55,7 +55,7 @@ namespace Teamwork
         private PeopleHandler people;
         private BoardsHandler boards;
         private ChatHandler chat;
-
+        private ReactionHandler reactions;
 
 
         public ProjectHandler Projects => projects ?? (projects = new ProjectHandler(client));
@@ -69,5 +69,6 @@ namespace Teamwork
         public PeopleHandler People => people ?? (people = new PeopleHandler(client));
         public BoardsHandler Boards => boards ?? (boards = new BoardsHandler(client));
         public ChatHandler Chat => chat ?? (chat = new ChatHandler(client));
+        public ReactionHandler Reactions => reactions ?? (reactions = new ReactionHandler(client));
     }
 }

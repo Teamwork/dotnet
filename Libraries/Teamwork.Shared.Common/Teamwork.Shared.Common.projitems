@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Endpoints\CompanyHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Endpoints\FileHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Endpoints\MeHandler.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Endpoints\ReactionHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Endpoints\PeopleHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Endpoints\ProjectHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Endpoints\TagHandler.cs" />
