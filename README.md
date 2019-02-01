@@ -11,7 +11,7 @@ If you are looking for API documentation go [here](http://developer.teamwork.com
 # Usage: 
 Install the SDK
 
-`install-package Teamwork`
+`install-package Teamwork -IncludePrerelease`
 
 ## Authentication
 Note, to get the Token and domain you need to use our [App Loginflow](https://developer.teamwork.com/projects/authentication-questions/how-to-authenticate-via-app-login-flow)
