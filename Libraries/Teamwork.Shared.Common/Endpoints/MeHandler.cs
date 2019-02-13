@@ -44,6 +44,42 @@ namespace Teamwork.Handler
             return false;
         }
 
+        public async Task<List<ClockIn>> GetClockins()
+        {
+            var myData = await GetMyDetails();
+            var personId = myData.Id;
+
+            var request = $"people/{personId}/clockins.json";
+            string post = string.Empty;
+            var data = await client.HttpClient.GetListAsync<ClockIn>(request, "clockIns", null);
+            if (data.StatusCode == HttpStatusCode.OK) return data.List;
+            if (data.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                throw new Exception(data.Message);
+            }
+            return null;
+        }
+
+
+        public async Task<ClockIn> GetActiveClockin()
+        {
+            var myData = await GetMyDetails();
+            var personId = myData.Id;
+
+            var request = $"people/{personId}/clockins.json";
+            string post = string.Empty;
+            var data = await client.HttpClient.GetListAsync<ClockIn>(request, "clockIns", null);
+            if (data.StatusCode == HttpStatusCode.OK) {
+                var active = data.List.FirstOrDefault(p => !p.ClockOutDatetime.HasValue);
+                return active;
+            };
+            if (data.StatusCode == HttpStatusCode.InternalServerError)
+            {
+                throw new Exception(data.Message);
+            }
+            return null;
+        }
+
         public async Task<bool> ClockOut()
         {
             var request = "/me/clockout.json";
@@ -68,21 +104,15 @@ namespace Teamwork.Handler
 
         public async Task<Account> GetAccountDetails()
         {
-
-						try
-						{
-							var request = "/account.json";
-							var result = await client.HttpClient.GetAsync<Account>(request, "account", null, RequestFormat.Json);
-							if (result.StatusCode == HttpStatusCode.OK)
-							{
-								return result.Data;
-							}
-							return null;
-						}
-						catch(Exception ex)
-									{
-							return null;
-						}
+            try {
+                var request = "/account.json";
+                var result = await client.HttpClient.GetAsync<Account>(request, "account", null, RequestFormat.Json);
+                if (result.StatusCode == HttpStatusCode.OK) return result.Data;
+                return null;
+            }
+            catch (Exception ex) {
+                return null;
+            }
         }
     }
 }

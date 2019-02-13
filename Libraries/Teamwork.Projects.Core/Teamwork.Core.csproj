@@ -7,9 +7,10 @@
     <ApplicationIcon />
     <StartupObject />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <AssemblyVersion>0.8.6.1</AssemblyVersion>
-    <FileVersion>0.8.6.1</FileVersion>
-    <PackageReleaseNotes>First Beta Release</PackageReleaseNotes>
+    <AssemblyVersion>0.9.1.0</AssemblyVersion>
+    <FileVersion>0.9.1.0</FileVersion>
+    <PackageReleaseNotes>Added Clockins/Outs 
+</PackageReleaseNotes>
     <RepositoryUrl>https://github.com/Teamwork/dotnet</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
     <Copyright>http://www.teamwork.com</Copyright>
@@ -18,9 +19,11 @@
     <Authors>Tim Cadenbach</Authors>
     <Company>Teamwork.com</Company>
     <Product>Teamwork Projects</Product>
-    <Version>0.8.8-beta</Version>
+    <Version>0.9.1</Version>
     <PackageId>Teamwork.Core</PackageId>
     <PackageIconUrl>https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKWUss70J4_BjpyEN-nIeQcRcPjUcQTyECUtN5xmfK6fhc3o2KmQ</PackageIconUrl>
+    <PackageLicenseUrl>https://www.teamwork.com</PackageLicenseUrl>
+    <PackageTags>Teamwork; Projects;</PackageTags>
   </PropertyGroup>
 
 

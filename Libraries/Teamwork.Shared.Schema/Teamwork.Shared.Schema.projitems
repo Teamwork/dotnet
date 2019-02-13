@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Activity.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Board.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Category.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Clockins.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Comment.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Company.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\CountryCodes.cs" />
@@ -35,6 +36,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\ProjectMailAddress.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\AccountResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\CategoriesResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\ClockinResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\CompaniesResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\CompanyResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Projects\v1\Response\Deprecated_BaseResponse.cs" />
