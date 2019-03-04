@@ -17,6 +17,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -39,15 +40,24 @@ namespace Teamwork
         /// </summary>
         /// <param name="pApiKey">APIKey for Projects API</param>
         /// <param name="pBaseuri"></param>
-        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, bool pUseOauth = false)
+        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, bool pUseOauth = false, string pUserAgent = "")
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             BaseAddress = pBaseuri;
             DefaultRequestHeaders.Authorization = pUseOauth ? new AuthenticationHeaderValue("Bearer",pApiKey) : new AuthenticationHeaderValue("Basic",Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));
             DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            DefaultRequestHeaders.Add("User-Agent",
-                "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident / 6.0)");
+
+            if (!string.IsNullOrEmpty(pUserAgent))
+            {
+                DefaultRequestHeaders.Add("User-Agent", pUserAgent);
+            }
+            else
+            {
+                DefaultRequestHeaders.Add("User-Agent",$"tw-dotnet ({System.Environment.OSVersion.Platform}; {Assembly.GetEntryAssembly().GetName().Version};{Assembly.GetEntryAssembly().GetName()})");
+            }
+
+
         }
 
         /// <summary>
@@ -55,15 +65,21 @@ namespace Teamwork
         /// </summary>
         /// <param name="pApiKey">APIKey for Projects API</param>
         /// <param name="pBaseuri"></param>
-        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, HttpMessageHandler handler, bool pUseOauth = false) : base(handler)
+        public AuthorizedHttpClient(string pApiKey, Uri pBaseuri, HttpMessageHandler handler, bool pUseOauth = false, string pUserAgent = "") : base(handler)
         {
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             BaseAddress = pBaseuri;
             DefaultRequestHeaders.Authorization = pUseOauth ? new AuthenticationHeaderValue("Bearer", pApiKey) : new AuthenticationHeaderValue("Basic", Convert.ToBase64String(Encoding.UTF8.GetBytes($"{pApiKey}:x")));
             DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            DefaultRequestHeaders.Add("User-Agent",
-                "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident / 6.0)");
+            if (!string.IsNullOrEmpty(pUserAgent))
+            {
+                DefaultRequestHeaders.Add("User-Agent", pUserAgent);
+            }
+            else
+            {
+                DefaultRequestHeaders.Add("User-Agent", $"tw-dotnet ({System.Environment.OSVersion.Platform};{Assembly.GetEntryAssembly().GetName().Version};{Assembly.GetEntryAssembly().GetName()})");
+            }
         }
 
         public AuthorizedHttpClient()
@@ -71,8 +87,7 @@ namespace Teamwork
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             DefaultRequestHeaders.Accept.Clear();
             DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            DefaultRequestHeaders.Add("User-Agent",
-                "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident / 6.0)");
+            DefaultRequestHeaders.Add("User-Agent", $"tw-dotnet ({System.Environment.OSVersion.Platform};{Assembly.GetEntryAssembly().GetName().Version};{Assembly.GetEntryAssembly().GetName()})");
         }
 
         public async Task<BaseResponse<T>> GetAsync<T>(string pEndpoint, Dictionary<string, string> pAramsDictionary,

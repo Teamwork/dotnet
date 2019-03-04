@@ -57,13 +57,14 @@ namespace Teamwork
         /// <param name="pDomain">Your Projects Domain eg: https://name.teamwork.com</param>
         /// <param name="pApiKey">Your API Key // Oauth Access Token</param>
         /// <param name="pUseOauth">When using a new access token instead of api token set this to true!</param>
+        /// <param name="pUserAgent">Can be used to set a custom user agent, shouldn't be overwritten if not necessary!</param>
         /// <returns></returns>
-        public static Client GetTeamworkClient(Uri pDomain, string pApiKey,bool pUseOauth)
+        public static Client GetTeamworkClient(Uri pDomain, string pApiKey,bool pUseOauth, string pUserAgent = "")
         {
             try
             {
                 Client newTeamworkClient = null;
-                newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(pApiKey, pDomain, pUseOauth), UseOauth = pUseOauth};
+                newTeamworkClient = new Client { HttpClient = new AuthorizedHttpClient(pApiKey, pDomain, pUseOauth, pUserAgent), UseOauth = pUseOauth};
                 newTeamworkClient.HttpClient.BaseAddress = pDomain;
                 return newTeamworkClient;
             }
