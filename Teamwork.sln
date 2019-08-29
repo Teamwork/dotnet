@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2047
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{38AEE918-184C-4DB6-A0B9-09866772E66F}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Teamwork.Schema", "Libraries\Teamwork.Shared.Schema\Teamwork.Schema.shproj", "{B4F380F9-CC6B-414B-A36D-77DC00C2E386}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Teamwork.Core", "Libraries\Teamwork.Projects.Core\Teamwork.Core.csproj", "{22C09FDA-2079-467A-ACE6-3E6E86C031B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Teamwork.CRM", "Libraries\Teamwork.CRM\Teamwork.CRM.csproj", "{010BDE0F-1B08-47FF-90FA-2E6D8E8DF3FA}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -41,6 +43,10 @@ Global
 		{22C09FDA-2079-467A-ACE6-3E6E86C031B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22C09FDA-2079-467A-ACE6-3E6E86C031B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22C09FDA-2079-467A-ACE6-3E6E86C031B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{010BDE0F-1B08-47FF-90FA-2E6D8E8DF3FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{010BDE0F-1B08-47FF-90FA-2E6D8E8DF3FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{010BDE0F-1B08-47FF-90FA-2E6D8E8DF3FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{010BDE0F-1B08-47FF-90FA-2E6D8E8DF3FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 		{D0F01239-903F-43CB-B12B-FD9C4FCE9FC2} = {38AEE918-184C-4DB6-A0B9-09866772E66F}
 		{B4F380F9-CC6B-414B-A36D-77DC00C2E386} = {38AEE918-184C-4DB6-A0B9-09866772E66F}
 		{22C09FDA-2079-467A-ACE6-3E6E86C031B0} = {38AEE918-184C-4DB6-A0B9-09866772E66F}
+		{010BDE0F-1B08-47FF-90FA-2E6D8E8DF3FA} = {38AEE918-184C-4DB6-A0B9-09866772E66F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C4F5FBA1-2871-4682-9CDB-BC7A351555BD}
